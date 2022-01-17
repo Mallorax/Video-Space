@@ -1,4 +1,4 @@
-package pl.patrykzygo.model.network
+package pl.patrykzygo.data.network
 
 
 import com.google.gson.annotations.SerializedName

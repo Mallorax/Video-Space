@@ -1,6 +1,6 @@
 package pl.patrykzygo.networking
 
-import pl.patrykzygo.model.network.PopularMoviesResponse
+import pl.patrykzygo.data.network.PopularMoviesResponse
 import pl.patrykzygo.videospace.BuildConfig
 import retrofit2.Response
 import retrofit2.http.GET
