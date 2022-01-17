@@ -46,7 +46,7 @@ class GenreDaoTest {
         val genre = GenreEntity(1, "genre")
         dao.insertGenre(genre)
         val requestedGenre = dao.getGenre(genre.id)
-        assertThat(requestedGenre.name)
+        assertThat(requestedGenre?.name)
             .isEqualTo(genre.name)
     }
 
@@ -57,7 +57,7 @@ class GenreDaoTest {
         dao.insertGenre(genre1)
         dao.insertGenre(genre2)
         val requestedGenre = dao.getGenre(1)
-        assertThat(requestedGenre.name)
+        assertThat(requestedGenre?.name)
             .isEqualTo(genre2.name)
     }
 
@@ -71,6 +71,18 @@ class GenreDaoTest {
         dao.insertGenres(*genres.toTypedArray(), genre4)
         val requestedGenres = dao.getGenres()
         assertThat(requestedGenres).containsAtLeastElementsIn(genres)
+    }
+
+    @Test
+    fun readNotExistTest() = runBlockingTest {
+        val requestedGenre = dao.getGenre(1)
+        assertThat(requestedGenre?.id).isEqualTo(null)
+    }
+
+    @Test
+    fun readGenresWhenTableIsEmptyTest() = runBlockingTest {
+        val requestedGenres = dao.getGenres()
+        assertThat(requestedGenres).isEmpty()
     }
 
 

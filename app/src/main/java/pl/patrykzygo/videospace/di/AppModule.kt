@@ -9,7 +9,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import pl.patrykzygo.videospace.data.local.GenreDao
 import pl.patrykzygo.videospace.data.local.VideoSpaceDatabase
+import pl.patrykzygo.videospace.networking.GenresEntryPoint
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
+import pl.patrykzygo.videospace.others.Constants.GENRES_BASE_URL
 import pl.patrykzygo.videospace.others.Constants.MOVIES_BASE_URL
 import pl.patrykzygo.videospace.others.Constants.VIDEO_SPACE_DB_NAME
 import retrofit2.Retrofit
@@ -28,6 +30,16 @@ object AppModule {
             .baseUrl(MOVIES_BASE_URL)
             .build()
             .create(MoviesEntryPoint::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGenresEntryPoint(): GenresEntryPoint {
+        return Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(GENRES_BASE_URL)
+            .build()
+            .create(GenresEntryPoint::class.java)
     }
 
     @Singleton

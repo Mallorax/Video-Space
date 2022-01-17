@@ -15,7 +15,7 @@ interface GenreDao {
     suspend fun insertGenres(vararg genre: GenreEntity)
 
     @Query("SELECT * FROM genres WHERE id = :id")
-    suspend fun getGenre(id: Int): GenreEntity
+    suspend fun getGenre(id: Int): GenreEntity?
 
     @Query("SELECT * FROM genres")
     suspend fun getGenres(): List<GenreEntity>
