@@ -1,4 +1,4 @@
-package pl.patrykzygo.data.app
+package pl.patrykzygo.videospace.data.app
 
 data class Movie(
     val adult: Boolean,

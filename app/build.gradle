@@ -20,7 +20,7 @@ android {
         versionName "1.0"
         buildConfigField "String", "API_KEY",localProperties['apiKey']
 
-        testInstrumentationRunner "com.example.unitttest.HiltTestRunner"
+        testInstrumentationRunner "pl.patrykzygo.videospace.HiltTestRunner"
     }
 
     buildTypes {

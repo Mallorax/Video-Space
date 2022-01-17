@@ -1,4 +1,4 @@
-package pl.patrykzygo.data.local
+package pl.patrykzygo.videospace.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

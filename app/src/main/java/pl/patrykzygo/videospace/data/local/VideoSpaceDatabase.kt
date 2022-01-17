@@ -1,9 +1,7 @@
-package pl.patrykzygo.data.local
+package pl.patrykzygo.videospace.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import pl.patrykzygo.data.local.GenreDao
-import pl.patrykzygo.data.local.GenreEntity
 
 @Database(
     entities = [GenreEntity::class],

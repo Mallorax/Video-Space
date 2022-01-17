@@ -1,6 +1,4 @@
-package pl.patrykzygo.others
-
-import java.util.*
+package pl.patrykzygo.videospace.others
 
 object Constants {
 

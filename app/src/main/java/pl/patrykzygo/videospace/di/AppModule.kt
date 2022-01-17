@@ -1,4 +1,4 @@
-package pl.patrykzygo.di
+package pl.patrykzygo.videospace.di
 
 import android.content.Context
 import androidx.room.Room
@@ -7,11 +7,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import pl.patrykzygo.data.local.GenreDao
-import pl.patrykzygo.data.local.VideoSpaceDatabase
-import pl.patrykzygo.networking.MoviesEntryPoint
-import pl.patrykzygo.others.Constants.MOVIES_BASE_URL
-import pl.patrykzygo.others.Constants.VIDEO_SPACE_DB_NAME
+import pl.patrykzygo.videospace.data.local.GenreDao
+import pl.patrykzygo.videospace.data.local.VideoSpaceDatabase
+import pl.patrykzygo.videospace.networking.MoviesEntryPoint
+import pl.patrykzygo.videospace.others.Constants.MOVIES_BASE_URL
+import pl.patrykzygo.videospace.others.Constants.VIDEO_SPACE_DB_NAME
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
