@@ -3,10 +3,8 @@ package pl.patrykzygo.videospace.repository
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import pl.patrykzygo.videospace.data.network.MoviesResponse
-import pl.patrykzygo.videospace.data.network.PopularMoviesResponse
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
 import retrofit2.HttpException
-import java.io.IOException
 import javax.inject.Inject
 
 class MoviesPagingSource @Inject constructor(private val moviesEntryPoint: MoviesEntryPoint) :
@@ -23,13 +21,15 @@ class MoviesPagingSource @Inject constructor(private val moviesEntryPoint: Movie
         try {
             val nextPageNumber = params.key ?: 1
             val response = moviesEntryPoint.requestPopularMovies(page = nextPageNumber)
-            return LoadResult.Page(
-                data = response.body()!!.moviesList,
-                prevKey = previousKey(response.body()!!.page),
-                nextKey = nextKey(response.body()!!.page, response.body()!!.totalPages)
-            )
-        } catch (e: IOException) {
-            return LoadResult.Error(e)
+            return if (response.isSuccessful) {
+                LoadResult.Page(
+                    data = response.body()!!.moviesList,
+                    prevKey = previousKey(response.body()!!.page),
+                    nextKey = nextKey(response.body()!!.page, response.body()!!.totalPages)
+                )
+            } else {
+                throw HttpException(response)
+            }
         } catch (e: HttpException) {
             return LoadResult.Error(e)
         } catch (e: NullPointerException) {
@@ -39,18 +39,19 @@ class MoviesPagingSource @Inject constructor(private val moviesEntryPoint: Movie
         }
 
     }
-    private fun previousKey(currKey: Int): Int?{
-        return if (currKey == 1){
+
+    private fun previousKey(currKey: Int): Int? {
+        return if (currKey == 1) {
             null
-        }else{
+        } else {
             currKey - 1
         }
     }
 
-    private fun nextKey(currKey: Int, lastKey: Int): Int?{
-        return if (currKey == lastKey){
+    private fun nextKey(currKey: Int, lastKey: Int): Int? {
+        return if (currKey == lastKey) {
             null
-        }else{
+        } else {
             currKey + 1
         }
     }

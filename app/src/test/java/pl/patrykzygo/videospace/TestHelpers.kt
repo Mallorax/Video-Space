@@ -1,5 +1,7 @@
 package pl.patrykzygo.videospace
 
+import okhttp3.MediaType
+import okhttp3.ResponseBody
 import pl.patrykzygo.videospace.data.network.MoviesResponse
 import pl.patrykzygo.videospace.data.network.PopularMoviesResponse
 import retrofit2.Response
@@ -12,6 +14,16 @@ fun stubbedCorrectMoviesResponse(page: Int, numberOfPages: Int): Response<Popula
         numberOfPages
     )
     return Response.success(moviesResponse)
+}
+
+fun stubbedHttpErrorResponse(): Response<PopularMoviesResponse> {
+    return Response.error(
+        404,
+        ResponseBody.create(
+            MediaType.parse("application/json"),
+            "{\"key\":[\"somestuff\"]}"
+        )
+    )
 }
 
 private fun fakeMoviesResponseList(page: Int): List<MoviesResponse> {

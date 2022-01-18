@@ -12,9 +12,12 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
+import pl.patrykzygo.videospace.data.network.MoviesResponse
 import pl.patrykzygo.videospace.data.network.PopularMoviesResponse
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
 import pl.patrykzygo.videospace.stubbedCorrectMoviesResponse
+import pl.patrykzygo.videospace.stubbedHttpErrorResponse
+import retrofit2.HttpException
 import retrofit2.Response
 
 @ExperimentalCoroutinesApi
@@ -36,7 +39,7 @@ class MoviesPagingSourceTest {
     }
 
     @After
-    fun teardown(){
+    fun teardown() {
         mockVideos.clear()
     }
 
@@ -50,21 +53,36 @@ class MoviesPagingSourceTest {
         Mockito.`when`(mockMoviesEntryPoint.requestPopularMovies(page = 2))
             .thenAnswer { mockVideos[1] }
 
-        assertThat(
-            PagingSource.LoadResult.Page(
-                data = listOf(mockVideos[0]).flatMap { it.body()!!.moviesList },
-                prevKey = null,
-                nextKey = mockVideos[0].body()?.page?.plus(1),
-            )
-        ).isEqualTo(
-            moviesPagingSource.load(
-                PagingSource.LoadParams.Refresh(
-                    key = null,
-                    loadSize = 1,
-                    placeholdersEnabled = false
-                )
+        val actual = moviesPagingSource.load(
+            PagingSource.LoadParams.Refresh(
+                key = null,
+                loadSize = 1,
+                placeholdersEnabled = false
             )
         )
+        val expected = PagingSource.LoadResult.Page(
+            data = listOf(mockVideos[0]).flatMap { it.body()!!.moviesList },
+            prevKey = null,
+            nextKey = mockVideos[0].body()?.page?.plus(1),
+        )
+
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `movies paging source load is http error`() = runBlockingTest {
+        val error = stubbedHttpErrorResponse()
+        Mockito.`when`(mockMoviesEntryPoint.requestPopularMovies(page = 1))
+            .thenAnswer { error }
+        val expected = PagingSource.LoadResult.Error<Int, MoviesResponse>(HttpException(error))
+        val actual = moviesPagingSource.load(
+            PagingSource.LoadParams.Refresh(
+                key = null,
+                loadSize = 1,
+                placeholdersEnabled = false
+            )
+        )
+        assertThat(expected::class).isEqualTo(actual::class)
     }
 
 
