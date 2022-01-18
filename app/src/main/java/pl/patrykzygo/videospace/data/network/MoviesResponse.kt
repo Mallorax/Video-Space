@@ -3,7 +3,7 @@ package pl.patrykzygo.videospace.data.network
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieResponse(
+data class MoviesResponse(
     @SerializedName("adult")
     val adult: Boolean,
     @SerializedName("backdrop_path")
