@@ -15,8 +15,8 @@ import org.mockito.MockitoAnnotations
 import pl.patrykzygo.videospace.data.network.MoviesResponse
 import pl.patrykzygo.videospace.data.network.PopularMoviesResponse
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
-import pl.patrykzygo.videospace.stubbedCorrectMoviesResponse
-import pl.patrykzygo.videospace.stubbedHttpErrorResponse
+import pl.patrykzygo.videospace.fakeCorrectMoviesResponse
+import pl.patrykzygo.videospace.fakeHttpErrorResponse
 import retrofit2.HttpException
 import retrofit2.Response
 
@@ -44,14 +44,11 @@ class MoviesPagingSourceTest {
     }
 
     @Test
-    fun `load returns page when on successful load of item keyed data`() = runBlockingTest {
-        mockVideos.add(stubbedCorrectMoviesResponse(1, 2))
-        mockVideos.add(stubbedCorrectMoviesResponse(2, 2))
+    fun `videos paging source refresh is success test`() = runBlockingTest {
+        mockVideos.add(fakeCorrectMoviesResponse(1, 2))
 
         Mockito.`when`(mockMoviesEntryPoint.requestPopularMovies(page = 1))
             .thenAnswer { mockVideos[0] }
-        Mockito.`when`(mockMoviesEntryPoint.requestPopularMovies(page = 2))
-            .thenAnswer { mockVideos[1] }
 
         val actual = moviesPagingSource.load(
             PagingSource.LoadParams.Refresh(
@@ -60,6 +57,7 @@ class MoviesPagingSourceTest {
                 placeholdersEnabled = false
             )
         )
+
         val expected = PagingSource.LoadResult.Page(
             data = listOf(mockVideos[0]).flatMap { it.body()!!.moviesList },
             prevKey = null,
@@ -71,7 +69,7 @@ class MoviesPagingSourceTest {
 
     @Test
     fun `movies paging source load is http error`() = runBlockingTest {
-        val error = stubbedHttpErrorResponse()
+        val error = fakeHttpErrorResponse()
         Mockito.`when`(mockMoviesEntryPoint.requestPopularMovies(page = 1))
             .thenAnswer { error }
         val expected = PagingSource.LoadResult.Error<Int, MoviesResponse>(HttpException(error))
@@ -83,6 +81,52 @@ class MoviesPagingSourceTest {
             )
         )
         assertThat(expected::class).isEqualTo(actual::class)
+    }
+
+    @Test
+    fun `videos paging source append last page is success test`() = runBlockingTest {
+        mockVideos.add(fakeCorrectMoviesResponse(2, 2))
+
+        Mockito.`when`(mockMoviesEntryPoint.requestPopularMovies(page = 2))
+            .thenAnswer { mockVideos[0] }
+
+        val actual = moviesPagingSource.load(
+            PagingSource.LoadParams.Append(
+                key = 2,
+                loadSize = 1,
+                placeholdersEnabled = false
+            )
+        )
+        val expected = PagingSource.LoadResult.Page(
+            data = listOf(mockVideos[0]).flatMap { it.body()!!.moviesList },
+            prevKey = 1,
+            nextKey = null,
+        )
+
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `videos paging source prepend first page is success test`() = runBlockingTest {
+        mockVideos.add(fakeCorrectMoviesResponse(1, 2))
+
+        Mockito.`when`(mockMoviesEntryPoint.requestPopularMovies(page = 1))
+            .thenAnswer { mockVideos[0] }
+
+        val actual = moviesPagingSource.load(
+            PagingSource.LoadParams.Prepend(
+                key = 1,
+                loadSize = 1,
+                placeholdersEnabled = false
+            )
+        )
+        val expected = PagingSource.LoadResult.Page(
+            data = listOf(mockVideos[0]).flatMap { it.body()!!.moviesList },
+            prevKey = null,
+            nextKey = 2,
+        )
+
+        assertThat(actual).isEqualTo(expected)
     }
 
 

@@ -6,7 +6,7 @@ import pl.patrykzygo.videospace.data.network.MoviesResponse
 import pl.patrykzygo.videospace.data.network.PopularMoviesResponse
 import retrofit2.Response
 
-fun stubbedCorrectMoviesResponse(page: Int, numberOfPages: Int): Response<PopularMoviesResponse> {
+fun fakeCorrectMoviesResponse(page: Int, numberOfPages: Int): Response<PopularMoviesResponse> {
     val moviesResponse = PopularMoviesResponse(
         page = page,
         fakeMoviesResponseList(page),
@@ -16,7 +16,7 @@ fun stubbedCorrectMoviesResponse(page: Int, numberOfPages: Int): Response<Popula
     return Response.success(moviesResponse)
 }
 
-fun stubbedHttpErrorResponse(): Response<PopularMoviesResponse> {
+fun fakeHttpErrorResponse(): Response<PopularMoviesResponse> {
     return Response.error(
         404,
         ResponseBody.create(
