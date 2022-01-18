@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">VideoSpace</string>
+    <string name="most_popular_section_label_string">Most popular</string>
+    <string name="film_thumbnail_string">Film thumbnail</string>
 </resources>
