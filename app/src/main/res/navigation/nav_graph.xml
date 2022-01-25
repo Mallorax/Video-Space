@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/movies_list_fragment">
+
+    <fragment
+        android:id="@+id/movies_list_fragment"
+        android:name="pl.patrykzygo.videospace.ui.MoviesListFragment"
+        android:label="@string/movies_list_fragment_label"
+        tools:layout="@layout/movies_list"/>
 
 </navigation>

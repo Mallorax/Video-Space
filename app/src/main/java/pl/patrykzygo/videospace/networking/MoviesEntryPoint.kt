@@ -10,8 +10,8 @@ interface MoviesEntryPoint {
 
     //TODO: Hardcoded language to simplify development,
     // change it to system language later
-    @GET("/movie/popular")
-    fun requestPopularMovies(
+    @GET("popular")
+    suspend fun requestPopularMovies(
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
         @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1,
