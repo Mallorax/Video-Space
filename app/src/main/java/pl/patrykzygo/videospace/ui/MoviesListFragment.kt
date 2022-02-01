@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import androidx.paging.LoadState
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +25,7 @@ class MoviesListFragment : Fragment() {
     private var _binding: MainFragmentBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MoviesListViewModel by viewModels()
-    val adapter = createRecyclerViewAdapter()
+    private val adapter = createRecyclerViewAdapter()
 
 
     override fun onCreateView(
@@ -32,13 +35,24 @@ class MoviesListFragment : Fragment() {
     ): View {
         _binding = MainFragmentBinding.inflate(inflater)
         binding.lifecycleOwner = viewLifecycleOwner
+
         val recyclerView = binding.mostPopularRecycler.moviesListRecycler
+        recyclerView.adapter = adapter
+
+        setUpAppBar()
         observeMovies()
         collectLoadingState()
-        recyclerView.adapter = adapter
+
 
         return binding.root
     }
+
+    private fun setUpAppBar() {
+        val navController = findNavController()
+        val appBarConfig = AppBarConfiguration(navController.graph)
+        binding.appBar.toolbar.setupWithNavController(navController, appBarConfig)
+    }
+
 
     private fun observeMovies() {
         viewModel.getMovies().observe(viewLifecycleOwner, Observer {
