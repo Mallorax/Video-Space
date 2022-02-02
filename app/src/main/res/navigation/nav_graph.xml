@@ -3,12 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/movies_list_fragment">
+    app:startDestination="@id/main_fragment">
+
+    <fragment
+        android:id="@+id/main_fragment"
+        android:name="pl.patrykzygo.videospace.ui.DefaultListsFragment"
+        android:label="@string/movies_list_fragment_label"
+        tools:layout="@layout/fragment_default_lists"/>
 
     <fragment
         android:id="@+id/movies_list_fragment"
-        android:name="pl.patrykzygo.videospace.ui.MoviesListFragment"
+        android:name="pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment"
         android:label="@string/movies_list_fragment_label"
-        tools:layout="@layout/movies_list"/>
+        tools:layout="@layout/fragment_movies_list"/>
 
 </navigation>

@@ -1,4 +1,4 @@
-package pl.patrykzygo.videospace.ui
+package pl.patrykzygo.videospace.ui.movies_list
 
 import android.view.LayoutInflater
 import android.view.View

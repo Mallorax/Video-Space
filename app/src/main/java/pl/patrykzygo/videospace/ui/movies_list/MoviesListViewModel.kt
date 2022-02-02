@@ -1,4 +1,4 @@
-package pl.patrykzygo.videospace.ui
+package pl.patrykzygo.videospace.ui.movies_list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

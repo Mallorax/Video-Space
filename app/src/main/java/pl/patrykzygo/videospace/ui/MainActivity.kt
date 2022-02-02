@@ -1,14 +1,10 @@
-package pl.patrykzygo.videospace
+package pl.patrykzygo.videospace.ui
 
-import android.app.Activity
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
-import androidx.navigation.Navigation
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI.navigateUp
 import dagger.hilt.android.AndroidEntryPoint
+import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.databinding.ActivityMainBinding
 
 @AndroidEntryPoint
