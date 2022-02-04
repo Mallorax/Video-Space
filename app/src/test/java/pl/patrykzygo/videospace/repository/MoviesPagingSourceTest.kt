@@ -9,6 +9,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.ArgumentMatchers.*
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
@@ -30,25 +31,20 @@ class MoviesPagingSourceTest {
 
     @Mock
     private lateinit var mockMoviesEntryPoint: MoviesEntryPoint
-    private val mockVideos = mutableListOf<Response<PopularMoviesResponse>>()
 
     @Before
     fun setup() {
-        MockitoAnnotations.initMocks(this)
+        MockitoAnnotations.openMocks(this)
         moviesPagingSource = MoviesPagingSource(mockMoviesEntryPoint)
     }
 
-    @After
-    fun teardown() {
-        mockVideos.clear()
-    }
 
     @Test
     fun `videos paging source refresh is success test`() = runBlockingTest {
-        mockVideos.add(fakeCorrectMoviesResponse(1, 2))
+        val fakeMoviesResponse = fakeCorrectMoviesResponse(1, 2)
 
         Mockito.`when`(mockMoviesEntryPoint.requestPopularMovies(page = 1))
-            .thenAnswer { mockVideos[0] }
+            .thenAnswer { fakeMoviesResponse }
 
         val actual = moviesPagingSource.load(
             PagingSource.LoadParams.Refresh(
@@ -59,9 +55,9 @@ class MoviesPagingSourceTest {
         )
 
         val expected = PagingSource.LoadResult.Page(
-            data = listOf(mockVideos[0]).flatMap { it.body()!!.moviesList },
+            data = listOf(fakeMoviesResponse).flatMap { it.body()!!.moviesList },
             prevKey = null,
-            nextKey = mockVideos[0].body()?.page?.plus(1),
+            nextKey = fakeMoviesResponse.body()?.page?.plus(1),
         )
 
         assertThat(actual).isEqualTo(expected)
@@ -85,10 +81,10 @@ class MoviesPagingSourceTest {
 
     @Test
     fun `videos paging source append last page is success test`() = runBlockingTest {
-        mockVideos.add(fakeCorrectMoviesResponse(2, 2))
+        val fakeResponse = fakeCorrectMoviesResponse(2, 2)
 
         Mockito.`when`(mockMoviesEntryPoint.requestPopularMovies(page = 2))
-            .thenAnswer { mockVideos[0] }
+            .thenAnswer { fakeResponse }
 
         val actual = moviesPagingSource.load(
             PagingSource.LoadParams.Append(
@@ -98,7 +94,7 @@ class MoviesPagingSourceTest {
             )
         )
         val expected = PagingSource.LoadResult.Page(
-            data = listOf(mockVideos[0]).flatMap { it.body()!!.moviesList },
+            data = listOf(fakeResponse).flatMap { it.body()!!.moviesList },
             prevKey = 1,
             nextKey = null,
         )
@@ -108,10 +104,10 @@ class MoviesPagingSourceTest {
 
     @Test
     fun `videos paging source prepend first page is success test`() = runBlockingTest {
-        mockVideos.add(fakeCorrectMoviesResponse(1, 2))
+        val fakeResponse = fakeCorrectMoviesResponse(1, 2)
 
         Mockito.`when`(mockMoviesEntryPoint.requestPopularMovies(page = 1))
-            .thenAnswer { mockVideos[0] }
+            .thenAnswer { fakeResponse }
 
         val actual = moviesPagingSource.load(
             PagingSource.LoadParams.Prepend(
@@ -121,7 +117,7 @@ class MoviesPagingSourceTest {
             )
         )
         val expected = PagingSource.LoadResult.Page(
-            data = listOf(mockVideos[0]).flatMap { it.body()!!.moviesList },
+            data = listOf(fakeResponse).flatMap { it.body()!!.moviesList },
             prevKey = null,
             nextKey = 2,
         )
