@@ -8,13 +8,13 @@
     <fragment
         android:id="@+id/main_fragment"
         android:name="pl.patrykzygo.videospace.ui.DefaultListsFragment"
-        android:label="@string/movies_list_fragment_label"
+        android:label="@string/main_app_label"
         tools:layout="@layout/fragment_default_lists"/>
 
     <fragment
         android:id="@+id/movies_list_fragment"
         android:name="pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment"
-        android:label="@string/movies_list_fragment_label"
+        android:label="@string/main_app_label"
         tools:layout="@layout/fragment_movies_list"/>
 
 </navigation>
