@@ -6,14 +6,14 @@ import pl.patrykzygo.videospace.data.network.MoviesResponse
 fun mapMoviesResponseToMovie(moviesResponse: MoviesResponse): Movie{
     return Movie(
         moviesResponse.adult,
-        moviesResponse.backdropPath,
+        moviesResponse.backdropPath.orEmpty(),
         listOf(), //TODO: leaving it empty for now, should fetch actual list from room/api
         moviesResponse.id,
         moviesResponse.originalLanguage,
         moviesResponse.originalTitle,
         moviesResponse.overview,
         moviesResponse.popularity,
-        moviesResponse.posterPath,
+        moviesResponse.posterPath.orEmpty(),
         moviesResponse.releaseDate,
         moviesResponse.title,
         moviesResponse.video,

@@ -10,9 +10,12 @@ import pl.patrykzygo.videospace.others.Constants
 
 @BindingAdapter("moviePoster")
 fun bindMoviePoster(imageView: ImageView, posterPath: String) {
-    Glide.with(imageView)
-        .load(Constants.POSTERS_BASE_URL + posterPath)
-        .error(R.drawable.ic_baseline_no_photography_24)
-        .transition(DrawableTransitionOptions.withCrossFade())
-        .into(imageView)
+    if (posterPath.isNotEmpty()){
+        Glide.with(imageView)
+            .load(Constants.POSTERS_BASE_URL + posterPath)
+            .error(R.drawable.ic_baseline_no_photography_24)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(imageView)
+    }
+
 }

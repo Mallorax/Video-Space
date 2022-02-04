@@ -3,4 +3,6 @@
     <string name="most_popular_section_label_string">Most popular</string>
     <string name="film_thumbnail_string">Film thumbnail</string>
     <string name="movies_list_fragment_label">Movies List</string>
+    <string name="top_rated_section_label_string">Top Rated</string>
+    <string name="default_movies_list_label">List:</string>
 </resources>

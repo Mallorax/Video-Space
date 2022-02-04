@@ -21,7 +21,6 @@ class MoviesListFragment : Fragment() {
     private val adapter = createRecyclerViewAdapter()
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,6 +35,9 @@ class MoviesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
+
+        val listLabel = arguments?.getString("list_label")
+        listLabel?.let { binding.listLabel.text = listLabel }
 
         val recyclerView = binding.moviesListRecycler
         recyclerView.adapter = adapter
