@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.databinding.FragmentMoviesListBinding
+import pl.patrykzygo.videospace.repository.MoviesRequestType
 
 @AndroidEntryPoint
 class MoviesListFragment : Fragment() {
@@ -20,12 +21,15 @@ class MoviesListFragment : Fragment() {
     private val adapter = createRecyclerViewAdapter()
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMoviesListBinding.inflate(inflater)
+        val requestType = arguments?.get("request_type") as MoviesRequestType?
+        requestType?.let { viewModel.setRequestType(it) }
         return binding.root
     }
 

@@ -12,8 +12,12 @@ import javax.inject.Inject
 class MoviesPagingSource @Inject constructor(private val moviesEntryPoint: MoviesEntryPoint) :
     PagingSource<Int, MoviesResponse>() {
 
-    var moviesRequestType = MoviesRequestType.POPULAR
+    private var moviesRequestType = MoviesRequestType.POPULAR
     var movieId = -1
+
+    fun setMoviesRequestType(moviesRequestType: MoviesRequestType){
+        this.moviesRequestType = moviesRequestType
+    }
 
     override fun getRefreshKey(state: PagingState<Int, MoviesResponse>): Int? {
         return state.anchorPosition?.let { anchorPosition ->

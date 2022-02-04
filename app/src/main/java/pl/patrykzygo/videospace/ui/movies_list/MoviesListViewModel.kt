@@ -9,10 +9,16 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.mapMoviesResponseToMovie
 import pl.patrykzygo.videospace.repository.MoviesPagingSource
+import pl.patrykzygo.videospace.repository.MoviesRequestType
 import javax.inject.Inject
 
 @HiltViewModel
 class MoviesListViewModel @Inject constructor(private val repo: MoviesPagingSource) : ViewModel() {
+
+
+    fun setRequestType(requestType: MoviesRequestType){
+        repo.setMoviesRequestType(requestType)
+    }
 
     fun getMovies(): LiveData<PagingData<Movie>> {
         val pager = Pager(

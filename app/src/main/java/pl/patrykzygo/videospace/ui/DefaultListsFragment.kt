@@ -11,6 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.databinding.FragmentDefaultListsBinding
+import pl.patrykzygo.videospace.repository.MoviesRequestType
 import pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment
 
 @AndroidEntryPoint
@@ -31,9 +32,17 @@ class DefaultListsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        addMoviesListFragmentToContainer(binding.mostPopularMoviesContainer.id, MoviesRequestType.POPULAR)
+    }
+
+    private fun addMoviesListFragmentToContainer(containerId: Int, contentType: MoviesRequestType){
         val fragmentManager = parentFragmentManager
         fragmentManager.commit {
-            replace(binding.mostPopularMoviesContainer.id, MoviesListFragment())
+            val args = Bundle()
+            args.putSerializable("request_type", contentType)
+            val fragment = MoviesListFragment()
+            fragment.arguments = args
+            replace(containerId, fragment)
             setReorderingAllowed(true)
         }
     }
