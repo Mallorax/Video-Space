@@ -3,11 +3,11 @@ package pl.patrykzygo.videospace
 import okhttp3.MediaType
 import okhttp3.ResponseBody
 import pl.patrykzygo.videospace.data.network.MoviesResponse
-import pl.patrykzygo.videospace.data.network.PopularMoviesResponse
+import pl.patrykzygo.videospace.data.network.EntryPointMoviesResponse
 import retrofit2.Response
 
-fun fakeCorrectMoviesResponse(page: Int, numberOfPages: Int): Response<PopularMoviesResponse> {
-    val moviesResponse = PopularMoviesResponse(
+fun fakeCorrectMoviesResponse(page: Int, numberOfPages: Int): Response<EntryPointMoviesResponse> {
+    val moviesResponse = EntryPointMoviesResponse(
         page = page,
         fakeMoviesResponseList(page),
         34234,
@@ -16,7 +16,7 @@ fun fakeCorrectMoviesResponse(page: Int, numberOfPages: Int): Response<PopularMo
     return Response.success(moviesResponse)
 }
 
-fun fakeHttpErrorResponse(): Response<PopularMoviesResponse> {
+fun fakeHttpErrorResponse(): Response<EntryPointMoviesResponse> {
     return Response.error(
         404,
         ResponseBody.create(

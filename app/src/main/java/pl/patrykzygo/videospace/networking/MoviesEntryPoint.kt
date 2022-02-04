@@ -1,6 +1,6 @@
 package pl.patrykzygo.videospace.networking
 
-import pl.patrykzygo.videospace.data.network.PopularMoviesResponse
+import pl.patrykzygo.videospace.data.network.EntryPointMoviesResponse
 import pl.patrykzygo.videospace.BuildConfig
 import retrofit2.Response
 import retrofit2.http.GET
@@ -17,7 +17,7 @@ interface MoviesEntryPoint {
         @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1,
         @Query("region") region: String? = null
-    ): Response<PopularMoviesResponse>
+    ): Response<EntryPointMoviesResponse>
 
     @GET("top_rated")
     suspend fun requestTopRatedMovies(
@@ -25,7 +25,7 @@ interface MoviesEntryPoint {
         @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1,
         @Query("region") region: String? = null
-    ): Response<PopularMoviesResponse>
+    ): Response<EntryPointMoviesResponse>
 
     @GET("now_playing")
     suspend fun requestNowPlayingMovies(
@@ -33,7 +33,7 @@ interface MoviesEntryPoint {
         @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1,
         @Query("region") region: String? = null
-    ): Response<PopularMoviesResponse>
+    ): Response<EntryPointMoviesResponse>
 
     @GET("upcoming")
     suspend fun requestUpcomingMovies(
@@ -41,7 +41,7 @@ interface MoviesEntryPoint {
         @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1,
         @Query("region") region: String? = null
-    ): Response<PopularMoviesResponse>
+    ): Response<EntryPointMoviesResponse>
 
     @GET("{id}/recommendations")
     suspend fun requestRecommendationsForMovie(
@@ -49,7 +49,7 @@ interface MoviesEntryPoint {
         @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1,
         @Path("id") id: Int
-    ): Response<PopularMoviesResponse>
+    ): Response<EntryPointMoviesResponse>
 
     @GET("{id}/similar")
     suspend fun requestSimilarMovies(
@@ -57,6 +57,6 @@ interface MoviesEntryPoint {
         @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1,
         @Path("id") id: Int
-    ): Response<PopularMoviesResponse>
+    ): Response<EntryPointMoviesResponse>
 
 }

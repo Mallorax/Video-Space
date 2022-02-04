@@ -2,13 +2,18 @@ package pl.patrykzygo.videospace.repository
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import pl.patrykzygo.videospace.data.network.EntryPointMoviesResponse
 import pl.patrykzygo.videospace.data.network.MoviesResponse
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
 import retrofit2.HttpException
+import retrofit2.Response
 import javax.inject.Inject
 
 class MoviesPagingSource @Inject constructor(private val moviesEntryPoint: MoviesEntryPoint) :
     PagingSource<Int, MoviesResponse>() {
+
+    var moviesRequestType = MoviesRequestType.POPULAR
+    var movieId = -1
 
     override fun getRefreshKey(state: PagingState<Int, MoviesResponse>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -20,7 +25,7 @@ class MoviesPagingSource @Inject constructor(private val moviesEntryPoint: Movie
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MoviesResponse> {
         try {
             val nextPageNumber = params.key ?: 1
-            val response = moviesEntryPoint.requestPopularMovies(page = nextPageNumber)
+            val response = handleRequestType(nextPageNumber, movieId)
             return if (response.isSuccessful) {
                 LoadResult.Page(
                     data = response.body()!!.moviesList,
@@ -56,6 +61,17 @@ class MoviesPagingSource @Inject constructor(private val moviesEntryPoint: Movie
             null
         } else {
             currKey + 1
+        }
+    }
+
+    private suspend fun handleRequestType(page: Int, id: Int = -1): Response<EntryPointMoviesResponse>{
+        return when(moviesRequestType){
+            MoviesRequestType.POPULAR -> moviesEntryPoint.requestPopularMovies(page = page)
+            MoviesRequestType.TOP_RATED -> moviesEntryPoint.requestTopRatedMovies(page = page)
+            MoviesRequestType.NOW_PLAYING -> moviesEntryPoint.requestNowPlayingMovies(page = page)
+            MoviesRequestType.UPCOMING -> moviesEntryPoint.requestUpcomingMovies(page = page)
+            MoviesRequestType.RECOMMENDATIONS -> moviesEntryPoint.requestRecommendationsForMovie(page = page, id = id)
+            MoviesRequestType.SIMILAR -> moviesEntryPoint.requestSimilarMovies(page = page, id = id)
         }
     }
 }

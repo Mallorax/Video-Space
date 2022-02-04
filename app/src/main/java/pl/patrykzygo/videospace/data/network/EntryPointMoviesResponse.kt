@@ -2,7 +2,7 @@ package pl.patrykzygo.videospace.data.network
 
 import com.google.gson.annotations.SerializedName
 
-data class PopularMoviesResponse(
+data class EntryPointMoviesResponse(
 
     @SerializedName("page")
     val page: Int,

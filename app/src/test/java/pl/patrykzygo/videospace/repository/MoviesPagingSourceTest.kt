@@ -5,21 +5,17 @@ import androidx.paging.PagingSource
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.ArgumentMatchers.*
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import pl.patrykzygo.videospace.data.network.MoviesResponse
-import pl.patrykzygo.videospace.data.network.PopularMoviesResponse
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
 import pl.patrykzygo.videospace.fakeCorrectMoviesResponse
 import pl.patrykzygo.videospace.fakeHttpErrorResponse
 import retrofit2.HttpException
-import retrofit2.Response
 
 @ExperimentalCoroutinesApi
 class MoviesPagingSourceTest {
