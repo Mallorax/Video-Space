@@ -2,4 +2,7 @@
 <resources>
     <dimen name="small_margin">8dp</dimen>
     <dimen name="section_text_size">24sp</dimen>
+    <dimen name="bottom_sheet_icon_dims">36dp</dimen>
+    <dimen name="bottom_sheet_option_text_size">18sp</dimen>
+    <dimen name="bottom_sheet_title_texst_size">32sp</dimen>
 </resources>

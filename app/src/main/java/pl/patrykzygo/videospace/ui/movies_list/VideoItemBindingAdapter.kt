@@ -13,7 +13,7 @@ fun bindMoviePoster(imageView: ImageView, posterPath: String) {
     if (posterPath.isNotEmpty()){
         Glide.with(imageView)
             .load(Constants.POSTERS_BASE_URL + posterPath)
-            .error(R.drawable.ic_baseline_no_photography_24)
+            .error(R.drawable.ic_baseline_no_photography)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(imageView)
     }

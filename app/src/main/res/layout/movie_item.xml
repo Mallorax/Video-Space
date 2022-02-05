@@ -27,8 +27,8 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="110dp"
-                android:layout_height="140dp"
+                android:layout_width="100dp"
+                android:layout_height="150dp"
                 android:contentDescription="@string/film_thumbnail_string"
                 android:scaleType="centerCrop"
                 app:moviePoster="@{movie.posterPath}"
@@ -44,6 +44,17 @@
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:textSize="14sp"
                 tools:text="Title" />
+
+            <ImageView
+                android:id="@+id/image_view_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_gravity="end"
+                android:contentDescription="@string/film_thumbnail_string"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_baseline_more_vert" />
 
 
         </LinearLayout>

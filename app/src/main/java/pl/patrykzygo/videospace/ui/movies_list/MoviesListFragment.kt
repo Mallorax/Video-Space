@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.databinding.FragmentMoviesListBinding
 import pl.patrykzygo.videospace.repository.MoviesRequestType
+import pl.patrykzygo.videospace.ui.movie_dialogs.MovieModalBottomSheet
 
 @AndroidEntryPoint
 class MoviesListFragment : Fragment() {
@@ -26,7 +27,7 @@ class MoviesListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMoviesListBinding.inflate(inflater)
+        _binding = FragmentMoviesListBinding.inflate(inflater, container, false)
         val requestType = arguments?.get("request_type") as MoviesRequestType?
         requestType?.let { viewModel.setRequestType(it) }
         return binding.root
@@ -55,10 +56,8 @@ class MoviesListFragment : Fragment() {
     private fun createRecyclerViewAdapter(): MoviesListRecyclerAdapter {
         val adapter =
             MoviesListRecyclerAdapter(MoviesListRecyclerAdapter.OnMovieClickListener { movie, view ->
-                if (movie != null) {
-                    Snackbar.make(view, "Movie: ${movie.title} was clicked", Snackbar.LENGTH_LONG)
-                        .show()
-                }
+                val modalBottomSheet = MovieModalBottomSheet()
+                modalBottomSheet.show(parentFragmentManager, MovieModalBottomSheet.TAG)
             })
         return adapter
     }
