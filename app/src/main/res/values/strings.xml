@@ -5,4 +5,6 @@
     <string name="main_app_label">Video Space</string>
     <string name="top_rated_section_label_string">Top Rated</string>
     <string name="default_movies_list_label">List:</string>
+    <string name="more_information_bottom_sheet">More information</string>
+    <string name="like_bottom_sheet">Like</string>
 </resources>

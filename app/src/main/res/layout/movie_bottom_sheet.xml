@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/info_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            android:src="@drawable/ic_baseline_info_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            android:text="@string/more_information_bottom_sheet"
+            app:layout_constraintBottom_toBottomOf="@id/info_image_view"
+            app:layout_constraintStart_toEndOf="@id/info_image_view"
+            app:layout_constraintTop_toTopOf="@id/info_image_view" />
+
+        <ImageView
+            android:id="@+id/favourite_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            android:src="@drawable/ic_baseline_favorite_border_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/info_image_view" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            android:text="@string/like_bottom_sheet"
+            app:layout_constraintStart_toEndOf="@id/favourite_image_view"
+            app:layout_constraintTop_toTopOf="@id/favourite_image_view"
+            app:layout_constraintBottom_toBottomOf="@id/favourite_image_view"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
