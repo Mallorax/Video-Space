@@ -56,7 +56,10 @@ class MoviesListFragment : Fragment() {
     private fun createRecyclerViewAdapter(): MoviesListRecyclerAdapter {
         val adapter =
             MoviesListRecyclerAdapter(MoviesListRecyclerAdapter.OnMovieClickListener { movie, view ->
+                val bundle = Bundle()
+                bundle.putParcelable("movie", movie)
                 val modalBottomSheet = MovieModalBottomSheet()
+                modalBottomSheet.arguments = bundle
                 modalBottomSheet.show(parentFragmentManager, MovieModalBottomSheet.TAG)
             })
         return adapter

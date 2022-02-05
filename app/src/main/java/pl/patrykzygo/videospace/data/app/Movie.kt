@@ -1,5 +1,9 @@
 package pl.patrykzygo.videospace.data.app
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class Movie(
     val adult: Boolean,
     val backdropPath: String,
@@ -15,6 +19,6 @@ data class Movie(
     val video: Boolean,
     val voteAverage: Double,
     val voteCount: Int
-) {
+) : Parcelable {
 
 }

@@ -2,6 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="pl.patrykzygo.videospace.ui.movie_dialogs.MovieBottomSheetViewModel" />
+    </data>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         style="@style/AppBottomSheetDialogTheme"
         android:layout_width="match_parent"
@@ -19,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin"
                 android:lines="2"
-                android:text="Title"
+                android:text="@{viewModel.movie.title}"
                 android:textSize="@dimen/bottom_sheet_title_texst_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
