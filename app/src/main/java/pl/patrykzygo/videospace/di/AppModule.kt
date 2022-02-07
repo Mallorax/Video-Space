@@ -8,6 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import pl.patrykzygo.videospace.data.local.GenreDao
+import pl.patrykzygo.videospace.data.local.MoviesDao
 import pl.patrykzygo.videospace.data.local.VideoSpaceDatabase
 import pl.patrykzygo.videospace.networking.GenresEntryPoint
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
@@ -57,5 +58,11 @@ object AppModule {
     @Provides
     fun provideGenresDao(db: VideoSpaceDatabase): GenreDao {
         return db.genreDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideMoviesDao(db: VideoSpaceDatabase): MoviesDao {
+        return db.moviesDao()
     }
 }

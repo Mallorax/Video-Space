@@ -67,10 +67,11 @@ class GenreDaoTest {
         val genre2 = GenreEntity(2, "genre2")
         val genre3 = GenreEntity(3, "genre3")
         val genre4 = GenreEntity(4, "genre4")
-        val genres = listOf(genre1, genre2, genre3)
+        val genres = mutableListOf(genre1, genre2, genre3)
         dao.insertGenres(*genres.toTypedArray(), genre4)
         val requestedGenres = dao.getGenres()
-        assertThat(requestedGenres).containsAtLeastElementsIn(genres)
+        genres.add(genre4)
+        assertThat(requestedGenres).containsExactlyElementsIn(genres)
     }
 
     @Test
