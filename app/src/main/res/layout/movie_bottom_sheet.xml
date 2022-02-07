@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="pl.patrykzygo.videospace.ui.movie_dialogs.MovieBottomSheetViewModel" />
@@ -44,6 +45,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/small_margin"
+                android:layout_marginEnd="@dimen/small_margin"
                 android:background="?attr/selectableItemBackground"
                 android:text="@string/more_information_bottom_sheet"
                 android:textSize="@dimen/bottom_sheet_option_text_size"
@@ -59,7 +61,6 @@
                 android:layout_margin="@dimen/small_margin"
                 android:layout_marginBottom="16dp"
                 android:src="@drawable/ic_baseline_favorite_border"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/info_image_view"
                 app:layout_constraintStart_toStartOf="@id/info_image_view"
                 app:layout_constraintTop_toBottomOf="@id/info_image_view" />
@@ -69,6 +70,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/small_margin"
+                android:layout_marginEnd="@dimen/small_margin"
                 android:background="?attr/selectableItemBackground"
                 android:text="@string/like_bottom_sheet"
                 android:textSize="@dimen/bottom_sheet_option_text_size"
@@ -76,6 +78,31 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/favourite_image_view"
                 app:layout_constraintTop_toTopOf="@id/favourite_image_view" />
+
+            <ImageView
+                android:id="@+id/archive_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin"
+                android:src="@drawable/ic_baseline_archive"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/favourite_image_view"
+                app:layout_constraintStart_toStartOf="@id/favourite_image_view"
+                app:layout_constraintTop_toBottomOf="@id/favourite_image_view" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/watch_later_list_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:background="?attr/selectableItemBackground"
+                android:text="@string/add_to_watch_later_text"
+                android:textSize="@dimen/bottom_sheet_option_text_size"
+                app:layout_constraintBottom_toBottomOf="@id/archive_image_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/archive_image_view"
+                app:layout_constraintTop_toTopOf="@id/archive_image_view"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

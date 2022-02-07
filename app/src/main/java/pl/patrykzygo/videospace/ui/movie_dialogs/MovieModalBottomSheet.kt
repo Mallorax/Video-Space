@@ -13,7 +13,7 @@ import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.MovieBottomSheetBinding
 
-class MovieModalBottomSheet: BottomSheetDialogFragment() {
+class MovieModalBottomSheet : BottomSheetDialogFragment() {
 
     private var _binding: MovieBottomSheetBinding? = null
     private val binding get() = _binding!!
@@ -24,7 +24,6 @@ class MovieModalBottomSheet: BottomSheetDialogFragment() {
     companion object {
         const val TAG = "MovieModalBottomSheet"
     }
-
 
 
     override fun onCreateView(
@@ -45,27 +44,72 @@ class MovieModalBottomSheet: BottomSheetDialogFragment() {
         setListeners()
     }
 
-    private fun observeViewModelState(){
+    private fun observeViewModelState() {
         viewModel.isMovieSet.observe(viewLifecycleOwner, Observer {
-            if (!it){
+            if (!it) {
                 dismiss()
             }
         })
+
+        viewModel.movie.observe(viewLifecycleOwner, Observer {
+            updateIsFavouriteImage(it.isFavourite)
+            updateIsOnWatchLaterListImage(it.isOnWatchLater)
+
+        })
     }
 
-    private fun setListeners(){
+
+    private fun setListeners() {
         binding.likeTextView.setOnClickListener {
-            isFavourite = if (isFavourite){
-                binding.favouriteImageView.setImageDrawable(getDrawable(requireContext(), R.drawable.ic_baseline_favorite_border))
-                false
-            }else{
-                binding.favouriteImageView.setImageDrawable(getDrawable(requireContext(), R.drawable.ic_baseline_favorite))
-                true
-            }
+            viewModel.changeIsMovieLiked()
         }
 
         binding.moreInfoTextView.setOnClickListener {
             Log.v(TAG, "clicky click")
+        }
+
+        binding.watchLaterListTextView.setOnClickListener {
+            viewModel.changeIsMovieSavedToWatchLater()
+        }
+    }
+
+    private fun updateIsFavouriteImage(isFavourite: Boolean) {
+        if (isFavourite) {
+            binding.favouriteImageView.setImageDrawable(
+                getDrawable(
+                    requireContext(),
+                    R.drawable.ic_baseline_favorite
+                )
+            )
+        } else {
+            binding.favouriteImageView.setImageDrawable(
+                getDrawable(
+                    requireContext(),
+                    R.drawable.ic_baseline_favorite_border
+                )
+            )
+
+        }
+    }
+
+    private fun updateIsOnWatchLaterListImage(isOnWatchLater: Boolean) {
+        if (isOnWatchLater) {
+            binding.archiveImageView.setImageDrawable(
+                getDrawable(
+                    requireContext(),
+                    R.drawable.ic_baseline_archive
+                )
+            )
+            binding.watchLaterListTextView.text = getString(R.string.add_to_watch_later_text)
+        } else {
+            binding.archiveImageView.setImageDrawable(
+                getDrawable(
+                    requireContext(),
+                    R.drawable.ic_baseline_unarchive
+                )
+            )
+            binding.watchLaterListTextView.text =
+                getString(R.string.remove_from_watch_later_text)
         }
     }
 
