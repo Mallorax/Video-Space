@@ -2,7 +2,7 @@ package pl.patrykzygo.videospace
 
 import okhttp3.MediaType
 import okhttp3.ResponseBody
-import pl.patrykzygo.videospace.data.network.MoviesResponse
+import pl.patrykzygo.videospace.data.network.MovieResponse
 import pl.patrykzygo.videospace.data.network.EntryPointMoviesResponse
 import retrofit2.Response
 
@@ -26,11 +26,11 @@ fun fakeHttpErrorResponse(): Response<EntryPointMoviesResponse> {
     )
 }
 
-private fun fakeMoviesResponseList(page: Int): List<MoviesResponse> {
-    val moviesList = mutableListOf<MoviesResponse>()
+private fun fakeMoviesResponseList(page: Int): List<MovieResponse> {
+    val moviesList = mutableListOf<MovieResponse>()
     for (i in 0..10) {
         moviesList.add(
-            MoviesResponse(
+            MovieResponse(
                 false, "frew",
                 listOf(1, 2, 3, 4),
                 page * 10 + i,

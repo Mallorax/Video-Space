@@ -16,4 +16,7 @@ interface MoviesDao {
 
     @Query("SELECT * FROM movies")
     suspend fun getAllFavourites(): List<MovieEntity>
+
+    @Query("SELECT * FROM movies WHERE movie_id = :id")
+    suspend fun getFavourite(id: Int): MovieEntity
 }

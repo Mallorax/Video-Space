@@ -3,14 +3,14 @@ package pl.patrykzygo.videospace.repository
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import pl.patrykzygo.videospace.data.network.EntryPointMoviesResponse
-import pl.patrykzygo.videospace.data.network.MoviesResponse
+import pl.patrykzygo.videospace.data.network.MovieResponse
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
 import retrofit2.HttpException
 import retrofit2.Response
 import javax.inject.Inject
 
 class MoviesPagingSource @Inject constructor(private val moviesEntryPoint: MoviesEntryPoint) :
-    PagingSource<Int, MoviesResponse>() {
+    PagingSource<Int, MovieResponse>() {
 
     private var moviesRequestType = MoviesRequestType.POPULAR
     var movieId = -1
@@ -19,20 +19,20 @@ class MoviesPagingSource @Inject constructor(private val moviesEntryPoint: Movie
         this.moviesRequestType = moviesRequestType
     }
 
-    override fun getRefreshKey(state: PagingState<Int, MoviesResponse>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, MovieResponse>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MoviesResponse> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieResponse> {
         try {
             val nextPageNumber = params.key ?: 1
             val response = handleRequestType(nextPageNumber, movieId)
             return if (response.isSuccessful) {
                 LoadResult.Page(
-                    data = response.body()!!.moviesList,
+                    data = response.body()!!.movieList,
                     prevKey = previousKey(response.body()!!.page),
                     nextKey = nextKey(response.body()!!.page, response.body()!!.totalPages)
                 )

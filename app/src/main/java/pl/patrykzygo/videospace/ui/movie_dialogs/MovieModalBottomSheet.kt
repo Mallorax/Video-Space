@@ -9,10 +9,12 @@ import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.MovieBottomSheetBinding
 
+@AndroidEntryPoint
 class MovieModalBottomSheet : BottomSheetDialogFragment() {
 
     private var _binding: MovieBottomSheetBinding? = null

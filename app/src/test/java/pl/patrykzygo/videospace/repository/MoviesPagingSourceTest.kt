@@ -11,7 +11,7 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
-import pl.patrykzygo.videospace.data.network.MoviesResponse
+import pl.patrykzygo.videospace.data.network.MovieResponse
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
 import pl.patrykzygo.videospace.fakeCorrectMoviesResponse
 import pl.patrykzygo.videospace.fakeHttpErrorResponse
@@ -51,7 +51,7 @@ class MoviesPagingSourceTest {
         )
 
         val expected = PagingSource.LoadResult.Page(
-            data = listOf(fakeMoviesResponse).flatMap { it.body()!!.moviesList },
+            data = listOf(fakeMoviesResponse).flatMap { it.body()!!.movieList },
             prevKey = null,
             nextKey = fakeMoviesResponse.body()?.page?.plus(1),
         )
@@ -64,7 +64,7 @@ class MoviesPagingSourceTest {
         val error = fakeHttpErrorResponse()
         Mockito.`when`(mockMoviesEntryPoint.requestPopularMovies(page = 1))
             .thenAnswer { error }
-        val expected = PagingSource.LoadResult.Error<Int, MoviesResponse>(HttpException(error))
+        val expected = PagingSource.LoadResult.Error<Int, MovieResponse>(HttpException(error))
         val actual = moviesPagingSource.load(
             PagingSource.LoadParams.Refresh(
                 key = null,
@@ -90,7 +90,7 @@ class MoviesPagingSourceTest {
             )
         )
         val expected = PagingSource.LoadResult.Page(
-            data = listOf(fakeResponse).flatMap { it.body()!!.moviesList },
+            data = listOf(fakeResponse).flatMap { it.body()!!.movieList },
             prevKey = 1,
             nextKey = null,
         )
@@ -113,7 +113,7 @@ class MoviesPagingSourceTest {
             )
         )
         val expected = PagingSource.LoadResult.Page(
-            data = listOf(fakeResponse).flatMap { it.body()!!.moviesList },
+            data = listOf(fakeResponse).flatMap { it.body()!!.movieList },
             prevKey = null,
             nextKey = 2,
         )
