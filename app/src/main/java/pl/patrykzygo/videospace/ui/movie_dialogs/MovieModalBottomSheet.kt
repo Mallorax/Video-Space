@@ -19,8 +19,6 @@ class MovieModalBottomSheet : BottomSheetDialogFragment() {
     private val binding get() = _binding!!
     private val viewModel: MovieBottomSheetViewModel by viewModels()
 
-    private var isFavourite = false
-
     companion object {
         const val TAG = "MovieModalBottomSheet"
     }
