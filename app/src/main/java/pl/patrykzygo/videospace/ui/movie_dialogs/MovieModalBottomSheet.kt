@@ -45,15 +45,13 @@ class MovieModalBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun observeViewModelState() {
-        viewModel.isMovieSet.observe(viewLifecycleOwner, Observer {
-            if (!it) {
+        viewModel.movie.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                updateIsFavouriteImage(it.isFavourite)
+                updateIsOnWatchLaterListImage(it.isOnWatchLater)
+            } else {
                 dismiss()
             }
-        })
-
-        viewModel.movie.observe(viewLifecycleOwner, Observer {
-            updateIsFavouriteImage(it.isFavourite)
-            updateIsOnWatchLaterListImage(it.isOnWatchLater)
 
         })
     }

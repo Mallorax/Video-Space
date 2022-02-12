@@ -2,8 +2,9 @@ package pl.patrykzygo.videospace
 
 import okhttp3.MediaType
 import okhttp3.ResponseBody
-import pl.patrykzygo.videospace.data.network.MovieResponse
+import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.network.EntryPointMoviesResponse
+import pl.patrykzygo.videospace.data.network.MovieResponse
 import retrofit2.Response
 
 fun fakeCorrectMoviesResponse(page: Int, numberOfPages: Int): Response<EntryPointMoviesResponse> {
@@ -23,6 +24,15 @@ fun fakeHttpErrorResponse(): Response<EntryPointMoviesResponse> {
             MediaType.parse("application/json"),
             "{\"key\":[\"somestuff\"]}"
         )
+    )
+}
+
+fun provideMovieWithId(id: Int): Movie {
+    return Movie(
+        false, "", listOf(), id,
+        "lang", "title $id", "overview",
+        0.0, "", "release date",
+        "title", false, 1.00, 323
     )
 }
 

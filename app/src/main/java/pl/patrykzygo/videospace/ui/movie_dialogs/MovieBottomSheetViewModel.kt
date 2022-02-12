@@ -9,7 +9,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import pl.patrykzygo.videospace.data.app.Movie
-import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.mapMovieToMovieEntity
 import pl.patrykzygo.videospace.repository.LocalStoreRepository
 import pl.patrykzygo.videospace.repository.RepositoryResponse
@@ -19,23 +18,20 @@ import javax.inject.Inject
 class MovieBottomSheetViewModel
 @Inject constructor(private val repository: LocalStoreRepository) : ViewModel() {
 
-    private val _isMovieSet = MutableLiveData<Boolean>()
-    val isMovieSet: LiveData<Boolean> get() = _isMovieSet
 
-    private val _movie = MutableLiveData<Movie>()
-    val movie: LiveData<Movie> get() = _movie
+    private val _movie = MutableLiveData<Movie?>()
+    val movie: LiveData<Movie?> get() = _movie
 
 
     fun setMovie(movie: Movie?) {
         if (movie != null) {
             runBlocking {
-                val favouriteResponse = checkIfIsFavourite(movie)
-                movie.isFavourite = favouriteResponse.isFavourite
-                movie.isOnWatchLater = favouriteResponse.isOnWatchLater
+                movie.isFavourite = checkIfIsFavourite(movie.id)
+                movie.isOnWatchLater = checkIfIsOnWatchLater(movie.id)
             }
             this._movie.value = movie
         } else {
-            _isMovieSet.value = false
+            this._movie.value = null
         }
     }
 
@@ -44,7 +40,7 @@ class MovieBottomSheetViewModel
         if (movie != null) {
             movie.isFavourite = !movie.isFavourite
             _movie.value = movie!!
-            viewModelScope.launch(Dispatchers.IO){
+            viewModelScope.launch(Dispatchers.IO) {
                 repository.insertFavourite(mapMovieToMovieEntity(movie))
             }
         }
@@ -55,24 +51,28 @@ class MovieBottomSheetViewModel
         if (movie != null) {
             movie.isOnWatchLater = !movie.isOnWatchLater
             _movie.value = movie!!
-            viewModelScope.launch(Dispatchers.IO){
+            viewModelScope.launch(Dispatchers.IO) {
                 repository.insertFavourite(mapMovieToMovieEntity(movie))
             }
         }
     }
 
-    private suspend fun checkIfIsFavourite(movie: Movie): MovieEntity {
-        val response = repository.getSpecificFavourite(movie.id)
+    private suspend fun checkIfIsFavourite(id: Int): Boolean {
+        var isFavourite = false
+        val response = repository.getSpecificFavourite(id)
         if (response.status == RepositoryResponse.Status.SUCCESS) {
-            if (response.data != null) {
-                return response.data!!
-            } else {
-                return MovieEntity(-1, false, isOnWatchLater = false)
-            }
-        } else {
-            return MovieEntity(-1, false, isOnWatchLater = false)
+            isFavourite = response.data!!.isFavourite
         }
+        return isFavourite
+    }
 
+    private suspend fun checkIfIsOnWatchLater(id: Int): Boolean {
+        var isOnWatchLater = false
+        val response = repository.getSpecificFavourite(id)
+        if (response.status == RepositoryResponse.Status.SUCCESS) {
+            isOnWatchLater = response.data!!.isOnWatchLater
+        }
+        return isOnWatchLater
     }
 
 
