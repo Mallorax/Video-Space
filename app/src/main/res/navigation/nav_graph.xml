@@ -37,6 +37,11 @@
             android:name="movie"
             app:argType="pl.patrykzygo.videospace.data.app.Movie" />
 
+        <action
+            android:id="@+id/action_movie_details_self"
+            app:launchSingleTop="true"
+            app:destination="@id/movie_details" />
+
     </fragment>
 
 </navigation>

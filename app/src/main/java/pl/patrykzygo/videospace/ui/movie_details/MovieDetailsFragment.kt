@@ -12,8 +12,10 @@ import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
+import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.FragmentMovieDetailsBinding
 import pl.patrykzygo.videospace.repository.MoviesRequestType
+import pl.patrykzygo.videospace.ui.DefaultListsFragmentDirections
 import pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment
 
 @AndroidEntryPoint
@@ -31,6 +33,13 @@ class MovieDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
+        parentFragmentManager.setFragmentResultListener("movieResult", this) { requestKey, bundle ->
+            val movie = bundle.getParcelable<Movie>("movie")
+            if (movie != null) {
+                val action = MovieDetailsFragmentDirections.actionMovieDetailsSelf(movie)
+                findNavController().navigate(action)
+            }
+        }
         setUpAppBar()
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
