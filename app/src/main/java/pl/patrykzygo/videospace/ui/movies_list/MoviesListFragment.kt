@@ -32,7 +32,8 @@ class MoviesListFragment : Fragment() {
     ): View {
         _binding = FragmentMoviesListBinding.inflate(inflater, container, false)
         val requestType = arguments?.get("request_type") as MoviesRequestType?
-        requestType?.let { viewModel.setRequestType(it) }
+        val movieId = arguments?.get("movieId") as Int?
+        requestType?.let { viewModel.setRequestType(it, movieId ?: -1) }
 
 
         return binding.root

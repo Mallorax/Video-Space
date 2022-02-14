@@ -46,18 +46,19 @@ interface MoviesEntryPoint {
 
     @GET("{id}/recommendations")
     suspend fun requestRecommendationsForMovie(
+        @Path("id") id: Int,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
         @Query("language") language: String = "en-US",
-        @Query("page") page: Int = 1,
-        @Path("id") id: Int
+        @Query("page") page: Int = 1
+
     ): Response<EntryPointMoviesResponse>
 
     @GET("{id}/similar")
     suspend fun requestSimilarMovies(
+        @Path("id") id: Int,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
         @Query("language") language: String = "en-US",
-        @Query("page") page: Int = 1,
-        @Path("id") id: Int
+        @Query("page") page: Int = 1
     ): Response<EntryPointMoviesResponse>
 
     @GET("{id}")

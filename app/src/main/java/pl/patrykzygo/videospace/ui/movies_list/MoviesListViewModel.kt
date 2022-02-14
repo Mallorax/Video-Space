@@ -16,8 +16,8 @@ import javax.inject.Inject
 class MoviesListViewModel @Inject constructor(private val repo: MoviesPagingSource) : ViewModel() {
 
 
-    fun setRequestType(requestType: MoviesRequestType){
-        repo.setMoviesRequestType(requestType)
+    fun setRequestType(requestType: MoviesRequestType, id: Int = -1){
+        repo.setMoviesRequestType(requestType, id)
     }
 
     fun getMovies(): LiveData<PagingData<Movie>> {

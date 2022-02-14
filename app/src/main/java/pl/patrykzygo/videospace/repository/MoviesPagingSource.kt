@@ -15,8 +15,9 @@ class MoviesPagingSource @Inject constructor(private val moviesEntryPoint: Movie
     private var moviesRequestType = MoviesRequestType.POPULAR
     var movieId = -1
 
-    fun setMoviesRequestType(moviesRequestType: MoviesRequestType){
+    fun setMoviesRequestType(moviesRequestType: MoviesRequestType, movieId: Int = -1){
         this.moviesRequestType = moviesRequestType
+        this.movieId = movieId
     }
 
     override fun getRefreshKey(state: PagingState<Int, MovieResponse>): Int? {

@@ -28,13 +28,6 @@ fun bindAverageVote(textView: TextView, voteAverage: Double) {
     textView.text = averageVote
 }
 
-@BindingAdapter("moviePopularity")
-fun bindMoviePopularity(textView: TextView, moviePopularity: Double) {
-    val popularityValue = "%.${2}f".format(moviePopularity).toDouble()
-    val popularity = "Popularity: $popularityValue"
-    textView.text = popularity
-}
-
 @BindingAdapter("movieVoteCount")
 fun bindVoteCount(textView: TextView, voteCount: Int) {
     val votes = "Vote count: $voteCount"
