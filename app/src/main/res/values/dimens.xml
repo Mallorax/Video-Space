@@ -5,4 +5,5 @@
     <dimen name="bottom_sheet_icon_dims">36dp</dimen>
     <dimen name="bottom_sheet_option_text_size">27sp</dimen>
     <dimen name="bottom_sheet_title_texst_size">32sp</dimen>
+    <dimen name="selector_side_padding">8dp</dimen>
 </resources>

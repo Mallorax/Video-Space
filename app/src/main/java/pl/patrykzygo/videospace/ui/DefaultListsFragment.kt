@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -29,10 +28,9 @@ class DefaultListsFragment : Fragment() {
     ): View? {
         _binding = FragmentDefaultListsBinding.inflate(inflater)
         setUpAppBar()
-        parentFragmentManager.setFragmentResultListener("movieResult", this){
-            requestKey, bundle ->
+        parentFragmentManager.setFragmentResultListener("movieResult", this) { requestKey, bundle ->
             val movie = bundle.getParcelable<Movie>("movie")
-            if (movie != null){
+            if (movie != null) {
                 val action = DefaultListsFragmentDirections.actionMainFragmentToMovieDetails(movie)
                 findNavController().navigate(action)
             }
