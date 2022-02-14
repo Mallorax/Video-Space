@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -33,6 +34,7 @@ class MovieModalBottomSheet : BottomSheetDialogFragment() {
     ): View? {
         _binding = MovieBottomSheetBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         val movie = arguments?.getParcelable<Movie>("movie")
         viewModel.setMovie(movie)
         observeViewModelState()
@@ -41,7 +43,8 @@ class MovieModalBottomSheet : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setListeners()
+        val movie = arguments?.getParcelable<Movie>("movie")
+        setListeners(movie)
     }
 
     private fun observeViewModelState() {
@@ -57,13 +60,16 @@ class MovieModalBottomSheet : BottomSheetDialogFragment() {
     }
 
 
-    private fun setListeners() {
+    private fun setListeners(movie: Movie?) {
         binding.likeTextView.setOnClickListener {
             viewModel.changeIsMovieLiked()
         }
 
         binding.moreInfoTextView.setOnClickListener {
-            Log.v(TAG, "clicky click")
+            val bundle = Bundle()
+            bundle.putParcelable("movie", movie)
+            parentFragmentManager.setFragmentResult("movieResult", bundle)
+            dismiss()
         }
 
         binding.watchLaterListTextView.setOnClickListener {

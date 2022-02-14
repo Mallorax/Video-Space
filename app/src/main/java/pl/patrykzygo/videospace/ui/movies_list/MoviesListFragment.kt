@@ -5,10 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.FragmentMoviesListBinding
 import pl.patrykzygo.videospace.repository.MoviesRequestType
 import pl.patrykzygo.videospace.ui.movie_dialogs.MovieModalBottomSheet
@@ -30,6 +33,8 @@ class MoviesListFragment : Fragment() {
         _binding = FragmentMoviesListBinding.inflate(inflater, container, false)
         val requestType = arguments?.get("request_type") as MoviesRequestType?
         requestType?.let { viewModel.setRequestType(it) }
+
+
         return binding.root
     }
 
