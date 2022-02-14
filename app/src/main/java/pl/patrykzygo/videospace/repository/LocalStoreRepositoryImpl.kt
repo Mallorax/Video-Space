@@ -40,7 +40,12 @@ class LocalStoreRepositoryImpl @Inject constructor(
     override suspend fun getSpecificFavourite(id: Int): RepositoryResponse<MovieEntity> {
         return try {
             val movie = moviesDao.getFavourite(id)
-            RepositoryResponse.success(movie)
+            if (movie == null){
+                RepositoryResponse.error("Mo such element")
+            }else {
+                RepositoryResponse.success(movie)
+            }
+
         }catch (e: Exception){
             RepositoryResponse.error(e.message ?: "")
         }
