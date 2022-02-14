@@ -32,6 +32,7 @@
                 android:contentDescription="@string/film_thumbnail_string"
                 android:scaleType="centerCrop"
                 app:moviePoster="@{movie.posterPath}"
+                app:layout_constraintDimensionRatio="2:3"
                 app:srcCompat="@drawable/ic_launcher_background" />
 
 

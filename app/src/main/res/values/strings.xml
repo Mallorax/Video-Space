@@ -9,4 +9,11 @@
     <string name="like_bottom_sheet">Like</string>
     <string name="add_to_watch_later_text">Add to watch later</string>
     <string name="remove_from_watch_later_text">Remove from watch later</string>
+
+    <string name="lorem_ipsum_long">Sed ut perspiciatis unde omnis iste natus
+        error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem
+        quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
+        adipisci velitur?</string>
+    <string name="movie_poster">movie_poster</string>
+
 </resources>

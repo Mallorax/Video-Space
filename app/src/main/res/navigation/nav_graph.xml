@@ -17,4 +17,10 @@
         android:label="@string/main_app_label"
         tools:layout="@layout/fragment_movies_list"/>
 
+    <fragment
+        android:id="@+id/movies_modal_bottom_sheet"
+        android:name="pl.patrykzygo.videospace.ui.movie_dialogs.MovieModalBottomSheet"
+        android:label="@string/main_app_label"
+        tools:layout="@layout/movie_bottom_sheet"/>
+
 </navigation>
