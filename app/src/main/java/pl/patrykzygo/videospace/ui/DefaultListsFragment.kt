@@ -19,7 +19,7 @@ import pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment
 class DefaultListsFragment : Fragment() {
 
     private var _binding: FragmentDefaultListsBinding? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,7 +27,6 @@ class DefaultListsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentDefaultListsBinding.inflate(inflater)
-        setUpAppBar()
         parentFragmentManager.setFragmentResultListener("movieResult", this) { _, bundle ->
             val movie = bundle.getParcelable<Movie>("movie")
             if (movie != null) {
@@ -40,48 +39,53 @@ class DefaultListsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        addMoviesListFragmentToContainer(
+        setUpAppBar()
+        addFragmentToContainer(
             binding.mostPopularMoviesContainer.id,
             MoviesRequestType.POPULAR,
-            "Most popular"
+            "Most popular",
+            MoviesListFragment()
         )
-        addMoviesListFragmentToContainer(
+        addFragmentToContainer(
             binding.topRatedMoviesContainer.id,
             MoviesRequestType.TOP_RATED,
-            "Top rated"
+            "Top rated",
+            MoviesListFragment()
         )
 
-        addMoviesListFragmentToContainer(
+        addFragmentToContainer(
             binding.nowPlayingMoviesContainer.id,
             MoviesRequestType.NOW_PLAYING,
-            "Now playing"
+            "Now playing",
+            MoviesListFragment()
         )
 
-        addMoviesListFragmentToContainer(
+        addFragmentToContainer(
             binding.upcomingMoviesContainer.id,
             MoviesRequestType.UPCOMING,
-            "Upcoming"
+            "Upcoming",
+            MoviesListFragment()
         )
     }
 
-    private fun addMoviesListFragmentToContainer(
+    private fun addFragmentToContainer(
         containerId: Int,
         contentType: MoviesRequestType,
-        listLabel: String
+        listLabel: String,
+        fragment: Fragment
     ) {
         val fragmentManager = parentFragmentManager
         fragmentManager.commit {
             val args = Bundle()
             args.putSerializable("request_type", contentType)
             args.putString("list_label", listLabel)
-            val fragment = MoviesListFragment()
             fragment.arguments = args
             replace(containerId, fragment)
             setReorderingAllowed(true)
         }
     }
 
-    private fun setUpAppBar() {
+    fun setUpAppBar() {
         val navController = findNavController()
         val appBarConfig = AppBarConfiguration(navController.graph)
         binding.appBar.toolbar.setupWithNavController(navController, appBarConfig)

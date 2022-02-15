@@ -19,10 +19,7 @@ import org.hamcrest.Matcher
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import pl.patrykzygo.videospace.R
-import pl.patrykzygo.videospace.UICoroutineRule
-import pl.patrykzygo.videospace.launchFragmentInHiltContainer
-import pl.patrykzygo.videospace.provideMovieWithIdUi
+import pl.patrykzygo.videospace.*
 
 
 @MediumTest
@@ -64,21 +61,4 @@ class MoviesListFragmentTest {
 
     }
 
-    private fun clickChildWithId(id: Int): ViewAction {
-        return object : ViewAction {
-            override fun getConstraints(): Matcher<View> {
-                return withEffectiveVisibility(Visibility.VISIBLE)
-            }
-
-            override fun getDescription(): String {
-                return "Description"
-            }
-
-            override fun perform(uiController: UiController?, view: View?) {
-                val img = view?.findViewById<View>(id)
-                img?.performClick()
-            }
-        }
-
-    }
 }
