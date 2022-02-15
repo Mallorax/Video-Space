@@ -26,6 +26,7 @@ class MovieBottomSheetViewModelTest {
     @get:Rule
     var taskExecutorRule = InstantTaskExecutorRule()
 
+
     @get:Rule
     var coroutineRule = MainCoroutineRule()
 

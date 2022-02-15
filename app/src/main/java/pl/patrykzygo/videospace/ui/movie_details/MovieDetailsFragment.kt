@@ -15,7 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.FragmentMovieDetailsBinding
 import pl.patrykzygo.videospace.repository.MoviesRequestType
-import pl.patrykzygo.videospace.ui.DefaultListsFragmentDirections
 import pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment
 
 @AndroidEntryPoint
@@ -33,7 +32,7 @@ class MovieDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
-        parentFragmentManager.setFragmentResultListener("movieResult", this) { requestKey, bundle ->
+        parentFragmentManager.setFragmentResultListener("movieResult", this) { _, bundle ->
             val movie = bundle.getParcelable<Movie>("movie")
             if (movie != null) {
                 val action = MovieDetailsFragmentDirections.actionMovieDetailsSelf(movie)
@@ -53,7 +52,7 @@ class MovieDetailsFragment : Fragment() {
         viewModel.setMovie(args.movie)
     }
 
-    private fun setUpFragmentContainers(){
+    private fun setUpFragmentContainers() {
         binding.recommendedMoviesContainer.visibility = View.VISIBLE
         addMoviesListFragmentToContainer(
             binding.recommendedMoviesContainer.id,

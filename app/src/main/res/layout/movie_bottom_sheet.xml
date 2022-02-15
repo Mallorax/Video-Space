@@ -10,6 +10,7 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/modal_bottom_sheet_root_layout"
         style="@style/AppBottomSheetDialogTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -102,7 +103,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/archive_image_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/archive_image_view"
-                app:layout_constraintTop_toTopOf="@id/archive_image_view"/>
+                app:layout_constraintTop_toTopOf="@id/archive_image_view" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

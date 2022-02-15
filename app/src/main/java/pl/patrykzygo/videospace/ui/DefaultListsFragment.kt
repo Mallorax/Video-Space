@@ -28,7 +28,7 @@ class DefaultListsFragment : Fragment() {
     ): View? {
         _binding = FragmentDefaultListsBinding.inflate(inflater)
         setUpAppBar()
-        parentFragmentManager.setFragmentResultListener("movieResult", this) { requestKey, bundle ->
+        parentFragmentManager.setFragmentResultListener("movieResult", this) { _, bundle ->
             val movie = bundle.getParcelable<Movie>("movie")
             if (movie != null) {
                 val action = DefaultListsFragmentDirections.actionMainFragmentToMovieDetails(movie)
