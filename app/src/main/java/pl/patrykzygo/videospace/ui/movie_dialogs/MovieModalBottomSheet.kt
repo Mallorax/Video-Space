@@ -35,7 +35,6 @@ open class MovieModalBottomSheet : BottomSheetDialogFragment() {
     ): View? {
         _binding = MovieBottomSheetBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[MovieBottomSheetViewModel::class.java]
-        binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         val movie = arguments?.getParcelable<Movie>("movie")
         viewModel.setMovie(movie)

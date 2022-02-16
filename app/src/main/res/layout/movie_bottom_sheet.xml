@@ -2,13 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-        <variable
-            name="viewModel"
-            type="pl.patrykzygo.videospace.ui.movie_dialogs.MovieBottomSheetViewModel" />
-    </data>
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/modal_bottom_sheet_root_layout"
         style="@style/AppBottomSheetDialogTheme"
@@ -18,6 +11,7 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottom_sheet_constraint_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -27,7 +21,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin"
                 android:lines="2"
-                android:text="@{viewModel.movie.title}"
                 android:textSize="@dimen/bottom_sheet_title_texst_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -46,6 +39,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/small_margin"
+                android:clickable="true"
                 android:layout_marginEnd="@dimen/small_margin"
                 android:background="?attr/selectableItemBackground"
                 android:text="@string/more_information_bottom_sheet"
@@ -72,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/small_margin"
                 android:layout_marginEnd="@dimen/small_margin"
+                android:clickable="true"
                 android:background="?attr/selectableItemBackground"
                 android:text="@string/like_bottom_sheet"
                 android:textSize="@dimen/bottom_sheet_option_text_size"
@@ -97,6 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/small_margin"
                 android:layout_marginEnd="@dimen/small_margin"
+                android:clickable="true"
                 android:background="?attr/selectableItemBackground"
                 android:text="@string/add_to_watch_later_text"
                 android:textSize="@dimen/bottom_sheet_option_text_size"

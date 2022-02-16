@@ -20,9 +20,9 @@ import org.junit.Rule
 import org.junit.Test
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.UICoroutineRule
-import pl.patrykzygo.videospace.launchFragmentInHiltContainer
 import pl.patrykzygo.videospace.repository.MoviesPagingSource
 import pl.patrykzygo.videospace.util.clickChildWithId
+import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
 import pl.patrykzygo.videospace.util.provideMovieWithIdUi
 import javax.inject.Inject
 import javax.inject.Named
@@ -53,7 +53,7 @@ class MoviesListFragmentTest {
     }
 
     @Test
-    fun testIsLabelSetProperly(){
+    fun testIsLabelSetProperly() {
         var given: String? = null
         val expected = "test"
         launchFragmentInHiltContainer<MoviesListFragment> {
