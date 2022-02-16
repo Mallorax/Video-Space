@@ -41,4 +41,5 @@ object TestAppModule {
     fun provideFakeMoviesSource(): MoviesPagingSource {
         return FakeMoviesPagingSource()
     }
+
 }

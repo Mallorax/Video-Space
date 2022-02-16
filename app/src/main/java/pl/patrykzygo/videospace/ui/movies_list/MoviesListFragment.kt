@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.databinding.FragmentMoviesListBinding
 import pl.patrykzygo.videospace.ui.movie_dialogs.MovieModalBottomSheet
@@ -16,7 +17,7 @@ class MoviesListFragment : Fragment() {
 
     private var _binding: FragmentMoviesListBinding? = null
     val binding get() = _binding!!
-    private val viewModel: MoviesListViewModel by viewModels()
+    lateinit var viewModel: MoviesListViewModel
     val adapter = createRecyclerViewAdapter()
 
 
@@ -26,6 +27,7 @@ class MoviesListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMoviesListBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this)[MoviesListViewModel::class.java]
         val requestType = arguments?.getString("request_type")
         val movieId = arguments?.getInt("movieId")
         requestType?.let { viewModel.setRequestType(it, movieId ?: -1) }
