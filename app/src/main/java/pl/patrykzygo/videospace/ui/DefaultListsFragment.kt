@@ -43,27 +43,23 @@ class DefaultListsFragment : Fragment() {
         addFragmentToContainer(
             binding.mostPopularMoviesContainer.id,
             MoviesRequestType.POPULAR,
-            "Most popular",
             MoviesListFragment()
         )
         addFragmentToContainer(
             binding.topRatedMoviesContainer.id,
             MoviesRequestType.TOP_RATED,
-            "Top rated",
             MoviesListFragment()
         )
 
         addFragmentToContainer(
             binding.nowPlayingMoviesContainer.id,
             MoviesRequestType.NOW_PLAYING,
-            "Now playing",
             MoviesListFragment()
         )
 
         addFragmentToContainer(
             binding.upcomingMoviesContainer.id,
             MoviesRequestType.UPCOMING,
-            "Upcoming",
             MoviesListFragment()
         )
     }
@@ -71,14 +67,12 @@ class DefaultListsFragment : Fragment() {
     fun addFragmentToContainer(
         containerId: Int,
         contentType: String,
-        listLabel: String,
         fragment: Fragment
     ) {
         val fragmentManager = parentFragmentManager
         fragmentManager.commit {
             val args = Bundle()
             args.putString("request_type", contentType)
-            args.putString("list_label", listLabel)
             fragment.arguments = args
             replace(containerId, fragment)
             setReorderingAllowed(true)

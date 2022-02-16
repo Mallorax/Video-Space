@@ -26,8 +26,8 @@ class MoviesListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMoviesListBinding.inflate(inflater, container, false)
-        val requestType = arguments?.get("request_type") as String?
-        val movieId = arguments?.get("movieId") as Int?
+        val requestType = arguments?.getString("request_type")
+        val movieId = arguments?.getInt("movieId")
         requestType?.let { viewModel.setRequestType(it, movieId ?: -1) }
 
 
@@ -37,9 +37,6 @@ class MoviesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
-
-        val listLabel = arguments?.getString("list_label")
-        listLabel?.let { binding.listLabel.text = listLabel }
 
         val recyclerView = binding.moviesListRecycler
         recyclerView.adapter = adapter
@@ -51,6 +48,9 @@ class MoviesListFragment : Fragment() {
     private fun observeMovies() {
         viewModel.getMovies().observe(viewLifecycleOwner, Observer {
             adapter.submitData(viewLifecycleOwner.lifecycle, it)
+        })
+        viewModel.requestType.observe(viewLifecycleOwner, Observer {
+            binding.listLabel.text = it
         })
     }
 
