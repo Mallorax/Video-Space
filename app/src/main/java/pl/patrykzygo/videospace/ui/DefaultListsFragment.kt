@@ -68,7 +68,7 @@ class DefaultListsFragment : Fragment() {
         )
     }
 
-    private fun addFragmentToContainer(
+    fun addFragmentToContainer(
         containerId: Int,
         contentType: MoviesRequestType,
         listLabel: String,
