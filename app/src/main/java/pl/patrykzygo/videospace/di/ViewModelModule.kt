@@ -10,6 +10,7 @@ import pl.patrykzygo.videospace.data.local.MoviesDao
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
 import pl.patrykzygo.videospace.repository.LocalStoreRepository
 import pl.patrykzygo.videospace.repository.LocalStoreRepositoryImpl
+import pl.patrykzygo.videospace.repository.MoviesPagingResultProvider
 import pl.patrykzygo.videospace.repository.MoviesPagingSource
 
 @Module
@@ -18,7 +19,7 @@ object ViewModelModule {
 
     @Provides
     @ViewModelScoped
-    fun provideMoviesPagingSource(moviesEntryPoint: MoviesEntryPoint): MoviesPagingSource {
+    fun provideMoviesPagingResult(moviesEntryPoint: MoviesEntryPoint): MoviesPagingResultProvider {
         return MoviesPagingSource(moviesEntryPoint)
     }
 

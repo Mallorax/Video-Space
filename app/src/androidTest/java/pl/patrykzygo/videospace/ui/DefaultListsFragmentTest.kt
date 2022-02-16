@@ -60,7 +60,6 @@ class DefaultListsFragmentTest {
 
     @Test
     fun testPutFragmentInContainer() {
-        val expectedLabel = "Test"
         val expectedRequestType = MoviesRequestType.SIMILAR
         var bundle: Bundle? = null
         val testFragment = Fragment()
@@ -68,14 +67,11 @@ class DefaultListsFragmentTest {
             this.addFragmentToContainer(
                 this.binding.mostPopularMoviesContainer.id,
                 expectedRequestType,
-                expectedLabel,
                 testFragment
             )
             bundle = testFragment.arguments
         }
-        val resultingLabel = bundle?.getString("list_label")
         val resultingRequestType = bundle?.getSerializable("request_type")
-        assertThat(resultingLabel).isEqualTo(expectedLabel)
         assertThat(resultingRequestType).isEqualTo(expectedRequestType)
 
     }
