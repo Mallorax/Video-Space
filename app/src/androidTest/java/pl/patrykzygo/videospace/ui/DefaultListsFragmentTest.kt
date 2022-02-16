@@ -2,33 +2,20 @@ package pl.patrykzygo.videospace.ui
 
 import android.os.Bundle
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.fragment.app.setFragmentResult
-import androidx.lifecycle.whenStarted
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.testing.TestNavHostController
-import androidx.paging.PagingData
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.filters.MediumTest
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito.*
-import pl.patrykzygo.videospace.*
-import pl.patrykzygo.videospace.ui.movie_dialogs.MovieModalBottomSheet
-import pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment
-import pl.patrykzygo.videospace.ui.movies_list.MoviesListRecyclerAdapter
+import pl.patrykzygo.videospace.R
+import pl.patrykzygo.videospace.UICoroutineRule
+import pl.patrykzygo.videospace.launchFragmentInHiltContainer
+import pl.patrykzygo.videospace.util.provideMovieWithIdUi
 import javax.inject.Inject
 
 @MediumTest
@@ -56,12 +43,12 @@ class DefaultListsFragmentTest {
     }
 
     @After
-    fun teardown(){
+    fun teardown() {
         testFragmentFactory = null
     }
 
     @Test
-    fun testNavigationToDetailsView(){
+    fun testNavigationToDetailsView() {
         testFragmentFactory = TestFragmentFactory(testNavController)
         val movie = provideMovieWithIdUi(1)
         launchFragmentInHiltContainer<DefaultListsFragment>(fragmentFactory = testFragmentFactory) {

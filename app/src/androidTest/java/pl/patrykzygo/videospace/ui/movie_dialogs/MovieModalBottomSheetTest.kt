@@ -10,7 +10,11 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import pl.patrykzygo.videospace.*
+import pl.patrykzygo.videospace.FakeLocalStoreRepositoryAndroid
+import pl.patrykzygo.videospace.UICoroutineRule
+import pl.patrykzygo.videospace.getOrAwaitValueTestAndroid
+import pl.patrykzygo.videospace.launchFragmentInHiltContainer
+import pl.patrykzygo.videospace.util.provideMovieWithIdUi
 
 @MediumTest
 @HiltAndroidTest

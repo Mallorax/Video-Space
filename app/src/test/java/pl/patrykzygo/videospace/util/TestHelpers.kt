@@ -27,14 +27,6 @@ fun fakeHttpErrorResponse(): Response<EntryPointMoviesResponse> {
     )
 }
 
-fun provideMovieWithId(id: Int): Movie {
-    return Movie(
-        false, "", listOf(), id,
-        "lang", "title $id", "overview",
-        0.0, "", "release date",
-        "title", false, 1.00, 323
-    )
-}
 
 private fun fakeMoviesResponseList(page: Int): List<MovieResponse> {
     val moviesList = mutableListOf<MovieResponse>()
@@ -59,3 +51,13 @@ private fun fakeMoviesResponseList(page: Int): List<MovieResponse> {
     }
     return moviesList
 }
+
+fun provideMovieWithId(id: Int): Movie {
+    return Movie(
+        false, "", listOf(), id,
+        "lang", "title $id", "overview",
+        0.0, "poster $id", "release date",
+        "title", false, 1.00, 323
+    )
+}
+

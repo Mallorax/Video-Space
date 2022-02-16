@@ -1,25 +1,26 @@
 package pl.patrykzygo.videospace.ui.movies_list
 
-import android.view.View
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingData
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.UiController
-import androidx.test.espresso.ViewAction
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.RootMatchers
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.MediumTest
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.hamcrest.Matcher
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import pl.patrykzygo.videospace.*
+import pl.patrykzygo.videospace.R
+import pl.patrykzygo.videospace.UICoroutineRule
+import pl.patrykzygo.videospace.launchFragmentInHiltContainer
+import pl.patrykzygo.videospace.util.clickChildWithId
+import pl.patrykzygo.videospace.util.provideMovieWithIdUi
 
 
 @MediumTest
