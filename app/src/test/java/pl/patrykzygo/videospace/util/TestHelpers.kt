@@ -1,4 +1,4 @@
-package pl.patrykzygo.videospace
+package pl.patrykzygo.videospace.util
 
 import okhttp3.MediaType
 import okhttp3.ResponseBody
@@ -28,7 +28,7 @@ fun fakeHttpErrorResponse(): Response<EntryPointMoviesResponse> {
 }
 
 
-private fun fakeMoviesResponseList(page: Int): List<MovieResponse> {
+fun fakeMoviesResponseList(page: Int): List<MovieResponse> {
     val moviesList = mutableListOf<MovieResponse>()
     for (i in 0..10) {
         moviesList.add(

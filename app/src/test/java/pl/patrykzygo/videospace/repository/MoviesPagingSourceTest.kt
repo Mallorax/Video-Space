@@ -13,14 +13,14 @@ import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import pl.patrykzygo.videospace.data.network.MovieResponse
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
-import pl.patrykzygo.videospace.fakeCorrectMoviesResponse
-import pl.patrykzygo.videospace.fakeHttpErrorResponse
+import pl.patrykzygo.videospace.util.fakeCorrectMoviesResponse
+import pl.patrykzygo.videospace.util.fakeHttpErrorResponse
 import retrofit2.HttpException
 
 @ExperimentalCoroutinesApi
 class MoviesPagingSourceTest {
 
-    private lateinit var moviesPagingSource: MoviesPagingSource
+    private lateinit var moviesPagingSourceImpl: MoviesPagingSourceImpl
 
     @get:Rule
     var rule = InstantTaskExecutorRule()
@@ -31,7 +31,7 @@ class MoviesPagingSourceTest {
     @Before
     fun setup() {
         MockitoAnnotations.openMocks(this)
-        moviesPagingSource = MoviesPagingSource(mockMoviesEntryPoint)
+        moviesPagingSourceImpl = MoviesPagingSourceImpl(mockMoviesEntryPoint)
     }
 
 
@@ -42,7 +42,7 @@ class MoviesPagingSourceTest {
         Mockito.`when`(mockMoviesEntryPoint.requestPopularMovies(page = 1))
             .thenAnswer { fakeMoviesResponse }
 
-        val actual = moviesPagingSource.load(
+        val actual = moviesPagingSourceImpl.load(
             PagingSource.LoadParams.Refresh(
                 key = null,
                 loadSize = 1,
@@ -65,7 +65,7 @@ class MoviesPagingSourceTest {
         Mockito.`when`(mockMoviesEntryPoint.requestPopularMovies(page = 1))
             .thenAnswer { error }
         val expected = PagingSource.LoadResult.Error<Int, MovieResponse>(HttpException(error))
-        val actual = moviesPagingSource.load(
+        val actual = moviesPagingSourceImpl.load(
             PagingSource.LoadParams.Refresh(
                 key = null,
                 loadSize = 1,
@@ -82,7 +82,7 @@ class MoviesPagingSourceTest {
         Mockito.`when`(mockMoviesEntryPoint.requestPopularMovies(page = 2))
             .thenAnswer { fakeResponse }
 
-        val actual = moviesPagingSource.load(
+        val actual = moviesPagingSourceImpl.load(
             PagingSource.LoadParams.Append(
                 key = 2,
                 loadSize = 1,
@@ -105,7 +105,7 @@ class MoviesPagingSourceTest {
         Mockito.`when`(mockMoviesEntryPoint.requestPopularMovies(page = 1))
             .thenAnswer { fakeResponse }
 
-        val actual = moviesPagingSource.load(
+        val actual = moviesPagingSourceImpl.load(
             PagingSource.LoadParams.Prepend(
                 key = 1,
                 loadSize = 1,

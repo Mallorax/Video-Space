@@ -12,17 +12,17 @@ import pl.patrykzygo.videospace.data.network.EntryPointMoviesResponse
 import pl.patrykzygo.videospace.data.network.MovieResponse
 import retrofit2.Response
 
-fun fakeCorrectMoviesResponse(page: Int, numberOfPages: Int): Response<EntryPointMoviesResponse> {
+fun fakeCorrectMoviesResponseUi(page: Int, numberOfPages: Int): Response<EntryPointMoviesResponse> {
     val moviesResponse = EntryPointMoviesResponse(
         page = page,
-        fakeMoviesResponseList(page),
+        fakeMoviesResponseListUi(page),
         34234,
         numberOfPages
     )
     return Response.success(moviesResponse)
 }
 
-fun fakeHttpErrorResponse(): Response<EntryPointMoviesResponse> {
+fun fakeHttpErrorResponseUi(): Response<EntryPointMoviesResponse> {
     return Response.error(
         404,
         ResponseBody.create(
@@ -33,7 +33,7 @@ fun fakeHttpErrorResponse(): Response<EntryPointMoviesResponse> {
 }
 
 
-private fun fakeMoviesResponseList(page: Int): List<MovieResponse> {
+private fun fakeMoviesResponseListUi(page: Int): List<MovieResponse> {
     val moviesList = mutableListOf<MovieResponse>()
     for (i in 0..10) {
         moviesList.add(
@@ -65,6 +65,7 @@ fun provideMovieWithIdUi(id: Int): Movie {
         "title", false, 1.00, 323
     )
 }
+
 
 fun clickChildWithId(id: Int): ViewAction {
     return object : ViewAction {

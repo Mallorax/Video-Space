@@ -1,18 +1,15 @@
 package pl.patrykzygo.videospace.ui.movies_list
 
 import androidx.lifecycle.*
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import androidx.paging.liveData
-import androidx.paging.map
+import androidx.paging.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.mapMoviesResponseToMovie
-import pl.patrykzygo.videospace.repository.MoviesPagingResultProvider
+import pl.patrykzygo.videospace.repository.MoviesPagingSource
 import javax.inject.Inject
 
 @HiltViewModel
-class MoviesListViewModel @Inject constructor(private val repo: MoviesPagingResultProvider) :
+class MoviesListViewModel @Inject constructor(private val repo: MoviesPagingSource) :
     ViewModel() {
 
     private var _requestType = MutableLiveData<String>()
@@ -24,7 +21,15 @@ class MoviesListViewModel @Inject constructor(private val repo: MoviesPagingResu
     }
 
     fun getMovies(): LiveData<PagingData<Movie>> {
-        val pager = repo.providePagingResult()
+        val pager = Pager(
+            PagingConfig(
+                pageSize = 10,
+                enablePlaceholders = true,
+                prefetchDistance = 5,
+                initialLoadSize = 10
+            ),
+            pagingSourceFactory = { repo }
+        )
             .liveData
             .cachedIn(viewModelScope)
             .map { pagingData ->
