@@ -15,7 +15,7 @@ import org.junit.Test
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.UICoroutineRule
 import pl.patrykzygo.videospace.launchFragmentInHiltContainer
-import pl.patrykzygo.videospace.repository.MoviesRequestType
+import pl.patrykzygo.videospace.others.MoviesRequestType
 import pl.patrykzygo.videospace.util.provideMovieWithIdUi
 import javax.inject.Inject
 

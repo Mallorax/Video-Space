@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.databinding.FragmentMoviesListBinding
-import pl.patrykzygo.videospace.repository.MoviesRequestType
 import pl.patrykzygo.videospace.ui.movie_dialogs.MovieModalBottomSheet
 
 @AndroidEntryPoint
@@ -27,7 +26,7 @@ class MoviesListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMoviesListBinding.inflate(inflater, container, false)
-        val requestType = arguments?.get("request_type") as MoviesRequestType?
+        val requestType = arguments?.get("request_type") as String?
         val movieId = arguments?.get("movieId") as Int?
         requestType?.let { viewModel.setRequestType(it, movieId ?: -1) }
 

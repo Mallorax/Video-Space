@@ -12,7 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.FragmentDefaultListsBinding
-import pl.patrykzygo.videospace.repository.MoviesRequestType
+import pl.patrykzygo.videospace.others.MoviesRequestType
 import pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment
 
 @AndroidEntryPoint
@@ -70,14 +70,14 @@ class DefaultListsFragment : Fragment() {
 
     fun addFragmentToContainer(
         containerId: Int,
-        contentType: MoviesRequestType,
+        contentType: String,
         listLabel: String,
         fragment: Fragment
     ) {
         val fragmentManager = parentFragmentManager
         fragmentManager.commit {
             val args = Bundle()
-            args.putSerializable("request_type", contentType)
+            args.putString("request_type", contentType)
             args.putString("list_label", listLabel)
             fragment.arguments = args
             replace(containerId, fragment)

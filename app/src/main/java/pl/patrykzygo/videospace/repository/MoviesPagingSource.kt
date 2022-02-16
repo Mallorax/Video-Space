@@ -5,6 +5,7 @@ import androidx.paging.PagingState
 import pl.patrykzygo.videospace.data.network.EntryPointMoviesResponse
 import pl.patrykzygo.videospace.data.network.MovieResponse
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
+import pl.patrykzygo.videospace.others.MoviesRequestType
 import retrofit2.HttpException
 import retrofit2.Response
 import javax.inject.Inject
@@ -15,7 +16,7 @@ class MoviesPagingSource @Inject constructor(private val moviesEntryPoint: Movie
     private var moviesRequestType = MoviesRequestType.POPULAR
     var movieId = -1
 
-    fun setMoviesRequestType(moviesRequestType: MoviesRequestType, movieId: Int = -1){
+    fun setMoviesRequestType(moviesRequestType: String, movieId: Int = -1){
         this.moviesRequestType = moviesRequestType
         this.movieId = movieId
     }
@@ -77,6 +78,7 @@ class MoviesPagingSource @Inject constructor(private val moviesEntryPoint: Movie
             MoviesRequestType.UPCOMING -> moviesEntryPoint.requestUpcomingMovies(page = page)
             MoviesRequestType.RECOMMENDATIONS -> moviesEntryPoint.requestRecommendationsForMovie(page = page, id = id)
             MoviesRequestType.SIMILAR -> moviesEntryPoint.requestSimilarMovies(page = page, id = id)
+            else -> moviesEntryPoint.requestPopularMovies(page = page)
         }
     }
 }

@@ -12,9 +12,9 @@ import pl.patrykzygo.videospace.data.local.MoviesDao
 import pl.patrykzygo.videospace.data.local.VideoSpaceDatabase
 import pl.patrykzygo.videospace.networking.GenresEntryPoint
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
-import pl.patrykzygo.videospace.others.Constants.GENRES_BASE_URL
-import pl.patrykzygo.videospace.others.Constants.MOVIES_BASE_URL
-import pl.patrykzygo.videospace.others.Constants.VIDEO_SPACE_DB_NAME
+import pl.patrykzygo.videospace.others.DbConstants.VIDEO_SPACE_DB_NAME
+import pl.patrykzygo.videospace.others.Paths.GENRES_BASE_URL
+import pl.patrykzygo.videospace.others.Paths.MOVIES_BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton

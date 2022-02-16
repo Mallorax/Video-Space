@@ -14,7 +14,7 @@ import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.FragmentMovieDetailsBinding
-import pl.patrykzygo.videospace.repository.MoviesRequestType
+import pl.patrykzygo.videospace.others.MoviesRequestType
 import pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment
 
 @AndroidEntryPoint
@@ -77,14 +77,14 @@ class MovieDetailsFragment : Fragment() {
 
     private fun addMoviesListFragmentToContainer(
         containerId: Int,
-        contentType: MoviesRequestType,
+        contentType: String,
         listLabel: String,
         movieId: Int
     ) {
         val fragmentManager = parentFragmentManager
         fragmentManager.commit {
             val args = Bundle()
-            args.putSerializable("request_type", contentType)
+            args.putString("request_type", contentType)
             args.putInt("movieId", movieId)
             args.putString("list_label", listLabel)
             val fragment = MoviesListFragment()
