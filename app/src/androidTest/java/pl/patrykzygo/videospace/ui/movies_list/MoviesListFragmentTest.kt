@@ -62,7 +62,7 @@ class MoviesListFragmentTest {
             viewModel.setRequestType(expected)
             given = binding.listLabel.text.toString()
         }
-        assertThat(given)
+        assertThat(given).isEqualTo(expected)
     }
 
     @Test
