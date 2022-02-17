@@ -10,8 +10,8 @@ import pl.patrykzygo.videospace.others.Paths
 
 
 @BindingAdapter("moviePoster")
-fun bindMoviePoster(imageView: ImageView, posterPath: String) {
-    if (posterPath.isNotEmpty()) {
+fun bindMoviePoster(imageView: ImageView, posterPath: String?) {
+    if (posterPath?.isNotEmpty() == true) {
         Glide.with(imageView)
             .load(Paths.POSTERS_BASE_URL + posterPath)
             .error(R.drawable.ic_baseline_no_photography)
@@ -22,14 +22,14 @@ fun bindMoviePoster(imageView: ImageView, posterPath: String) {
 }
 
 @BindingAdapter("averageVote")
-fun bindAverageVote(textView: TextView, voteAverage: Double) {
+fun bindAverageVote(textView: TextView, voteAverage: Double?) {
     val voteValue = "%.${2}f".format(voteAverage).toDouble()
     val averageVote = "Average vote: $voteValue"
     textView.text = averageVote
 }
 
 @BindingAdapter("movieVoteCount")
-fun bindVoteCount(textView: TextView, voteCount: Int) {
+fun bindVoteCount(textView: TextView, voteCount: Int?) {
     val votes = "Vote count: $voteCount"
     textView.text = votes
 }
