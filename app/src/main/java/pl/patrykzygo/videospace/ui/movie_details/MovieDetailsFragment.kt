@@ -56,15 +56,13 @@ class MovieDetailsFragment : Fragment() {
         addMoviesListFragmentToContainer(
             binding.recommendedMoviesContainer.id,
             MoviesRequestType.RECOMMENDATIONS,
-            "Recommended",
-            movie?.id ?: -1
+            MoviesListFragment()
         )
         binding.similarMoviesContainer.visibility = View.VISIBLE
         addMoviesListFragmentToContainer(
             binding.similarMoviesContainer.id,
             MoviesRequestType.SIMILAR,
-            "Similar",
-            movie?.id ?: -1
+            MoviesListFragment()
         )
     }
 
@@ -74,19 +72,16 @@ class MovieDetailsFragment : Fragment() {
         binding.appBar.toolbar.setupWithNavController(navController, appBarConfig)
     }
 
-    private fun addMoviesListFragmentToContainer(
+    fun addMoviesListFragmentToContainer(
         containerId: Int,
         contentType: String,
-        listLabel: String,
-        movieId: Int
+        fragment: Fragment
     ) {
         val fragmentManager = parentFragmentManager
         fragmentManager.commit {
             val args = Bundle()
             args.putString("request_type", contentType)
-            args.putInt("movieId", movieId)
-            args.putString("list_label", listLabel)
-            val fragment = MoviesListFragment()
+            args.putInt("movieId", movie?.id ?: -1)
             fragment.arguments = args
             replace(containerId, fragment)
             setReorderingAllowed(true)

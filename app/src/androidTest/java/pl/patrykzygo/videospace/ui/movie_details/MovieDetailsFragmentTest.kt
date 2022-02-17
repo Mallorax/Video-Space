@@ -2,12 +2,14 @@ package pl.patrykzygo.videospace.ui.movie_details
 
 import android.os.Bundle
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.navigation.NavController
+import androidx.fragment.app.Fragment
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.filters.MediumTest
+import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -15,10 +17,10 @@ import org.hamcrest.Matchers.containsString
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import com.google.common.truth.Truth.assertThat
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.UICoroutineRule
 import pl.patrykzygo.videospace.data.app.Movie
+import pl.patrykzygo.videospace.others.MoviesRequestType
 import pl.patrykzygo.videospace.ui.TestFragmentFactory
 import pl.patrykzygo.videospace.ui.movies_list.getAverageVoteString
 import pl.patrykzygo.videospace.ui.movies_list.getVoteCountString
@@ -55,12 +57,31 @@ class MovieDetailsFragmentTest() {
         testFragmentFactory = TestFragmentFactory(testNavController)
     }
 
+    @Test
+    fun testPutFragmentInContainer() {
+        val expectedMovie = provideMovieWithIdUi(1)
+        val expectedRequestType = MoviesRequestType.SIMILAR
+        var bundle: Bundle? = null
+        val testFragment = Fragment()
+        launchFragmentInHiltContainer<MovieDetailsFragment>(fragmentFactory = testFragmentFactory) {
+            movie = expectedMovie
+            addMoviesListFragmentToContainer(
+                binding.similarMoviesContainer.id,
+                expectedRequestType, testFragment
+            )
+            bundle = testFragment.arguments
+        }
+        val resultingRequestType = bundle?.getString("request_type")
+        val resultingId = bundle?.getInt("movieId")
+        assertThat(resultingRequestType).isEqualTo(expectedRequestType)
+        assertThat(resultingId).isEqualTo(expectedMovie.id)
+    }
 
     @Test
-    fun testNavigationToSelf(){
+    fun testNavigationToSelf() {
         val movie = provideMovieWithIdUi(1)
         var resultedMovie: Movie? = null
-        testNavController.addOnDestinationChangedListener { controller, destination, arguments ->
+        testNavController.addOnDestinationChangedListener { _, _, arguments ->
             resultedMovie = arguments?.getParcelable("movie")
         }
         launchFragmentInHiltContainer<MovieDetailsFragment>(fragmentFactory = testFragmentFactory) {
@@ -112,6 +133,14 @@ class MovieDetailsFragmentTest() {
             viewModel.setMovie(movie)
         }
         val expectedVoteCount = getVoteCountString(movie.voteCount)
-        onView(withId(R.id.movie_vote_count)).check(matches(withText(containsString(expectedVoteCount))))
+        onView(withId(R.id.movie_vote_count)).check(
+            matches(
+                withText(
+                    containsString(
+                        expectedVoteCount
+                    )
+                )
+            )
+        )
     }
 }

@@ -24,7 +24,7 @@ import pl.patrykzygo.videospace.FakeLocalStoreRepositoryAndroid
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.UICoroutineRule
 import pl.patrykzygo.videospace.data.app.Movie
-import pl.patrykzygo.videospace.getOrAwaitValueTestAndroid
+import pl.patrykzygo.videospace.util.getOrAwaitValueTestAndroid
 import pl.patrykzygo.videospace.repository.MoviesPagingSource
 import pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment
 import pl.patrykzygo.videospace.ui.movies_list.MoviesListRecyclerAdapter

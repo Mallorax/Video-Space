@@ -1,7 +1,6 @@
 package pl.patrykzygo.videospace.di
 
 import android.content.Context
-import androidx.navigation.NavController
 import androidx.navigation.testing.TestNavHostController
 import androidx.room.Room
 import dagger.Module

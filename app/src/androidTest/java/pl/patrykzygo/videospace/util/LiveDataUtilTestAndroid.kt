@@ -1,4 +1,4 @@
-package pl.patrykzygo.videospace
+package pl.patrykzygo.videospace.util
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData

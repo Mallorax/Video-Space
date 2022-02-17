@@ -64,14 +64,14 @@ class DefaultListsFragmentTest {
         var bundle: Bundle? = null
         val testFragment = Fragment()
         launchFragmentInHiltContainer<DefaultListsFragment>(fragmentFactory = testFragmentFactory) {
-            this.addFragmentToContainer(
-                this.binding.mostPopularMoviesContainer.id,
+            addFragmentToContainer(
+                binding.mostPopularMoviesContainer.id,
                 expectedRequestType,
                 testFragment
             )
             bundle = testFragment.arguments
         }
-        val resultingRequestType = bundle?.getSerializable("request_type")
+        val resultingRequestType = bundle?.getString("request_type")
         assertThat(resultingRequestType).isEqualTo(expectedRequestType)
 
     }
