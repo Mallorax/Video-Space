@@ -1,7 +1,9 @@
 package pl.patrykzygo.videospace.ui.movie_details
 
+import android.os.Bundle
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.navigation.NavController
+import androidx.navigation.testing.TestNavHostController
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -13,8 +15,10 @@ import org.hamcrest.Matchers.containsString
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import com.google.common.truth.Truth.assertThat
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.UICoroutineRule
+import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.ui.TestFragmentFactory
 import pl.patrykzygo.videospace.ui.movies_list.getAverageVoteString
 import pl.patrykzygo.videospace.ui.movies_list.getVoteCountString
@@ -37,7 +41,7 @@ class MovieDetailsFragmentTest() {
     var coroutineRule = UICoroutineRule()
 
     @Inject
-    lateinit var testNavController: NavController
+    lateinit var testNavController: TestNavHostController
 
     lateinit var viewModel: MovieDetailsViewModel
 
@@ -46,10 +50,29 @@ class MovieDetailsFragmentTest() {
     @Before
     fun setup() {
         hiltRule.inject()
+        testNavController.setCurrentDestination(R.id.movie_details)
         viewModel = MovieDetailsViewModel()
         testFragmentFactory = TestFragmentFactory(testNavController)
     }
 
+
+    @Test
+    fun testNavigationToSelf(){
+        val movie = provideMovieWithIdUi(1)
+        var resultedMovie: Movie? = null
+        testNavController.addOnDestinationChangedListener { controller, destination, arguments ->
+            resultedMovie = arguments?.getParcelable("movie")
+        }
+        launchFragmentInHiltContainer<MovieDetailsFragment>(fragmentFactory = testFragmentFactory) {
+            this.movie = movie
+            val bundle = Bundle()
+            bundle.putParcelable("movie", movie)
+            parentFragmentManager.setFragmentResult("movieResult", bundle)
+        }
+        assertThat(resultedMovie).isEqualTo(movie)
+    }
+
+    //view binding tests
     @Test
     fun testMovieIsTitleSet() {
         val movie = provideMovieWithIdUi(1)

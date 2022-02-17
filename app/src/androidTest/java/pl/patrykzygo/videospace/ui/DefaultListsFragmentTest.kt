@@ -3,7 +3,7 @@ package pl.patrykzygo.videospace.ui
 import android.os.Bundle
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
+import androidx.navigation.testing.TestNavHostController
 import androidx.test.filters.MediumTest
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -34,7 +34,7 @@ class DefaultListsFragmentTest {
     var coroutineRule = UICoroutineRule()
 
     @Inject
-    lateinit var testNavController: NavController
+    lateinit var testNavController: TestNavHostController
 
     var testFragmentFactory: TestFragmentFactory? = null
 

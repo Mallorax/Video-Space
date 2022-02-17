@@ -30,7 +30,7 @@ object TestAppModule {
     }
 
     @Provides
-    fun provideTestNavController(@ApplicationContext context: Context): NavController {
+    fun provideTestNavController(@ApplicationContext context: Context): TestNavHostController {
         val navController = TestNavHostController(context)
         navController.setGraph(R.navigation.nav_graph)
         return navController
