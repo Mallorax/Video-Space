@@ -23,13 +23,20 @@ fun bindMoviePoster(imageView: ImageView, posterPath: String?) {
 
 @BindingAdapter("averageVote")
 fun bindAverageVote(textView: TextView, voteAverage: Double?) {
+    textView.text = getAverageVoteString(voteAverage)
+}
+
+fun getAverageVoteString(voteAverage: Double?): String {
     val voteValue = "%.${2}f".format(voteAverage).toDouble()
-    val averageVote = "Average vote: $voteValue"
-    textView.text = averageVote
+    return "Average vote: $voteValue"
 }
 
 @BindingAdapter("movieVoteCount")
 fun bindVoteCount(textView: TextView, voteCount: Int?) {
-    val votes = "Vote count: $voteCount"
-    textView.text = votes
+    textView.text = getVoteCountString(voteCount)
 }
+
+fun getVoteCountString(voteCount: Int?): String{
+    return "Vote count: $voteCount"
+}
+
