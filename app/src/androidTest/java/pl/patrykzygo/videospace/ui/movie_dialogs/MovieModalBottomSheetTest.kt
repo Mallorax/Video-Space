@@ -8,7 +8,7 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.RootMatchers
-import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.MediumTest
 import com.google.common.truth.Truth.assertThat
@@ -19,6 +19,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import pl.patrykzygo.videospace.CustomMatchers.withDrawable
 import pl.patrykzygo.videospace.FakeLocalStoreRepositoryAndroid
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.UICoroutineRule
@@ -35,6 +36,9 @@ import pl.patrykzygo.videospace.util.provideMovieWithIdUi
 import javax.inject.Inject
 import javax.inject.Named
 
+
+//When launching this fragment by itself espresso wouldn't be able to get access to it's views.
+//To handle this, in tests that require view ids, fragment is being launched from movie list fragment
 @MediumTest
 @HiltAndroidTest
 @ExperimentalCoroutinesApi
@@ -62,10 +66,9 @@ class MovieModalBottomSheetTest {
         viewModel = MovieBottomSheetViewModel(FakeLocalStoreRepositoryAndroid())
     }
 
+    //Test is sensitive to tint changes in layout's ImageView
     @Test
     fun testIfFavouriteImageWasChangedOnClick() {
-        val movie = provideMovieWithIdUi(1)
-
         launchFragmentInHiltContainer<MoviesListFragment> {
             val factory = MoviesListVMFactory(pagingSource)
             viewModel = ViewModelProvider(this, factory)[MoviesListViewModel::class.java]
@@ -79,8 +82,40 @@ class MovieModalBottomSheetTest {
                 clickChildWithId(R.id.image_view_more)
             )
         )
+        onView(withId(R.id.like_text_view)).inRoot(RootMatchers.isFocusable())
+            .perform(click())
+        onView(withId(R.id.favourite_image_view)).inRoot(RootMatchers.isFocusable())
+            .check(matches(isDisplayed()))
+            .check(
+                matches(withDrawable(R.drawable.ic_baseline_favorite, tint = R.color.icon_tint))
+            )
 
-        
+    }
+
+    //Test is sensitive to tint changes in layout's ImageView
+    @Test
+    fun testIfIsOnWatchLaterImageWasChangedOnClick() {
+        launchFragmentInHiltContainer<MoviesListFragment> {
+            val factory = MoviesListVMFactory(pagingSource)
+            viewModel = ViewModelProvider(this, factory)[MoviesListViewModel::class.java]
+            val movies = PagingData.from(listOf(provideMovieWithIdUi(1), provideMovieWithIdUi(2)))
+            runBlockingTest { adapter.submitData(movies) }
+            this.binding.moviesListRecycler.adapter = adapter
+        }
+        onView(withId(R.id.movies_list_recycler)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<MoviesListRecyclerAdapter.MovieItemViewHolder>(
+                0,
+                clickChildWithId(R.id.image_view_more)
+            )
+        )
+        onView(withId(R.id.watch_later_list_text_view)).inRoot(RootMatchers.isFocusable())
+            .perform(click())
+        onView(withId(R.id.archive_image_view)).inRoot(RootMatchers.isFocusable())
+            .check(matches(isDisplayed()))
+            .check(
+                matches(withDrawable(R.drawable.ic_baseline_archive, tint = R.color.icon_tint))
+            )
+
     }
 
     @Test
@@ -99,18 +134,26 @@ class MovieModalBottomSheetTest {
     fun testIfFragmentResultIsSet() {
         val expectedMovie = provideMovieWithIdUi(1)
         var resultedMovie: Movie? = null
-        launchFragmentInHiltContainer<MovieModalBottomSheet> {
-            this.viewModel = this@MovieModalBottomSheetTest.viewModel
-            viewModel.setMovie(expectedMovie)
+        launchFragmentInHiltContainer<MoviesListFragment> {
+            val factory = MoviesListVMFactory(pagingSource)
+            viewModel = ViewModelProvider(this, factory)[MoviesListViewModel::class.java]
+            val movies = PagingData.from(listOf(provideMovieWithIdUi(1), provideMovieWithIdUi(2)))
+            runBlockingTest { adapter.submitData(movies) }
+            this.binding.moviesListRecycler.adapter = adapter
             parentFragmentManager.setFragmentResultListener("movieResult", this) { _, bundle ->
                 resultedMovie = bundle.getParcelable("movie")
             }
         }
-        onView(withId(R.id.more_info_text_view)).perform(click())
+        onView(withId(R.id.movies_list_recycler)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<MoviesListRecyclerAdapter.MovieItemViewHolder>(
+                0,
+                clickChildWithId(R.id.image_view_more)
+            )
+        )
+        onView(withId(R.id.more_info_text_view)).inRoot(RootMatchers.isFocusable())
+            .perform(click())
         assertThat(resultedMovie).isEqualTo(expectedMovie)
     }
-
-    //TODO: launching modal view by itself doesn't work, should try to launch it from list fragment
 
 
 }

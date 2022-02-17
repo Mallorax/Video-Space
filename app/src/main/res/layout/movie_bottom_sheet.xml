@@ -32,16 +32,17 @@
                 android:layout_marginTop="@dimen/small_margin"
                 android:src="@drawable/ic_baseline_info"
                 app:layout_constraintStart_toStartOf="@id/bottom_sheet_title"
-                app:layout_constraintTop_toBottomOf="@id/bottom_sheet_title" />
+                app:layout_constraintTop_toBottomOf="@id/bottom_sheet_title"
+                app:tint="@color/icon_tint" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/more_info_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/small_margin"
-                android:clickable="true"
                 android:layout_marginEnd="@dimen/small_margin"
                 android:background="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:text="@string/more_information_bottom_sheet"
                 android:textSize="@dimen/bottom_sheet_option_text_size"
                 app:layout_constraintBottom_toBottomOf="@id/info_image_view"
@@ -58,7 +59,8 @@
                 android:src="@drawable/ic_baseline_favorite_border"
                 app:layout_constraintEnd_toEndOf="@id/info_image_view"
                 app:layout_constraintStart_toStartOf="@id/info_image_view"
-                app:layout_constraintTop_toBottomOf="@id/info_image_view" />
+                app:layout_constraintTop_toBottomOf="@id/info_image_view"
+                app:tint="@color/icon_tint" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/like_text_view"
@@ -66,8 +68,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/small_margin"
                 android:layout_marginEnd="@dimen/small_margin"
-                android:clickable="true"
                 android:background="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:text="@string/like_bottom_sheet"
                 android:textSize="@dimen/bottom_sheet_option_text_size"
                 app:layout_constraintBottom_toBottomOf="@id/favourite_image_view"
@@ -84,7 +86,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/favourite_image_view"
                 app:layout_constraintStart_toStartOf="@id/favourite_image_view"
-                app:layout_constraintTop_toBottomOf="@id/favourite_image_view" />
+                app:layout_constraintTop_toBottomOf="@id/favourite_image_view"
+                app:tint="@color/icon_tint" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/watch_later_list_text_view"
@@ -92,8 +95,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/small_margin"
                 android:layout_marginEnd="@dimen/small_margin"
-                android:clickable="true"
                 android:background="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:text="@string/add_to_watch_later_text"
                 android:textSize="@dimen/bottom_sheet_option_text_size"
                 app:layout_constraintBottom_toBottomOf="@id/archive_image_view"
