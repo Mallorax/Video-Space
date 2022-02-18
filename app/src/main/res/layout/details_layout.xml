@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="pl.patrykzygo.videospace.ui.movie_details.MovieDetailsViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/app_bar"
+                layout="@layout/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/vertical_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.05" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/vertical_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.95" />
+
+
+
+            <ImageView
+                android:id="@+id/poster_image_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/custom_border"
+                android:padding="@dimen/small_margin"
+                android:src="@drawable/ic_launcher_background"
+                android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toTopOf="@id/stats_and_poster_barrier_bottom"
+                app:layout_constraintDimensionRatio="2:3"
+                app:layout_constraintEnd_toStartOf="@id/stats_barrier_left"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/vertical_left"
+                app:layout_constraintTop_toBottomOf="@id/app_bar"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/score_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:fontFamily="@font/averia_serif_libre"
+                android:textAlignment="textEnd"
+                android:text="@string/user_score"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:layout_constraintBottom_toTopOf="@+id/movie_rating"
+                app:layout_constraintEnd_toStartOf="@+id/vertical_right"
+                app:layout_constraintTop_toTopOf="@id/poster_image_view"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/movie_rating"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:fontFamily="@font/averia_serif_libre"
+                android:textAlignment="textEnd"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:averageVote="@{viewModel.movie.voteAverage}"
+                app:layout_constraintBottom_toTopOf="@+id/movie_vote_count_label"
+                app:layout_constraintEnd_toStartOf="@+id/vertical_right"
+                app:layout_constraintTop_toBottomOf="@id/score_text_view"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="rating" />
+
+            <ImageView
+                android:id="@+id/movie_rating_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_star"
+                android:layout_marginEnd="4dp"
+                app:layout_constraintEnd_toStartOf="@id/movie_rating"
+                app:layout_constraintBottom_toBottomOf="@id/movie_rating"
+                app:layout_constraintTop_toTopOf="@id/movie_rating"/>
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/movie_vote_count_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/averia_serif_libre"
+                android:textAlignment="textEnd"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:layout_constraintBottom_toTopOf="@id/movie_vote_count"
+                app:layout_constraintEnd_toStartOf="@+id/vertical_right"
+                app:layout_constraintTop_toBottomOf="@+id/movie_rating"
+                app:movieVoteCount="@{viewModel.movie.voteCount}"
+                tools:text="vote count" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/movie_vote_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/averia_serif_libre"
+                android:textAlignment="textEnd"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:layout_constraintBottom_toTopOf="@id/add_to_favourites_button"
+                app:layout_constraintEnd_toStartOf="@+id/vertical_right"
+                app:layout_constraintTop_toBottomOf="@+id/movie_vote_count_label"
+                app:movieVoteCount="@{viewModel.movie.voteCount}"
+                tools:text="vote count" />
+
+
+            <Button
+                android:id="@+id/add_to_favourites_button"
+                style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                app:icon="@drawable/ic_baseline_favorite_border"
+                app:iconTint="@color/icon_tint"
+                app:layout_constraintBottom_toBottomOf="@+id/poster_image_view"
+                app:layout_constraintEnd_toEndOf="@id/vertical_right"
+                app:layout_constraintTop_toBottomOf="@id/movie_vote_count" />
+
+            <Button
+                android:id="@+id/add_to_watch_later"
+                style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/small_margin"
+                app:icon="@drawable/ic_baseline_playlist_add"
+                app:iconTint="@color/icon_tint"
+                app:layout_constraintBottom_toBottomOf="@id/add_to_favourites_button"
+                app:layout_constraintEnd_toStartOf="@id/add_to_favourites_button"
+                app:layout_constraintTop_toTopOf="@id/add_to_favourites_button"
+                tools:layout_editor_absoluteX="343dp"
+                tools:layout_editor_absoluteY="200dp" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/stats_and_poster_barrier_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="poster_image_view" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/stats_barrier_left"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:barrierDirection="left"
+                app:constraint_referenced_ids="movie_rating, movie_vote_count,add_to_watch_later,add_to_favourites_button,movie_rating_icon,score_text_view"
+                app:layout_constraintBottom_toTopOf="@id/stats_and_poster_barrier_bottom"
+                tools:layout_editor_absoluteX="323dp" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</layout>

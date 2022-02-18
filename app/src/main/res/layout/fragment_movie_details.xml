@@ -122,6 +122,15 @@
                 app:movieVoteCount="@{viewModel.movie.voteCount}"
                 tools:text="example4" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/materialButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Like"
+                app:layout_constraintEnd_toStartOf="@+id/right_guideline"
+                app:layout_constraintTop_toBottomOf="@+id/movie_vote_count" />
+
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/description_barrier"
                 android:layout_width="wrap_content"
@@ -136,12 +145,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/movie_vote_count"
+                app:layout_constraintTop_toBottomOf="@+id/materialButton"
                 tools:layout="@layout/fragment_movies_list" />
 
             <androidx.fragment.app.FragmentContainerView

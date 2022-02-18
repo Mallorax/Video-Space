@@ -53,6 +53,7 @@ open class MovieModalBottomSheet : BottomSheetDialogFragment() {
             if (it != null) {
                 updateIsFavouriteImage(it.isFavourite)
                 updateIsOnWatchLaterListImage(it.isOnWatchLater)
+                binding.bottomSheetTitle.text = it.title
             } else {
                 dismiss()
             }
