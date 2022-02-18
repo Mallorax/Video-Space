@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
+import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.FragmentMovieDetailsBinding
 import pl.patrykzygo.videospace.others.MoviesRequestType
@@ -44,10 +47,13 @@ class MovieDetailsFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpAppBar()
         setUpFragmentContainers()
+        setOnClickListeners()
+        observeViewModel()
         viewModel.setMovie(movie)
     }
 
@@ -85,6 +91,28 @@ class MovieDetailsFragment : Fragment() {
             fragment.arguments = args
             replace(containerId, fragment)
             setReorderingAllowed(true)
+        }
+    }
+
+    private fun setOnClickListeners(){
+        binding.addToFavouritesButton.setOnClickListener {
+            viewModel.toggleFavourite()
+        }
+    }
+
+    private fun observeViewModel(){
+        viewModel.movie.observe(viewLifecycleOwner, Observer {
+            updateFavouritesButton(it?.isFavourite)
+        })
+    }
+
+    private fun updateFavouritesButton(isFavourite: Boolean?){
+        if (isFavourite == true){
+            binding.addToFavouritesButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_baseline_favorite, 0 , 0, 0)
+            binding.addToFavouritesButton.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.purple_200, null))
+        }else{
+            binding.addToFavouritesButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_baseline_favorite_border, 0 , 0, 0)
+            binding.addToFavouritesButton.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, null))
         }
     }
 }

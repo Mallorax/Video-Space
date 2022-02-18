@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -27,129 +26,201 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/left_guideline"
+                android:id="@+id/vertical_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.1" />
-
+                app:layout_constraintGuide_percent="0.05" />
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/right_guideline"
+                android:id="@+id/vertical_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.9" />
+                app:layout_constraintGuide_percent="0.95" />
 
 
             <ImageView
                 android:id="@+id/poster_image_view"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:contentDescription="@string/movie_poster"
-                android:scaleType="centerCrop"
                 android:layout_marginTop="16dp"
-                app:layout_constraintDimensionRatio="2:3"
-                app:layout_constraintEnd_toStartOf="@id/right_guideline"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@id/left_guideline"
-                app:layout_constraintTop_toBottomOf="@id/app_bar"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/custom_border"
+                android:padding="@dimen/small_margin"
                 app:moviePoster="@{viewModel.movie.posterPath}"
-                app:srcCompat="@drawable/ic_launcher_background" />
-
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/movie_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/averia_serif_libre"
-                android:text="@{viewModel.movie.title}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                app:layout_constraintBottom_toTopOf="@+id/movie_description"
-                app:layout_constraintEnd_toStartOf="@id/right_guideline"
+                app:layout_constraintBottom_toTopOf="@id/stats_and_poster_barrier_bottom"
+                app:layout_constraintDimensionRatio="2:3"
+                app:layout_constraintEnd_toStartOf="@id/stats_barrier_left"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@id/left_guideline"
-                app:layout_constraintTop_toBottomOf="@+id/poster_image_view"
-                app:layout_constraintVertical_chainStyle="packed"
-                tools:text="example" />
+                app:layout_constraintStart_toStartOf="@id/vertical_left"
+                app:layout_constraintTop_toBottomOf="@id/app_bar"
+                app:layout_constraintVertical_bias="1.0" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/movie_description"
+                android:id="@+id/score_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="@dimen/small_margin"
                 android:fontFamily="@font/averia_serif_libre"
-                android:text="@{viewModel.movie.overview}"
-                app:layout_constraintEnd_toStartOf="@id/right_guideline"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@id/left_guideline"
-                app:layout_constraintTop_toBottomOf="@+id/movie_title"
-                tools:text="example2" />
+                android:text="@string/user_score"
+                android:textAlignment="textEnd"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:layout_constraintBottom_toTopOf="@+id/movie_rating"
+                app:layout_constraintEnd_toStartOf="@+id/vertical_right"
+                app:layout_constraintTop_toTopOf="@id/poster_image_view"
+                app:layout_constraintVertical_chainStyle="packed" />
+
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/movie_rating"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="@dimen/small_margin"
                 android:fontFamily="@font/averia_serif_libre"
+                android:textAlignment="textEnd"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 app:averageVote="@{viewModel.movie.voteAverage}"
-                app:layout_constraintEnd_toStartOf="@id/movie_vote_count"
-                app:layout_constraintHorizontal_bias="0.49"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="@id/left_guideline"
-                app:layout_constraintTop_toBottomOf="@id/description_barrier"
-                tools:text="exampl3" />
+                app:layout_constraintBottom_toTopOf="@+id/movie_vote_count_label"
+                app:layout_constraintEnd_toStartOf="@+id/vertical_right"
+                app:layout_constraintTop_toBottomOf="@id/score_text_view"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="rating" />
 
+            <ImageView
+                android:id="@+id/movie_rating_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_baseline_star"
+                app:layout_constraintBottom_toBottomOf="@id/movie_rating"
+                app:layout_constraintEnd_toStartOf="@id/movie_rating"
+                app:layout_constraintTop_toTopOf="@id/movie_rating" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/movie_vote_count_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/averia_serif_libre"
+                android:textAlignment="textEnd"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:layout_constraintBottom_toTopOf="@id/movie_vote_count"
+                app:layout_constraintEnd_toStartOf="@+id/vertical_right"
+                app:layout_constraintTop_toBottomOf="@+id/movie_rating"
+                android:text="@string/number_of_votes"
+                tools:text="vote count" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/movie_vote_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/averia_serif_libre"
+                android:textAlignment="textEnd"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                app:layout_constraintBottom_toBottomOf="@id/movie_rating"
-                app:layout_constraintEnd_toStartOf="@id/right_guideline"
-                app:layout_constraintStart_toEndOf="@id/movie_rating"
-                app:layout_constraintTop_toTopOf="@+id/movie_rating"
+                app:layout_constraintBottom_toTopOf="@id/add_to_favourites_button"
+                app:layout_constraintEnd_toStartOf="@+id/vertical_right"
+                app:layout_constraintTop_toBottomOf="@+id/movie_vote_count_label"
                 app:movieVoteCount="@{viewModel.movie.voteCount}"
-                tools:text="example4" />
+                tools:text="vote count number" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/materialButton"
+
+            <Button
+                android:id="@+id/add_to_favourites_button"
+                style="@style/Widget.App.Button.OutlinedButton.IconOnly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="Like"
-                app:layout_constraintEnd_toStartOf="@+id/right_guideline"
-                app:layout_constraintTop_toBottomOf="@+id/movie_vote_count" />
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                app:icon="@drawable/ic_baseline_favorite_border"
+                app:iconTint="@color/icon_tint"
+                app:layout_constraintBottom_toBottomOf="@+id/poster_image_view"
+                app:layout_constraintEnd_toEndOf="@id/vertical_right"
+                app:layout_constraintTop_toBottomOf="@id/movie_vote_count" />
+
+            <Button
+                android:id="@+id/add_to_watch_later"
+                style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/small_margin"
+                app:icon="@drawable/ic_baseline_playlist_add"
+                app:iconTint="@color/icon_tint"
+                app:layout_constraintBottom_toBottomOf="@id/add_to_favourites_button"
+                app:layout_constraintEnd_toStartOf="@id/add_to_favourites_button"
+                app:layout_constraintTop_toTopOf="@id/add_to_favourites_button" />
 
             <androidx.constraintlayout.widget.Barrier
-                android:id="@+id/description_barrier"
+                android:id="@+id/stats_and_poster_barrier_bottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
-                app:constraint_referenced_ids="poster_image_view, movie_title, movie_description"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:constraint_referenced_ids="poster_image_view" />
 
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/stats_barrier_left"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:barrierDirection="left"
+                app:constraint_referenced_ids="movie_rating, movie_vote_count,add_to_watch_later,add_to_favourites_button,movie_rating_icon,score_text_view"
+                app:layout_constraintBottom_toTopOf="@id/stats_and_poster_barrier_bottom"
+                tools:layout_editor_absoluteX="323dp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/movie_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/averia_serif_libre"
+                android:text="@{viewModel.movie.title}"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                app:layout_constraintEnd_toStartOf="@id/vertical_right"
+                app:layout_constraintStart_toEndOf="@id/vertical_left"
+                app:layout_constraintTop_toBottomOf="@id/stats_and_poster_barrier_bottom"
+                tools:text="example fjsdkgjfdlkfdjdfjdfl" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/genres_chip_group"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                tools:layout_height="100dp"
+                tools:background="@drawable/custom_border"
+                app:layout_constraintEnd_toStartOf="@id/vertical_right"
+                app:layout_constraintStart_toEndOf="@id/vertical_left"
+                app:layout_constraintTop_toBottomOf="@id/movie_title" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/movie_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:fontFamily="@font/averia_serif_libre"
+                app:movieDescription="@{viewModel.movie.overview}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:layout_constraintEnd_toStartOf="@id/vertical_right"
+                app:layout_constraintStart_toEndOf="@id/vertical_left"
+                app:layout_constraintTop_toBottomOf="@+id/genres_chip_group"
+                tools:text="@string/lorem_ipsum" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/recommended_movies_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/materialButton"
+                app:layout_constraintTop_toBottomOf="@id/movie_description"
                 tools:layout="@layout/fragment_movies_list" />
 
             <androidx.fragment.app.FragmentContainerView
@@ -165,9 +236,8 @@
                 app:layout_constraintTop_toBottomOf="@id/recommended_movies_container"
                 tools:layout="@layout/fragment_movies_list" />
 
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     </ScrollView>
 
 </layout>

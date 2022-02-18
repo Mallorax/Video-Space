@@ -18,4 +18,13 @@ class MovieDetailsViewModel @Inject constructor() : ViewModel() {
         this._movie.value = movie
     }
 
+    fun toggleFavourite(){
+        val movie = _movie.value
+        if (movie != null){
+            movie.isFavourite = !movie.isFavourite
+            _movie.value = movie
+        }
+
+    }
+
 }

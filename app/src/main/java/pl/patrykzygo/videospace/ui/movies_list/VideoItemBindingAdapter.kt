@@ -1,5 +1,7 @@
 package pl.patrykzygo.videospace.ui.movies_list
 
+import android.graphics.text.LineBreaker.JUSTIFICATION_MODE_INTER_WORD
+import android.os.Build
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -26,17 +28,27 @@ fun bindAverageVote(textView: TextView, voteAverage: Double?) {
     textView.text = getAverageVoteString(voteAverage)
 }
 
-fun getAverageVoteString(voteAverage: Double?): String {
-    val voteValue = "%.${2}f".format(voteAverage).toDouble()
-    return "Average vote: $voteValue"
-}
-
 @BindingAdapter("movieVoteCount")
 fun bindVoteCount(textView: TextView, voteCount: Int?) {
     textView.text = getVoteCountString(voteCount)
 }
 
+@BindingAdapter("movieDescription")
+fun bindMovieDescription(textView: TextView, description: String){
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        textView.justificationMode = JUSTIFICATION_MODE_INTER_WORD
+    }
+    textView.text = description
+}
+
+fun getAverageVoteString(voteAverage: Double?): String {
+    val voteValue = "%.${2}f".format(voteAverage).toDouble()
+    return voteValue.toString()
+}
+
+
+
 fun getVoteCountString(voteCount: Int?): String{
-    return "Vote count: $voteCount"
+    return voteCount.toString()
 }
 
