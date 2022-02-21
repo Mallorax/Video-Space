@@ -1,13 +1,10 @@
 package pl.patrykzygo.videospace.repository
 
-import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.local.GenreDao
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.local.MoviesDao
-import pl.patrykzygo.videospace.data.mapMoviesResponseToMovie
 import pl.patrykzygo.videospace.data.network.MovieResponse
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
-import java.lang.Exception
 import javax.inject.Inject
 
 class LocalStoreRepositoryImpl @Inject constructor(
@@ -30,9 +27,9 @@ class LocalStoreRepositoryImpl @Inject constructor(
 
     override suspend fun getSpecificMovie(id: Int): RepositoryResponse<MovieResponse> {
         val response = moviesEntryPoint.requestMovie(id = id)
-        return if (response.isSuccessful){
+        return if (response.isSuccessful) {
             RepositoryResponse.success(response.body()!!)
-        }else{
+        } else {
             RepositoryResponse.error(response.message())
         }
     }
@@ -40,13 +37,13 @@ class LocalStoreRepositoryImpl @Inject constructor(
     override suspend fun getSpecificFavourite(id: Int): RepositoryResponse<MovieEntity> {
         return try {
             val movie = moviesDao.getFavourite(id)
-            if (movie == null){
+            if (movie == null) {
                 RepositoryResponse.error("Mo such element")
-            }else {
+            } else {
                 RepositoryResponse.success(movie)
             }
 
-        }catch (e: Exception){
+        } catch (e: Exception) {
             RepositoryResponse.error(e.message ?: "")
         }
 

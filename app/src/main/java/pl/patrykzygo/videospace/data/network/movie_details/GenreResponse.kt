@@ -1,4 +1,4 @@
-package pl.patrykzygo.videospace.data.network
+package pl.patrykzygo.videospace.data.network.movie_details
 
 
 import com.google.gson.annotations.SerializedName

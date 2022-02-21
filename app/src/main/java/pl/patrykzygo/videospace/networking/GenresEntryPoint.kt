@@ -1,7 +1,7 @@
 package pl.patrykzygo.videospace.networking
 
 import pl.patrykzygo.videospace.BuildConfig
-import pl.patrykzygo.videospace.data.network.GenreResponse
+import pl.patrykzygo.videospace.data.network.movie_details.GenreResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
