@@ -4,6 +4,7 @@ import pl.patrykzygo.videospace.data.local.GenreDao
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.local.MoviesDao
 import pl.patrykzygo.videospace.data.network.MovieResponse
+import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
 import javax.inject.Inject
 
@@ -25,7 +26,7 @@ class LocalStoreRepositoryImpl @Inject constructor(
         return RepositoryResponse.success(listOf())
     }
 
-    override suspend fun getSpecificMovie(id: Int): RepositoryResponse<MovieResponse> {
+    override suspend fun getSpecificMovie(id: Int): RepositoryResponse<MovieDetailsResponse> {
         val response = moviesEntryPoint.requestMovie(id = id)
         return if (response.isSuccessful) {
             RepositoryResponse.success(response.body()!!)

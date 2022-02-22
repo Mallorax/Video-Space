@@ -3,12 +3,13 @@ package pl.patrykzygo.videospace.data
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.network.MovieResponse
+import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
 
 fun mapMoviesResponseToMovie(movieResponse: MovieResponse): Movie {
     return Movie(
         movieResponse.adult,
         movieResponse.backdropPath.orEmpty(),
-        listOf(), //TODO: leaving it empty for now, should fetch actual list from room/api
+        listOf(),
         movieResponse.id,
         movieResponse.originalLanguage,
         movieResponse.originalTitle,
@@ -20,6 +21,25 @@ fun mapMoviesResponseToMovie(movieResponse: MovieResponse): Movie {
         movieResponse.video,
         movieResponse.voteAverage,
         movieResponse.voteCount
+    )
+}
+
+fun mapMovieDetailsResponseToMovie(movieDetailsResponse: MovieDetailsResponse): Movie{
+    return Movie(
+        movieDetailsResponse.adult ?: false,
+        movieDetailsResponse.backdropPath.orEmpty(),
+        movieDetailsResponse.genres.mapNotNull { t -> t?.name },
+        movieDetailsResponse.id ?: -1,
+        movieDetailsResponse.originalLanguage.orEmpty(),
+        movieDetailsResponse.originalTitle.orEmpty(),
+        movieDetailsResponse.overview.orEmpty(),
+        movieDetailsResponse.popularity ?: -1.0,
+        movieDetailsResponse.posterPath.orEmpty(),
+        movieDetailsResponse.releaseDate.orEmpty(),
+        movieDetailsResponse.title.orEmpty(),
+        movieDetailsResponse.video ?: false,
+        movieDetailsResponse.voteAverage ?: -1.0,
+        movieDetailsResponse.voteCount ?: -1
     )
 }
 

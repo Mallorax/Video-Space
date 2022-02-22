@@ -2,6 +2,7 @@ package pl.patrykzygo.videospace.repository
 
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.network.MovieResponse
+import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
 
 open class FakeLocalStoreRepository : LocalStoreRepository {
 
@@ -19,8 +20,8 @@ open class FakeLocalStoreRepository : LocalStoreRepository {
         return RepositoryResponse.success(movieList)
     }
 
-    override suspend fun getSpecificMovie(id: Int): RepositoryResponse<MovieResponse> {
-        return RepositoryResponse.success(getMovieResponseWithId(id))
+    override suspend fun getSpecificMovie(id: Int): RepositoryResponse<MovieDetailsResponse> {
+        return RepositoryResponse.success(getMovieDetailsResponseWithId(id))
     }
 
     override suspend fun getSpecificFavourite(id: Int): RepositoryResponse<MovieEntity> {
@@ -32,12 +33,13 @@ open class FakeLocalStoreRepository : LocalStoreRepository {
         }
     }
 
-    private fun getMovieResponseWithId(id: Int): MovieResponse {
-        return MovieResponse(
-            false, null, listOf(), id,
-            "lang", "title $id", "overview",
-            0.0, null, "release date",
-            "title", false, 1.00, 323
+    private fun getMovieDetailsResponseWithId(id: Int): MovieDetailsResponse {
+        return MovieDetailsResponse(
+            "", "id", false, "title $id",
+            "", 123, listOf(), 2.43, id, 23,
+            45234543, "descritpion $id", "orginal title $id",
+            34324, "", "date $id", 2.03, "",
+            false, "", ""
         )
     }
 

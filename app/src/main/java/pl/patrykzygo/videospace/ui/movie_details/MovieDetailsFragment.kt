@@ -8,14 +8,19 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.chip.Chip
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.FragmentMovieDetailsBinding
 import pl.patrykzygo.videospace.others.MoviesRequestType
+import pl.patrykzygo.videospace.ui.movie_dialogs.MovieBottomSheetViewModel
 import pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment
 
 @AndroidEntryPoint
@@ -33,7 +38,7 @@ class MovieDetailsFragment : Fragment() {
     ): View? {
         _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
         movie = arguments?.let { MovieDetailsFragmentArgs.fromBundle(it).movie }
-        viewModel = MovieDetailsViewModel()
+        viewModel = ViewModelProvider(requireActivity())[MovieDetailsViewModel::class.java]
         parentFragmentManager.setFragmentResultListener("movieResult", this) { _, bundle ->
             val movie = bundle.getParcelable<Movie>("movie")
             if (movie != null) {
@@ -103,7 +108,22 @@ class MovieDetailsFragment : Fragment() {
     private fun observeViewModel(){
         viewModel.movie.observe(viewLifecycleOwner, Observer {
             updateFavouritesButton(it?.isFavourite)
+            showMovieGenres(it?.genres)
         })
+        viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
+            Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
+        })
+    }
+
+    private fun showMovieGenres(genres: List<String>?){
+        genres?.forEach { genre ->
+            val chip = Chip(requireContext())
+            chip.text = genre
+            chip.setChipBackgroundColorResource(R.color.purple_200)
+            chip.isCloseIconVisible = true
+            chip.setTextColor(ResourcesCompat.getColor(resources, R.color.white, null))
+            binding.genresChipGroup.addView(chip)
+        }
     }
 
     private fun updateFavouritesButton(isFavourite: Boolean?){

@@ -3,6 +3,7 @@ package pl.patrykzygo.videospace.networking
 import pl.patrykzygo.videospace.data.network.EntryPointMoviesResponse
 import pl.patrykzygo.videospace.BuildConfig
 import pl.patrykzygo.videospace.data.network.MovieResponse
+import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -63,9 +64,9 @@ interface MoviesEntryPoint {
 
     @GET("{id}")
     suspend fun requestMovie(
+        @Path("id") id: Int,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
-        @Query("language") language: String = "en-US",
-        @Path("id") id: Int
-    ): Response<MovieResponse>
+        @Query("language") language: String = "en-US"
+    ): Response<MovieDetailsResponse>
 
 }
