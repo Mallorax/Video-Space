@@ -31,8 +31,10 @@ class MovieDetailsViewModel @Inject constructor(private val repo: LocalStoreRepo
         if (movie != null) {
             viewModelScope.launch(Dispatchers.IO) {
                 val response = repo.getSpecificMovie(movie.id)
+                val isFavourite = repo.getSpecificFavourite(movie.id).data?.isFavourite
                 if (response.status == RepositoryResponse.Status.SUCCESS) {
                     val mappedMovie = mapMovieDetailsResponseToMovie(response.data!!)
+                    mappedMovie.isFavourite = isFavourite ?: false
                     _movie.postValue(mappedMovie)
                     _genres.postValue(mappedMovie.genres)
                 } else if (response.status == RepositoryResponse.Status.ERROR) {
