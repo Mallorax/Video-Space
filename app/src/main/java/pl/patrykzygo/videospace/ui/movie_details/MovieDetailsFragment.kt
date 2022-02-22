@@ -108,7 +108,9 @@ class MovieDetailsFragment : Fragment() {
     private fun observeViewModel(){
         viewModel.movie.observe(viewLifecycleOwner, Observer {
             updateFavouritesButton(it?.isFavourite)
-            showMovieGenres(it?.genres)
+        })
+        viewModel.genres.observe(viewLifecycleOwner, Observer {
+            showMovieGenres(it)
         })
         viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
             Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
@@ -120,9 +122,12 @@ class MovieDetailsFragment : Fragment() {
             val chip = Chip(requireContext())
             chip.text = genre
             chip.setChipBackgroundColorResource(R.color.purple_200)
-            chip.isCloseIconVisible = true
             chip.setTextColor(ResourcesCompat.getColor(resources, R.color.white, null))
             binding.genresChipGroup.addView(chip)
+            chip.setOnClickListener {
+                //TODO make navigation to list of movies with specific genre
+                Snackbar.make(requireView(), "Navigation here", Snackbar.LENGTH_LONG).show()
+            }
         }
     }
 

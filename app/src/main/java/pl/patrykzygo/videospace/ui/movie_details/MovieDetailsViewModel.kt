@@ -4,11 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.mapMovieDetailsResponseToMovie
+import pl.patrykzygo.videospace.data.mapMovieToMovieEntity
 import pl.patrykzygo.videospace.repository.LocalStoreRepository
 import pl.patrykzygo.videospace.repository.RepositoryResponse
 import javax.inject.Inject
@@ -22,13 +24,17 @@ class MovieDetailsViewModel @Inject constructor(private val repo: LocalStoreRepo
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> get() = _errorMessage
 
+    private val _genres = LiveEvent<List<String>>()
+    val genres: LiveData<List<String>> get() = _genres
 
     fun setMovie(movie: Movie?) {
         if (movie != null) {
             viewModelScope.launch(Dispatchers.IO) {
                 val response = repo.getSpecificMovie(movie.id)
                 if (response.status == RepositoryResponse.Status.SUCCESS) {
-                    _movie.postValue(mapMovieDetailsResponseToMovie(response.data!!))
+                    val mappedMovie = mapMovieDetailsResponseToMovie(response.data!!)
+                    _movie.postValue(mappedMovie)
+                    _genres.postValue(mappedMovie.genres)
                 } else if (response.status == RepositoryResponse.Status.ERROR) {
                     _errorMessage.postValue(response.message!!)
                 }
@@ -41,6 +47,9 @@ class MovieDetailsViewModel @Inject constructor(private val repo: LocalStoreRepo
         if (movie != null){
             movie.isFavourite = !movie.isFavourite
             _movie.value = movie
+            viewModelScope.launch(Dispatchers.IO){
+                repo.insertFavourite(mapMovieToMovieEntity(movie))
+            }
         }
 
     }
