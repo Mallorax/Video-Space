@@ -1,4 +1,4 @@
-package pl.patrykzygo.videospace.ui.movies_list
+package pl.patrykzygo.videospace.ui.movies_gallery
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,11 +7,11 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import pl.patrykzygo.videospace.data.app.Movie
-import pl.patrykzygo.videospace.databinding.MovieItemBinding
-import pl.patrykzygo.videospace.databinding.MovieItemBindingImpl
+import pl.patrykzygo.videospace.databinding.MovieGalleryItemBinding
+import pl.patrykzygo.videospace.databinding.MovieGalleryItemBindingImpl
 
-class MoviesListRecyclerAdapter(private val onMovieClickListener: OnMovieClickListener) :
-    PagingDataAdapter<Movie, MoviesListRecyclerAdapter.MovieItemViewHolder>(DiffCallback) {
+class MoviesGalleryRecyclerAdapter(private val onMovieClickListener: OnMovieClickListener) :
+    PagingDataAdapter<Movie, MoviesGalleryRecyclerAdapter.MovieItemViewHolder>(DiffCallback) {
 
     override fun onBindViewHolder(holder: MovieItemViewHolder, position: Int) {
         val movie = getItem(position)
@@ -26,11 +26,11 @@ class MoviesListRecyclerAdapter(private val onMovieClickListener: OnMovieClickLi
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = MovieItemBindingImpl.inflate(inflater, parent, false)
+        val binding = MovieGalleryItemBindingImpl.inflate(inflater, parent, false)
         return MovieItemViewHolder(binding)
     }
 
-    class MovieItemViewHolder(val binding: MovieItemBinding) :
+    class MovieItemViewHolder(val binding: MovieGalleryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie) {

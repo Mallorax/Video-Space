@@ -3,7 +3,6 @@ package pl.patrykzygo.videospace.ui
 import android.os.Bundle
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.fragment.app.Fragment
-import androidx.navigation.testing.TestNavHostController
 import androidx.test.filters.MediumTest
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -13,6 +12,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import pl.patrykzygo.videospace.R
+import pl.patrykzygo.videospace.TestFragmentFactory
 import pl.patrykzygo.videospace.UICoroutineRule
 import pl.patrykzygo.videospace.others.MoviesRequestType
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
@@ -34,14 +34,11 @@ class DefaultListsFragmentTest {
     var coroutineRule = UICoroutineRule()
 
     @Inject
-    lateinit var testNavController: TestNavHostController
-
-    var testFragmentFactory: TestFragmentFactory? = null
+    lateinit var testFragmentFactory: TestFragmentFactory
 
     @Before
     fun setup() {
         hiltRule.inject()
-        testFragmentFactory = TestFragmentFactory(testNavController)
     }
 
 
@@ -54,7 +51,7 @@ class DefaultListsFragmentTest {
             parentFragmentManager.setFragmentResult("movieResult", bundle)
         }
 
-        assertThat(testNavController.currentDestination?.id).isEqualTo(R.id.movie_details)
+        assertThat(testFragmentFactory.navController.currentDestination?.id).isEqualTo(R.id.movie_details)
 
     }
 

@@ -4,8 +4,9 @@ import androidx.paging.PagingState
 import pl.patrykzygo.videospace.data.network.MovieResponse
 import pl.patrykzygo.videospace.repository.MoviesPagingSource
 import pl.patrykzygo.videospace.util.fakeCorrectMoviesResponseUi
+import javax.inject.Inject
 
-open class FakeMoviesPagingSource : MoviesPagingSource() {
+open class FakeMoviesPagingSource @Inject constructor() : MoviesPagingSource() {
 
     override fun setMoviesRequestType(moviesRequestType: String, movieId: Int) {}
 

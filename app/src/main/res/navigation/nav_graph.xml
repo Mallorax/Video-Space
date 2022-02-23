@@ -17,9 +17,9 @@
 
     <fragment
         android:id="@+id/movies_list_fragment"
-        android:name="pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment"
+        android:name="pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment"
         android:label="@string/main_app_label"
-        tools:layout="@layout/fragment_movies_list"/>
+        tools:layout="@layout/fragment_movies_gallery"/>
 
     <fragment
         android:id="@+id/movies_modal_bottom_sheet"

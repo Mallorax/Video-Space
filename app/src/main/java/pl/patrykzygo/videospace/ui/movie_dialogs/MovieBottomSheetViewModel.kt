@@ -10,13 +10,15 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.mapMovieToMovieEntity
+import pl.patrykzygo.videospace.di.LocalRepoImplQualifier
 import pl.patrykzygo.videospace.repository.LocalStoreRepository
 import pl.patrykzygo.videospace.repository.RepositoryResponse
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieBottomSheetViewModel
-@Inject constructor(private val repository: LocalStoreRepository) : ViewModel() {
+@Inject constructor(
+    @LocalRepoImplQualifier private val repository: LocalStoreRepository) : ViewModel() {
 
 
     private val _movie = MutableLiveData<Movie?>()

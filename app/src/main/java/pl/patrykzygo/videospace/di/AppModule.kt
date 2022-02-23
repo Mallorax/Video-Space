@@ -15,6 +15,10 @@ import pl.patrykzygo.videospace.networking.MoviesEntryPoint
 import pl.patrykzygo.videospace.others.DbConstants.VIDEO_SPACE_DB_NAME
 import pl.patrykzygo.videospace.others.Paths.GENRES_BASE_URL
 import pl.patrykzygo.videospace.others.Paths.MOVIES_BASE_URL
+import pl.patrykzygo.videospace.repository.LocalStoreRepository
+import pl.patrykzygo.videospace.repository.LocalStoreRepositoryImpl
+import pl.patrykzygo.videospace.repository.MoviesPagingSource
+import pl.patrykzygo.videospace.repository.MoviesPagingSourceImpl
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -54,6 +58,7 @@ object AppModule {
         ).build()
     }
 
+
     @Singleton
     @Provides
     fun provideGenresDao(db: VideoSpaceDatabase): GenreDao {
@@ -64,5 +69,22 @@ object AppModule {
     @Provides
     fun provideMoviesDao(db: VideoSpaceDatabase): MoviesDao {
         return db.moviesDao()
+    }
+
+    @LocalRepoImplQualifier
+    @Provides
+    fun provideLocalStoreRepository(
+        moviesDao: MoviesDao,
+        genreDao: GenreDao,
+        moviesEntryPoint: MoviesEntryPoint
+    ): LocalStoreRepository {
+        return LocalStoreRepositoryImpl(moviesDao, genreDao, moviesEntryPoint)
+    }
+
+
+    @MoviesPagingSourceImplQualifier
+    @Provides
+    fun provideMoviesPagingSource(moviesEntryPoint: MoviesEntryPoint): MoviesPagingSource {
+        return MoviesPagingSourceImpl(moviesEntryPoint)
     }
 }

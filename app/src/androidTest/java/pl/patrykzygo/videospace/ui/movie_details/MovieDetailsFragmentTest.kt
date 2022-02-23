@@ -3,7 +3,6 @@ package pl.patrykzygo.videospace.ui.movie_details
 import android.os.Bundle
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.fragment.app.Fragment
-import androidx.navigation.testing.TestNavHostController
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -21,12 +20,13 @@ import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.UICoroutineRule
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.others.MoviesRequestType
-import pl.patrykzygo.videospace.ui.TestFragmentFactory
-import pl.patrykzygo.videospace.ui.movies_list.getAverageVoteString
-import pl.patrykzygo.videospace.ui.movies_list.getVoteCountString
+import pl.patrykzygo.videospace.TestFragmentFactory
+import pl.patrykzygo.videospace.ui.movies_gallery.getAverageVoteString
+import pl.patrykzygo.videospace.ui.movies_gallery.getVoteCountString
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
 import pl.patrykzygo.videospace.util.provideMovieWithIdUi
 import javax.inject.Inject
+import javax.inject.Named
 
 @MediumTest
 @HiltAndroidTest
@@ -42,24 +42,25 @@ class MovieDetailsFragmentTest() {
     @get:Rule
     var coroutineRule = UICoroutineRule()
 
+
     @Inject
-    lateinit var testNavController: TestNavHostController
+    @Named("with_details_nav")
+    lateinit var testFragmentFactory: TestFragmentFactory
 
     lateinit var viewModel: MovieDetailsViewModel
+    lateinit var expectedMovie: Movie
 
-    var testFragmentFactory: TestFragmentFactory? = null
+
 
     @Before
     fun setup() {
         hiltRule.inject()
-        testNavController.setCurrentDestination(R.id.movie_details)
-        viewModel = MovieDetailsViewModel()
-        testFragmentFactory = TestFragmentFactory(testNavController)
+        expectedMovie = provideMovieWithIdUi(1)
+
     }
 
     @Test
     fun testPutFragmentInContainer() {
-        val expectedMovie = provideMovieWithIdUi(1)
         val expectedRequestType = MoviesRequestType.SIMILAR
         var bundle: Bundle? = null
         val testFragment = Fragment()
@@ -81,7 +82,7 @@ class MovieDetailsFragmentTest() {
     fun testNavigationToSelf() {
         val movie = provideMovieWithIdUi(1)
         var resultedMovie: Movie? = null
-        testNavController.addOnDestinationChangedListener { _, _, arguments ->
+        testFragmentFactory.navController.addOnDestinationChangedListener { _, _, arguments ->
             resultedMovie = arguments?.getParcelable("movie")
         }
         launchFragmentInHiltContainer<MovieDetailsFragment>(fragmentFactory = testFragmentFactory) {
@@ -96,22 +97,21 @@ class MovieDetailsFragmentTest() {
     //view binding tests
     @Test
     fun testMovieIsTitleSet() {
-        val movie = provideMovieWithIdUi(1)
         launchFragmentInHiltContainer<MovieDetailsFragment>(fragmentFactory = testFragmentFactory) {
-            this.movie = movie
-            viewModel.setMovie(movie)
+            this.viewModel = this@MovieDetailsFragmentTest.viewModel
+            this.movie = expectedMovie
+            viewModel.setMovie(expectedMovie)
         }
-        onView(withId(R.id.movie_title)).check(matches(withText(containsString(movie.title))))
+        onView(withId(R.id.movie_title)).check(matches(withText(expectedMovie.title)))
     }
 
     @Test
     fun testIsMovieDescriptionSet() {
-        val movie = provideMovieWithIdUi(1)
         launchFragmentInHiltContainer<MovieDetailsFragment>(fragmentFactory = testFragmentFactory) {
-            this.movie = movie
-            viewModel.setMovie(movie)
+            movie = expectedMovie
+            viewModel.setMovie(expectedMovie)
         }
-        onView(withId(R.id.movie_description)).check(matches(withText(containsString(movie.overview))))
+        onView(withId(R.id.movie_description)).check(matches(withText(containsString(expectedMovie.overview))))
     }
 
     @Test
@@ -136,11 +136,11 @@ class MovieDetailsFragmentTest() {
         onView(withId(R.id.movie_vote_count)).check(
             matches(
                 withText(
-                    containsString(
-                        expectedVoteCount
-                    )
+                    expectedVoteCount
                 )
             )
         )
     }
+
+
 }

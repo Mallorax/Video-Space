@@ -1,4 +1,4 @@
-package pl.patrykzygo.videospace.ui.movies_list
+package pl.patrykzygo.videospace.ui.movies_gallery
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.ViewModelProvider
@@ -31,7 +31,7 @@ import javax.inject.Named
 @MediumTest
 @HiltAndroidTest
 @ExperimentalCoroutinesApi
-class MoviesListFragmentTest {
+class MoviesGalleryFragmentTest {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -56,9 +56,9 @@ class MoviesListFragmentTest {
     fun testIsLabelSetProperly() {
         var given: String? = null
         val expected = "test"
-        launchFragmentInHiltContainer<MoviesListFragment> {
-            val factory = MoviesListVMFactory(pagingSource)
-            viewModel = ViewModelProvider(this, factory)[MoviesListViewModel::class.java]
+        launchFragmentInHiltContainer<MoviesGalleryFragment> {
+            val factory = MoviesGalleryVMFactory(pagingSource)
+            viewModel = ViewModelProvider(this, factory)[MoviesGalleryViewModel::class.java]
             viewModel.setRequestType(expected)
             given = binding.listLabel.text.toString()
         }
@@ -67,13 +67,13 @@ class MoviesListFragmentTest {
 
     @Test
     fun clickMovieListItem_showBottomSheetDialog() {
-        launchFragmentInHiltContainer<MoviesListFragment> {
+        launchFragmentInHiltContainer<MoviesGalleryFragment> {
             val movies = PagingData.from(listOf(provideMovieWithIdUi(1), provideMovieWithIdUi(2)))
             runBlockingTest { adapter.submitData(movies) }
             this.binding.moviesListRecycler.adapter = adapter
         }
         onView(withId(R.id.movies_list_recycler)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<MoviesListRecyclerAdapter.MovieItemViewHolder>(
+            RecyclerViewActions.actionOnItemAtPosition<MoviesGalleryRecyclerAdapter.MovieItemViewHolder>(
                 0,
                 clickChildWithId(R.id.image_view_more)
             )

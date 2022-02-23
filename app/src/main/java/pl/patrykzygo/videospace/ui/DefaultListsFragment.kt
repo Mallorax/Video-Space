@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.FragmentDefaultListsBinding
 import pl.patrykzygo.videospace.others.MoviesRequestType
-import pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment
+import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
 
 @AndroidEntryPoint
 class DefaultListsFragment : Fragment() {
@@ -43,24 +43,24 @@ class DefaultListsFragment : Fragment() {
         addFragmentToContainer(
             binding.mostPopularMoviesContainer.id,
             MoviesRequestType.POPULAR,
-            MoviesListFragment()
+            MoviesGalleryFragment()
         )
         addFragmentToContainer(
             binding.topRatedMoviesContainer.id,
             MoviesRequestType.TOP_RATED,
-            MoviesListFragment()
+            MoviesGalleryFragment()
         )
 
         addFragmentToContainer(
             binding.nowPlayingMoviesContainer.id,
             MoviesRequestType.NOW_PLAYING,
-            MoviesListFragment()
+            MoviesGalleryFragment()
         )
 
         addFragmentToContainer(
             binding.upcomingMoviesContainer.id,
             MoviesRequestType.UPCOMING,
-            MoviesListFragment()
+            MoviesGalleryFragment()
         )
     }
 

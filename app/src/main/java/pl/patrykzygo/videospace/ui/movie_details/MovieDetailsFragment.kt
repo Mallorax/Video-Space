@@ -8,7 +8,6 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -20,8 +19,10 @@ import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.FragmentMovieDetailsBinding
 import pl.patrykzygo.videospace.others.MoviesRequestType
-import pl.patrykzygo.videospace.ui.movie_dialogs.MovieBottomSheetViewModel
-import pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment
+import pl.patrykzygo.videospace.ui.MainViewModelFactory
+import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
+import javax.inject.Inject
+import javax.inject.Named
 
 @AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
@@ -31,6 +32,10 @@ class MovieDetailsFragment : Fragment() {
     lateinit var viewModel: MovieDetailsViewModel
     var movie: Movie? = null
 
+    @Inject
+    @Named("main_vm_factory")
+    lateinit var viewModelFactory: MainViewModelFactory
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,7 +43,7 @@ class MovieDetailsFragment : Fragment() {
     ): View? {
         _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
         movie = arguments?.let { MovieDetailsFragmentArgs.fromBundle(it).movie }
-        viewModel = ViewModelProvider(requireActivity())[MovieDetailsViewModel::class.java]
+        viewModel = viewModelFactory.create(MovieDetailsViewModel::class.java)
         parentFragmentManager.setFragmentResultListener("movieResult", this) { _, bundle ->
             val movie = bundle.getParcelable<Movie>("movie")
             if (movie != null) {
@@ -67,13 +72,13 @@ class MovieDetailsFragment : Fragment() {
         addMoviesListFragmentToContainer(
             binding.recommendedMoviesContainer.id,
             MoviesRequestType.RECOMMENDATIONS,
-            MoviesListFragment()
+            MoviesGalleryFragment()
         )
         binding.similarMoviesContainer.visibility = View.VISIBLE
         addMoviesListFragmentToContainer(
             binding.similarMoviesContainer.id,
             MoviesRequestType.SIMILAR,
-            MoviesListFragment()
+            MoviesGalleryFragment()
         )
     }
 

@@ -32,7 +32,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/app_bar"
-                tools:layout="@layout/fragment_movies_list" />
+                tools:layout="@layout/fragment_movies_gallery" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/top_rated_movies_container"
@@ -46,7 +46,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/most_popular_movies_container"
                 app:layout_constraintTop_toBottomOf="@+id/most_popular_movies_container"
-                tools:layout="@layout/fragment_movies_list" />
+                tools:layout="@layout/fragment_movies_gallery" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/now_playing_movies_container"
@@ -60,7 +60,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/most_popular_movies_container"
                 app:layout_constraintTop_toBottomOf="@+id/top_rated_movies_container"
-                tools:layout="@layout/fragment_movies_list" />
+                tools:layout="@layout/fragment_movies_gallery" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/upcoming_movies_container"
@@ -74,7 +74,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/most_popular_movies_container"
                 app:layout_constraintTop_toBottomOf="@+id/now_playing_movies_container"
-                tools:layout="@layout/fragment_movies_list" />
+                tools:layout="@layout/fragment_movies_gallery" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

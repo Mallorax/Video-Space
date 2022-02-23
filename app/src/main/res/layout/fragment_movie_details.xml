@@ -229,7 +229,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/movie_description"
-                    tools:layout="@layout/fragment_movies_list" />
+                    tools:layout="@layout/fragment_movies_gallery" />
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/similar_movies_container"
@@ -242,7 +242,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/recommended_movies_container"
-                    tools:layout="@layout/fragment_movies_list" />
+                    tools:layout="@layout/fragment_movies_gallery" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

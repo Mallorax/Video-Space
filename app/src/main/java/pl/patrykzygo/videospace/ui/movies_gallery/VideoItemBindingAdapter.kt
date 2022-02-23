@@ -1,4 +1,4 @@
-package pl.patrykzygo.videospace.ui.movies_list
+package pl.patrykzygo.videospace.ui.movies_gallery
 
 import android.graphics.text.LineBreaker.JUSTIFICATION_MODE_INTER_WORD
 import android.os.Build

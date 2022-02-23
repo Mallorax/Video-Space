@@ -1,38 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/movies_list_vertical_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        tools:listitem="@layout/movie_list_item"/>
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/list_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/small_margin"
-            android:layout_marginTop="@dimen/small_margin"
-            android:text="@string/default_movies_list_label"
-            android:textSize="@dimen/section_text_size" />
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/movies_list_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/small_margin"
-            android:layout_marginTop="@dimen/small_margin"
-            android:layout_marginEnd="@dimen/small_margin"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/movie_item" />
-
-    </LinearLayout>
-
-</layout>
+</LinearLayout>

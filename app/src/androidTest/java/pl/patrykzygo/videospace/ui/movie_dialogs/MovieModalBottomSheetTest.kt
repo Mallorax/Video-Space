@@ -26,10 +26,10 @@ import pl.patrykzygo.videospace.UICoroutineRule
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.util.getOrAwaitValueTestAndroid
 import pl.patrykzygo.videospace.repository.MoviesPagingSource
-import pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment
-import pl.patrykzygo.videospace.ui.movies_list.MoviesListRecyclerAdapter
-import pl.patrykzygo.videospace.ui.movies_list.MoviesListVMFactory
-import pl.patrykzygo.videospace.ui.movies_list.MoviesListViewModel
+import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
+import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryRecyclerAdapter
+import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryVMFactory
+import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryViewModel
 import pl.patrykzygo.videospace.util.clickChildWithId
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
 import pl.patrykzygo.videospace.util.provideMovieWithIdUi
@@ -69,15 +69,15 @@ class MovieModalBottomSheetTest {
     //Test is sensitive to tint changes in layout's ImageView
     @Test
     fun testIfFavouriteImageWasChangedOnClick() {
-        launchFragmentInHiltContainer<MoviesListFragment> {
-            val factory = MoviesListVMFactory(pagingSource)
-            viewModel = ViewModelProvider(this, factory)[MoviesListViewModel::class.java]
+        launchFragmentInHiltContainer<MoviesGalleryFragment> {
+            val factory = MoviesGalleryVMFactory(pagingSource)
+            viewModel = ViewModelProvider(this, factory)[MoviesGalleryViewModel::class.java]
             val movies = PagingData.from(listOf(provideMovieWithIdUi(1), provideMovieWithIdUi(2)))
             runBlockingTest { adapter.submitData(movies) }
             this.binding.moviesListRecycler.adapter = adapter
         }
         onView(withId(R.id.movies_list_recycler)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<MoviesListRecyclerAdapter.MovieItemViewHolder>(
+            RecyclerViewActions.actionOnItemAtPosition<MoviesGalleryRecyclerAdapter.MovieItemViewHolder>(
                 0,
                 clickChildWithId(R.id.image_view_more)
             )
@@ -95,15 +95,15 @@ class MovieModalBottomSheetTest {
     //Test is sensitive to tint changes in layout's ImageView
     @Test
     fun testIfIsOnWatchLaterImageWasChangedOnClick() {
-        launchFragmentInHiltContainer<MoviesListFragment> {
-            val factory = MoviesListVMFactory(pagingSource)
-            viewModel = ViewModelProvider(this, factory)[MoviesListViewModel::class.java]
+        launchFragmentInHiltContainer<MoviesGalleryFragment> {
+            val factory = MoviesGalleryVMFactory(pagingSource)
+            viewModel = ViewModelProvider(this, factory)[MoviesGalleryViewModel::class.java]
             val movies = PagingData.from(listOf(provideMovieWithIdUi(1), provideMovieWithIdUi(2)))
             runBlockingTest { adapter.submitData(movies) }
             this.binding.moviesListRecycler.adapter = adapter
         }
         onView(withId(R.id.movies_list_recycler)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<MoviesListRecyclerAdapter.MovieItemViewHolder>(
+            RecyclerViewActions.actionOnItemAtPosition<MoviesGalleryRecyclerAdapter.MovieItemViewHolder>(
                 0,
                 clickChildWithId(R.id.image_view_more)
             )
@@ -134,9 +134,9 @@ class MovieModalBottomSheetTest {
     fun testIfFragmentResultIsSet() {
         val expectedMovie = provideMovieWithIdUi(1)
         var resultedMovie: Movie? = null
-        launchFragmentInHiltContainer<MoviesListFragment> {
-            val factory = MoviesListVMFactory(pagingSource)
-            viewModel = ViewModelProvider(this, factory)[MoviesListViewModel::class.java]
+        launchFragmentInHiltContainer<MoviesGalleryFragment> {
+            val factory = MoviesGalleryVMFactory(pagingSource)
+            viewModel = ViewModelProvider(this, factory)[MoviesGalleryViewModel::class.java]
             val movies = PagingData.from(listOf(provideMovieWithIdUi(1), provideMovieWithIdUi(2)))
             runBlockingTest { adapter.submitData(movies) }
             this.binding.moviesListRecycler.adapter = adapter
@@ -145,7 +145,7 @@ class MovieModalBottomSheetTest {
             }
         }
         onView(withId(R.id.movies_list_recycler)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<MoviesListRecyclerAdapter.MovieItemViewHolder>(
+            RecyclerViewActions.actionOnItemAtPosition<MoviesGalleryRecyclerAdapter.MovieItemViewHolder>(
                 0,
                 clickChildWithId(R.id.image_view_more)
             )

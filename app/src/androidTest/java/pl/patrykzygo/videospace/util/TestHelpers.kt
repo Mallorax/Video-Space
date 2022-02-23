@@ -62,7 +62,7 @@ fun provideMovieWithIdUi(id: Int): Movie {
         false, "", listOf(), id,
         "lang", "title $id", "overview",
         0.0, "poster $id", "release date",
-        "title", false, 1.00, 323
+        "title $id", false, 1.00, 323
     )
 }
 
