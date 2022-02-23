@@ -62,7 +62,6 @@ object TestAppModule {
 
     @FakeMoviePagingSourceQualifier
     @Provides
-    @Named("fake_movies_source")
     fun provideFakeMoviesSource(): MoviesPagingSource {
         return FakeMoviesPagingSource()
     }
@@ -82,7 +81,7 @@ object TestAppModule {
     @Named("with_details_nav")
     fun providesTestFragmentFactory(
         testNavHostController: TestNavHostController,
-        viewModelFactory: MainViewModelFactory
+        @Named("test_vm_factory") viewModelFactory: MainViewModelFactory
     ): TestFragmentFactory {
         testNavHostController.setCurrentDestination(R.id.movie_details)
         return TestFragmentFactory(testNavHostController, viewModelFactory)
