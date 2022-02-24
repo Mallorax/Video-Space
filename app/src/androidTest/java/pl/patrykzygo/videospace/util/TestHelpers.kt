@@ -60,7 +60,7 @@ private fun fakeMoviesResponseListUi(page: Int): List<MovieResponse> {
 fun provideMovieWithIdUi(id: Int): Movie {
     return Movie(
         false, "", listOf(), id,
-        "lang", "title $id", "overview",
+        "lang", "title $id", "descritpion $id",
         0.0, "poster $id", "release date",
         "title $id", false, 1.00, 323
     )

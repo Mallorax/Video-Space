@@ -10,8 +10,7 @@ import pl.patrykzygo.videospace.repository.MoviesPagingSource
 import javax.inject.Inject
 
 @HiltViewModel
-class MoviesGalleryViewModel @Inject constructor(
-    @MoviesPagingSourceImplQualifier private val repo: MoviesPagingSource) :
+class MoviesGalleryViewModel @Inject constructor(@MoviesPagingSourceImplQualifier private val repo: MoviesPagingSource) :
     ViewModel() {
 
     private var _requestType = MutableLiveData<String>()

@@ -39,9 +39,9 @@ open class FakeLocalStoreRepositoryAndroid @Inject constructor() : LocalStoreRep
     private fun getMovieDetailsResponseWithId(id: Int): MovieDetailsResponse {
         return MovieDetailsResponse(
             "", "id", false, "title $id",
-            "", 123, listOf(), 2.43, id, 23,
+            "", 123, listOf(), 2.43, id, 323,
             45234543, "descritpion $id", "orginal title $id",
-            34324, "", "date $id", 2.03, "",
+            34324, "", "date $id", 1.00, "",
             false, "", ""
         )
     }

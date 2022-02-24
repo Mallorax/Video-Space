@@ -17,8 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieBottomSheetViewModel
-@Inject constructor(
-    @LocalRepoImplQualifier private val repository: LocalStoreRepository) : ViewModel() {
+@Inject constructor(@LocalRepoImplQualifier private val repository: LocalStoreRepository) : ViewModel() {
 
 
     private val _movie = MutableLiveData<Movie?>()

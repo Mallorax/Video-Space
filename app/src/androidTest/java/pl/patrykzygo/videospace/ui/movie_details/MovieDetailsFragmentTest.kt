@@ -46,7 +46,6 @@ class MovieDetailsFragmentTest() {
     @Inject
     lateinit var testFragmentFactory: TestFragmentFactory
 
-    lateinit var viewModel: MovieDetailsViewModel
     lateinit var expectedMovie: Movie
 
 
@@ -98,7 +97,6 @@ class MovieDetailsFragmentTest() {
     @Test
     fun testMovieIsTitleSet() {
         launchFragmentInHiltContainer<MovieDetailsFragment>(fragmentFactory = testFragmentFactory) {
-            this.viewModel = this@MovieDetailsFragmentTest.viewModel
             this.movie = expectedMovie
             viewModel.setMovie(expectedMovie)
         }
