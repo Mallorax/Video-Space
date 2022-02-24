@@ -8,6 +8,7 @@ import pl.patrykzygo.videospace.ui.DefaultListsFragment
 import pl.patrykzygo.videospace.ui.MainViewModelFactory
 import pl.patrykzygo.videospace.ui.movie_details.MovieDetailsFragment
 import pl.patrykzygo.videospace.ui.movie_details.MovieDetailsViewModel
+import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -32,6 +33,9 @@ class TestFragmentFactory @Inject constructor(
                         Navigation.setViewNavController(fragment.requireView(), navController)
                     }
                 }
+            }
+            MoviesGalleryFragment::class.java.name -> MoviesGalleryFragment().also { fragment ->
+                fragment.viewModelFactory = viewModelFactory
             }
             else -> super.instantiate(classLoader, className)
         }

@@ -78,12 +78,10 @@ object TestAppModule {
 
 
     @Provides
-    @Named("with_details_nav")
     fun providesTestFragmentFactory(
         testNavHostController: TestNavHostController,
         @Named("test_vm_factory") viewModelFactory: MainViewModelFactory
     ): TestFragmentFactory {
-        testNavHostController.setCurrentDestination(R.id.movie_details)
         return TestFragmentFactory(testNavHostController, viewModelFactory)
     }
 

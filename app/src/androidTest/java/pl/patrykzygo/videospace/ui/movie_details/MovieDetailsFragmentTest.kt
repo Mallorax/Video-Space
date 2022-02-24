@@ -44,7 +44,6 @@ class MovieDetailsFragmentTest() {
 
 
     @Inject
-    @Named("with_details_nav")
     lateinit var testFragmentFactory: TestFragmentFactory
 
     lateinit var viewModel: MovieDetailsViewModel
@@ -56,6 +55,7 @@ class MovieDetailsFragmentTest() {
     fun setup() {
         hiltRule.inject()
         expectedMovie = provideMovieWithIdUi(1)
+        testFragmentFactory.navController.setCurrentDestination(R.id.movie_details)
 
     }
 

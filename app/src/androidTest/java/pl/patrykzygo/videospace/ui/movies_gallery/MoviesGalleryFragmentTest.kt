@@ -19,6 +19,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import pl.patrykzygo.videospace.R
+import pl.patrykzygo.videospace.TestFragmentFactory
 import pl.patrykzygo.videospace.UICoroutineRule
 import pl.patrykzygo.videospace.di.FakeMoviePagingSourceQualifier
 import pl.patrykzygo.videospace.repository.MoviesPagingSource
@@ -44,9 +45,9 @@ class MoviesGalleryFragmentTest {
     var coroutineRule = UICoroutineRule()
 
 
+
     @Inject
-    @FakeMoviePagingSourceQualifier
-    lateinit var pagingSource: MoviesPagingSource
+    lateinit var testFragmentFactory: TestFragmentFactory
 
     @Before
     fun setup() {
@@ -57,9 +58,7 @@ class MoviesGalleryFragmentTest {
     fun testIsLabelSetProperly() {
         var given: String? = null
         val expected = "test"
-        launchFragmentInHiltContainer<MoviesGalleryFragment> {
-            val factory = MoviesGalleryVMFactory(pagingSource)
-            viewModel = ViewModelProvider(this, factory)[MoviesGalleryViewModel::class.java]
+        launchFragmentInHiltContainer<MoviesGalleryFragment>(fragmentFactory = testFragmentFactory) {
             viewModel.setRequestType(expected)
             given = binding.listLabel.text.toString()
         }
@@ -68,7 +67,7 @@ class MoviesGalleryFragmentTest {
 
     @Test
     fun clickMovieListItem_showBottomSheetDialog() {
-        launchFragmentInHiltContainer<MoviesGalleryFragment> {
+        launchFragmentInHiltContainer<MoviesGalleryFragment>(fragmentFactory = testFragmentFactory) {
             val movies = PagingData.from(listOf(provideMovieWithIdUi(1), provideMovieWithIdUi(2)))
             runBlockingTest { adapter.submitData(movies) }
             this.binding.moviesListRecycler.adapter = adapter
