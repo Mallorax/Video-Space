@@ -28,9 +28,8 @@ class TestFragmentFactory @Inject constructor(
                     }
                 }
             }
-            MovieDetailsFragment::class.java.name -> MovieDetailsFragment().also { fragment ->
+            MovieDetailsFragment::class.java.name -> MovieDetailsFragment(viewModelFactory).also { fragment ->
                 fragment.movie = provideMovieWithIdUi(1)
-                fragment.viewModelFactory = viewModelFactory
                 fragment.viewLifecycleOwnerLiveData.observeForever {
                     if (it != null) {
                         Navigation.setViewNavController(fragment.requireView(), navController)
