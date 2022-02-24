@@ -15,9 +15,8 @@ import pl.patrykzygo.videospace.repository.LocalStoreRepository
 import pl.patrykzygo.videospace.repository.RepositoryResponse
 import javax.inject.Inject
 
-@HiltViewModel
 class MovieBottomSheetViewModel
-@Inject constructor(@LocalRepoImplQualifier private val repository: LocalStoreRepository) : ViewModel() {
+constructor(private val repository: LocalStoreRepository) : ViewModel() {
 
 
     private val _movie = MutableLiveData<Movie?>()

@@ -19,8 +19,11 @@ import pl.patrykzygo.videospace.repository.LocalStoreRepository
 import pl.patrykzygo.videospace.repository.LocalStoreRepositoryImpl
 import pl.patrykzygo.videospace.repository.MoviesPagingSource
 import pl.patrykzygo.videospace.repository.MoviesPagingSourceImpl
+import pl.patrykzygo.videospace.ui.DefaultFragmentFactory
+import pl.patrykzygo.videospace.ui.MainViewModelFactory
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -86,5 +89,20 @@ object AppModule {
     @Provides
     fun provideMoviesPagingSource(moviesEntryPoint: MoviesEntryPoint): MoviesPagingSource {
         return MoviesPagingSourceImpl(moviesEntryPoint)
+    }
+
+    @Provides
+    @Named("main_vm_factory")
+    fun provideViewModelFactory(
+        @LocalRepoImplQualifier localStoreRepository: LocalStoreRepository,
+        @MoviesPagingSourceImplQualifier moviesPagingSource: MoviesPagingSource
+    ): MainViewModelFactory {
+        return MainViewModelFactory(localStoreRepository, moviesPagingSource)
+    }
+
+    @DefaultFragmentFactoryQualifier
+    @Provides
+    fun provideDefaultFragmentFactory(@Named("main_vm_factory") vmFactory: MainViewModelFactory): DefaultFragmentFactory{
+        return DefaultFragmentFactory(vmFactory)
     }
 }

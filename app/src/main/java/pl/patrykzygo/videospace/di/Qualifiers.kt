@@ -7,3 +7,6 @@ annotation class LocalRepoImplQualifier
 
 @Qualifier
 annotation class MoviesPagingSourceImplQualifier
+
+@Qualifier
+annotation class DefaultFragmentFactoryQualifier

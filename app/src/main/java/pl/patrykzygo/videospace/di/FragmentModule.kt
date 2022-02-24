@@ -13,13 +13,6 @@ import javax.inject.Named
 @InstallIn(FragmentComponent::class)
 object FragmentModule {
 
-    @Provides
-    @Named("main_vm_factory")
-    fun provideViewModelFactory(
-        @LocalRepoImplQualifier localStoreRepository: LocalStoreRepository,
-        @MoviesPagingSourceImplQualifier moviesPagingSource: MoviesPagingSource
-    ): MainViewModelFactory {
-        return MainViewModelFactory(localStoreRepository, moviesPagingSource)
-    }
+
 
 }

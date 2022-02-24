@@ -25,16 +25,13 @@ import javax.inject.Inject
 import javax.inject.Named
 
 @AndroidEntryPoint
-class MovieDetailsFragment : Fragment() {
+class MovieDetailsFragment constructor(private val viewModelFactory: MainViewModelFactory) : Fragment() {
 
     private var _binding: FragmentMovieDetailsBinding? = null
     val binding get() = _binding!!
     lateinit var viewModel: MovieDetailsViewModel
     var movie: Movie? = null
 
-    @Inject
-    @Named("main_vm_factory")
-    lateinit var viewModelFactory: MainViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater,
