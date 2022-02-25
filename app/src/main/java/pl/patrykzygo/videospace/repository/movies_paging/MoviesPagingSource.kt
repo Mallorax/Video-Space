@@ -1,4 +1,4 @@
-package pl.patrykzygo.videospace.repository
+package pl.patrykzygo.videospace.repository.movies_paging
 
 import androidx.paging.PagingSource
 import pl.patrykzygo.videospace.data.network.MovieResponse

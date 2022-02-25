@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import pl.patrykzygo.videospace.di.LocalRepoImplQualifier
 import pl.patrykzygo.videospace.di.MoviesPagingSourceImplQualifier
-import pl.patrykzygo.videospace.repository.LocalStoreRepository
-import pl.patrykzygo.videospace.repository.MoviesPagingSource
+import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
+import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
 import pl.patrykzygo.videospace.ui.movie_details.MovieDetailsViewModel
 import pl.patrykzygo.videospace.ui.movie_dialogs.MovieBottomSheetViewModel
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryViewModel

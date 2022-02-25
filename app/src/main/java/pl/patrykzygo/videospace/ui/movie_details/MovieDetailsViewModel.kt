@@ -5,20 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.mapMovieDetailsResponseToMovie
 import pl.patrykzygo.videospace.data.mapMovieToMovieEntity
-import pl.patrykzygo.videospace.di.LocalRepoImplQualifier
-import pl.patrykzygo.videospace.repository.LocalStoreRepository
+import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
 import pl.patrykzygo.videospace.repository.RepositoryResponse
-import javax.inject.Inject
 
 
 class MovieDetailsViewModel constructor(
-    private val repo: LocalStoreRepository) : ViewModel() {
+    private val repo: LocalStoreRepository
+) : ViewModel() {
 
     private val _movie = MutableLiveData<Movie?>()
     val movie: LiveData<Movie?> get() = _movie

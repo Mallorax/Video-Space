@@ -1,7 +1,9 @@
 package pl.patrykzygo.videospace.networking
 
 import pl.patrykzygo.videospace.BuildConfig
+import pl.patrykzygo.videospace.data.network.EntryPointMoviesResponse
 import pl.patrykzygo.videospace.others.SortOptions
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -13,5 +15,5 @@ interface DiscoverEntryPoint {
         @Query("sort_by") sortOptions: String = SortOptions.POPULARITY_DESC,
         @Query("page") page: Int = 1,
         @Query("with_genre") includedGenres: String
-    )
+    ): Response<EntryPointMoviesResponse>
 }

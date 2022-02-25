@@ -2,12 +2,9 @@ package pl.patrykzygo.videospace.ui.movies_gallery
 
 import androidx.lifecycle.*
 import androidx.paging.*
-import dagger.hilt.android.lifecycle.HiltViewModel
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.mapMoviesResponseToMovie
-import pl.patrykzygo.videospace.di.MoviesPagingSourceImplQualifier
-import pl.patrykzygo.videospace.repository.MoviesPagingSource
-import javax.inject.Inject
+import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
 
 class MoviesGalleryViewModel constructor(private val repo: MoviesPagingSource) :
     ViewModel() {

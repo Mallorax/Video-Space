@@ -2,7 +2,7 @@ package pl.patrykzygo.videospace
 
 import androidx.paging.PagingState
 import pl.patrykzygo.videospace.data.network.MovieResponse
-import pl.patrykzygo.videospace.repository.MoviesPagingSource
+import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
 import pl.patrykzygo.videospace.util.fakeCorrectMoviesResponseUi
 import javax.inject.Inject
 

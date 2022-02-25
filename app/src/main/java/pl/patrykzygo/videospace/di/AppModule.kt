@@ -17,10 +17,12 @@ import pl.patrykzygo.videospace.others.DbConstants.VIDEO_SPACE_DB_NAME
 import pl.patrykzygo.videospace.others.Paths.DISCOVER_BASE_URL
 import pl.patrykzygo.videospace.others.Paths.GENRES_BASE_URL
 import pl.patrykzygo.videospace.others.Paths.MOVIES_BASE_URL
-import pl.patrykzygo.videospace.repository.LocalStoreRepository
-import pl.patrykzygo.videospace.repository.LocalStoreRepositoryImpl
-import pl.patrykzygo.videospace.repository.MoviesPagingSource
-import pl.patrykzygo.videospace.repository.MoviesPagingSourceImpl
+import pl.patrykzygo.videospace.repository.genre_paging.GenrePagingSource
+import pl.patrykzygo.videospace.repository.genre_paging.GenrePagingSourceImpl
+import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
+import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepositoryImpl
+import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
+import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSourceImpl
 import pl.patrykzygo.videospace.ui.DefaultFragmentFactory
 import pl.patrykzygo.videospace.ui.MainViewModelFactory
 import retrofit2.Retrofit
@@ -101,6 +103,12 @@ object AppModule {
     @Provides
     fun provideMoviesPagingSource(moviesEntryPoint: MoviesEntryPoint): MoviesPagingSource {
         return MoviesPagingSourceImpl(moviesEntryPoint)
+    }
+
+    @GenrePagingSourceImplQualifier
+    @Provides
+    fun provideGenrePagingSource(discoverEntryPoint: DiscoverEntryPoint): GenrePagingSource{
+        return GenrePagingSourceImpl(discoverEntryPoint)
     }
 
     @Provides

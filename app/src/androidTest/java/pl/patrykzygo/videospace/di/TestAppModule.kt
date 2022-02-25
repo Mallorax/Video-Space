@@ -16,8 +16,8 @@ import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.TestFragmentFactory
 import pl.patrykzygo.videospace.data.local.VideoSpaceDatabase
 import pl.patrykzygo.videospace.data.mapMovieToMovieEntity
-import pl.patrykzygo.videospace.repository.LocalStoreRepository
-import pl.patrykzygo.videospace.repository.MoviesPagingSource
+import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
+import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
 import pl.patrykzygo.videospace.ui.MainViewModelFactory
 import pl.patrykzygo.videospace.util.provideMovieWithIdUi
 import javax.inject.Named

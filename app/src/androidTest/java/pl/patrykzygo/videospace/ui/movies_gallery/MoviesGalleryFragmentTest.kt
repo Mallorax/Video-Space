@@ -1,7 +1,6 @@
 package pl.patrykzygo.videospace.ui.movies_gallery
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagingData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -21,13 +20,10 @@ import org.junit.Test
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.TestFragmentFactory
 import pl.patrykzygo.videospace.UICoroutineRule
-import pl.patrykzygo.videospace.di.FakeMoviePagingSourceQualifier
-import pl.patrykzygo.videospace.repository.MoviesPagingSource
 import pl.patrykzygo.videospace.util.clickChildWithId
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
 import pl.patrykzygo.videospace.util.provideMovieWithIdUi
 import javax.inject.Inject
-import javax.inject.Named
 
 
 @MediumTest

@@ -10,3 +10,6 @@ annotation class MoviesPagingSourceImplQualifier
 
 @Qualifier
 annotation class DefaultFragmentFactoryQualifier
+
+@Qualifier
+annotation class GenrePagingSourceImplQualifier

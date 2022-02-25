@@ -1,8 +1,8 @@
-package pl.patrykzygo.videospace.repository
+package pl.patrykzygo.videospace.repository.local_store
 
 import pl.patrykzygo.videospace.data.local.MovieEntity
-import pl.patrykzygo.videospace.data.network.MovieResponse
 import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
+import pl.patrykzygo.videospace.repository.RepositoryResponse
 
 interface LocalStoreRepository {
 

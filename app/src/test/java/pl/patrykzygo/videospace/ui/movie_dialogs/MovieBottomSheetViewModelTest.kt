@@ -14,7 +14,7 @@ import pl.patrykzygo.videospace.MainCoroutineRule
 import pl.patrykzygo.videospace.data.mapMovieToMovieEntity
 import pl.patrykzygo.videospace.getOrAwaitValueTest
 import pl.patrykzygo.videospace.repository.FakeLocalStoreRepository
-import pl.patrykzygo.videospace.repository.LocalStoreRepository
+import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
 import pl.patrykzygo.videospace.util.provideMovieWithId
 
 @ExperimentalCoroutinesApi

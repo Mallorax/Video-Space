@@ -26,7 +26,7 @@ import pl.patrykzygo.videospace.UICoroutineRule
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.di.FakeMoviePagingSourceQualifier
 import pl.patrykzygo.videospace.util.getOrAwaitValueTestAndroid
-import pl.patrykzygo.videospace.repository.MoviesPagingSource
+import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryRecyclerAdapter
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryVMFactory
@@ -35,7 +35,6 @@ import pl.patrykzygo.videospace.util.clickChildWithId
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
 import pl.patrykzygo.videospace.util.provideMovieWithIdUi
 import javax.inject.Inject
-import javax.inject.Named
 
 
 //When launching this fragment by itself espresso wouldn't be able to get access to it's views.
