@@ -127,8 +127,8 @@ class MovieDetailsFragment constructor(private val viewModelFactory: MainViewMod
             chip.setTextColor(ResourcesCompat.getColor(resources, R.color.white, null))
             binding.genresChipGroup.addView(chip)
             chip.setOnClickListener {
-                //TODO make navigation to list of movies with specific genre
-                Snackbar.make(requireView(), "Navigation here", Snackbar.LENGTH_LONG).show()
+                val action = MovieDetailsFragmentDirections.actionMovieDetailsToMoviesListFragment(genre)
+                findNavController().navigate(action)
             }
         }
     }

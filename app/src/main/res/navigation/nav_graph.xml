@@ -16,7 +16,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/movies_list_fragment"
+        android:id="@+id/movies_gallery_fragment"
         android:name="pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment"
         android:label="@string/main_app_label"
         tools:layout="@layout/fragment_movies_gallery"/>
@@ -26,6 +26,23 @@
         android:name="pl.patrykzygo.videospace.ui.movie_dialogs.MovieModalBottomSheet"
         android:label="@string/main_app_label"
         tools:layout="@layout/movie_bottom_sheet"/>
+
+    <fragment
+        android:id="@+id/movies_list_fragment"
+        android:name="pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment"
+        android:label="{genre}"
+        tools:layout="@layout/fragment_movies_list">
+
+        <argument
+            android:name="genre"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_movies_list_fragment_to_movie_details"
+            app:destination="@id/movie_details"
+            app:launchSingleTop="true" />
+
+    </fragment>
+
 
     <fragment
         android:id="@+id/movie_details"
@@ -41,6 +58,9 @@
             android:id="@+id/action_movie_details_self"
             app:launchSingleTop="true"
             app:destination="@id/movie_details" />
+        <action
+            android:id="@+id/action_movie_details_to_movies_list_fragment"
+            app:destination="@id/movies_list_fragment" />
 
     </fragment>
 
