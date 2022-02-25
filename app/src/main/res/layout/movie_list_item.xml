@@ -16,12 +16,13 @@
 
         <ImageView
             android:id="@+id/movie_poster"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/small_margin"
             app:layout_constraintDimensionRatio="2:3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/movie_list_item_left_guideline"
             app:moviePoster="@{movie.posterPath}"
             app:srcCompat="@drawable/ic_launcher_background"
             tools:layout_editor_absoluteX="16dp"
@@ -32,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:maxLines="5"
             android:fontFamily="@font/averia_serif_libre"
             android:text="@{movie.title}"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -39,6 +41,13 @@
             app:layout_constraintStart_toEndOf="@id/movie_poster"
             app:layout_constraintTop_toTopOf="@id/movie_poster"
             tools:text="Movie title" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/movie_list_item_left_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.35" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

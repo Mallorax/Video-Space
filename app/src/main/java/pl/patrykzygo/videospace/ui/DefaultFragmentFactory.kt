@@ -12,13 +12,13 @@ import javax.inject.Named
 
 class DefaultFragmentFactory
 @Inject constructor(
-    @Named("named_vm") private val viewModelFactory: MainViewModelFactory
+    @Named("main_vm_factory") private val viewModelFactory: MainViewModelFactory
 ) : FragmentFactory() {
 
     override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
         return when (className) {
             DefaultListsFragment::class.java.name -> DefaultListsFragment()
-            MoviesListFragment::class.java.name -> MoviesListFragment()
+            MoviesListFragment::class.java.name -> MoviesListFragment(viewModelFactory)
             MoviesGalleryFragment::class.java.name -> MoviesGalleryFragment()
             MovieModalBottomSheet::class.java.name -> MovieModalBottomSheet()
             MovieDetailsFragment::class.java.name -> MovieDetailsFragment(viewModelFactory)

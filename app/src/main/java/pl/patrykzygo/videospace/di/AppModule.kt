@@ -93,9 +93,10 @@ object AppModule {
     fun provideLocalStoreRepository(
         moviesDao: MoviesDao,
         genreDao: GenreDao,
-        moviesEntryPoint: MoviesEntryPoint
+        moviesEntryPoint: MoviesEntryPoint,
+        genresEntryPoint: GenresEntryPoint
     ): LocalStoreRepository {
-        return LocalStoreRepositoryImpl(moviesDao, genreDao, moviesEntryPoint)
+        return LocalStoreRepositoryImpl(moviesDao, genreDao, moviesEntryPoint, genresEntryPoint)
     }
 
 
@@ -115,9 +116,10 @@ object AppModule {
     @Named("main_vm_factory")
     fun provideViewModelFactory(
         @LocalRepoImplQualifier localStoreRepository: LocalStoreRepository,
-        @MoviesPagingSourceImplQualifier moviesPagingSource: MoviesPagingSource
+        @MoviesPagingSourceImplQualifier moviesPagingSource: MoviesPagingSource,
+        @GenrePagingSourceImplQualifier genresPagingSource: GenrePagingSource
     ): MainViewModelFactory {
-        return MainViewModelFactory(localStoreRepository, moviesPagingSource)
+        return MainViewModelFactory(localStoreRepository, moviesPagingSource, genresPagingSource)
     }
 
     @DefaultFragmentFactoryQualifier

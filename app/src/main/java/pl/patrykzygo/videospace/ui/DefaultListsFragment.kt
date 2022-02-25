@@ -16,7 +16,7 @@ import pl.patrykzygo.videospace.others.MoviesRequestType
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
 
 @AndroidEntryPoint
-class DefaultListsFragment : Fragment() {
+class DefaultListsFragment() : Fragment() {
 
     private var _binding: FragmentDefaultListsBinding? = null
     val binding get() = _binding!!
