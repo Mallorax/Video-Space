@@ -10,9 +10,11 @@ import dagger.hilt.components.SingletonComponent
 import pl.patrykzygo.videospace.data.local.GenreDao
 import pl.patrykzygo.videospace.data.local.MoviesDao
 import pl.patrykzygo.videospace.data.local.VideoSpaceDatabase
+import pl.patrykzygo.videospace.networking.DiscoverEntryPoint
 import pl.patrykzygo.videospace.networking.GenresEntryPoint
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
 import pl.patrykzygo.videospace.others.DbConstants.VIDEO_SPACE_DB_NAME
+import pl.patrykzygo.videospace.others.Paths.DISCOVER_BASE_URL
 import pl.patrykzygo.videospace.others.Paths.GENRES_BASE_URL
 import pl.patrykzygo.videospace.others.Paths.MOVIES_BASE_URL
 import pl.patrykzygo.videospace.repository.LocalStoreRepository
@@ -48,6 +50,16 @@ object AppModule {
             .baseUrl(GENRES_BASE_URL)
             .build()
             .create(GenresEntryPoint::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDiscoverEntryPoint(): DiscoverEntryPoint {
+        return Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(DISCOVER_BASE_URL)
+            .build()
+            .create(DiscoverEntryPoint::class.java)
     }
 
     @Singleton
