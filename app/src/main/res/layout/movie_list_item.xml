@@ -12,33 +12,38 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?selectableItemBackground">
 
         <ImageView
             android:id="@+id/movie_poster"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_margin="@dimen/small_margin"
             app:layout_constraintDimensionRatio="2:3"
+            app:layout_constraintEnd_toStartOf="@id/movie_list_item_left_guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/movie_list_item_left_guideline"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:moviePoster="@{movie.posterPath}"
-            app:srcCompat="@drawable/ic_launcher_background"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="28dp" />
+            app:srcCompat="@drawable/ic_launcher_background" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/movie_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:maxLines="5"
+            android:layout_marginEnd="16dp"
             android:fontFamily="@font/averia_serif_libre"
+            android:maxLines="5"
             android:text="@{movie.title}"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintBottom_toBottomOf="@id/movie_poster"
-            app:layout_constraintStart_toEndOf="@id/movie_poster"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/movie_list_item_left_guideline"
             app:layout_constraintTop_toTopOf="@id/movie_poster"
             tools:text="Movie title" />
 
@@ -47,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.35" />
+            app:layout_constraintGuide_percent="0.3" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

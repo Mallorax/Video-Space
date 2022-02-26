@@ -17,13 +17,13 @@
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/details_fab"
             android:layout_width="wrap_content"
-            android:layout_margin="@dimen/small_margin"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
             android:backgroundTint="@color/purple_200"
             android:src="@drawable/ic_baseline_playlist_add"
-            app:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:tint="@color/white" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -151,11 +151,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
-                    app:layout_constraintStart_toEndOf="@id/stats_barrier_left"
                     app:icon="@drawable/ic_baseline_favorite_border"
                     app:iconTint="@color/icon_tint"
                     app:layout_constraintBottom_toBottomOf="@+id/poster_image_view"
                     app:layout_constraintEnd_toEndOf="@id/vertical_right"
+                    app:layout_constraintStart_toEndOf="@id/stats_barrier_left"
                     app:layout_constraintTop_toBottomOf="@id/movie_vote_count" />
 
 

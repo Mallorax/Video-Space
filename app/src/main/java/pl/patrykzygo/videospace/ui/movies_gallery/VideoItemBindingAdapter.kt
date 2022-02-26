@@ -14,8 +14,9 @@ import pl.patrykzygo.videospace.others.Paths
 @BindingAdapter("moviePoster")
 fun bindMoviePoster(imageView: ImageView, posterPath: String?) {
     if (posterPath?.isNotEmpty() == true) {
+        val path = Paths.POSTERS_BASE_URL + posterPath
         Glide.with(imageView)
-            .load(Paths.POSTERS_BASE_URL + posterPath)
+            .load(path)
             .error(R.drawable.ic_baseline_no_photography)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(imageView)
