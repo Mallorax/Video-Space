@@ -7,20 +7,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.databinding.FragmentMoviesListBinding
 import pl.patrykzygo.videospace.ui.MainViewModelFactory
-import pl.patrykzygo.videospace.ui.movie_dialogs.MovieModalBottomSheet
+import pl.patrykzygo.videospace.ui.delegate.AppBarDelegate
+import pl.patrykzygo.videospace.ui.delegate.AppBarDelegateImpl
 
 @AndroidEntryPoint
-class MoviesListFragment(val viewModelFactory: MainViewModelFactory) : Fragment() {
+class MoviesListFragment(val viewModelFactory: MainViewModelFactory) : Fragment(),
+    AppBarDelegate by AppBarDelegateImpl() {
 
     private var _binding: FragmentMoviesListBinding? = null
     val binding get() = _binding!!
     lateinit var viewModel: MoviesListViewModel
-    val adapter = createRecyclerViewAdapter()
+    private val adapter = createRecyclerViewAdapter()
 
     lateinit var movieGenre: String
 
@@ -39,7 +39,7 @@ class MoviesListFragment(val viewModelFactory: MainViewModelFactory) : Fragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpAppBar()
+        setUpAppBar(findNavController(), binding.appBar.toolbar)
         binding.lifecycleOwner = viewLifecycleOwner
         val recyclerView = binding.moviesListVerticalRecycler
         recyclerView.adapter = adapter
@@ -53,17 +53,13 @@ class MoviesListFragment(val viewModelFactory: MainViewModelFactory) : Fragment(
         })
     }
 
-    private fun setUpAppBar() {
-        val navController = findNavController()
-        val appBarConfig = AppBarConfiguration(navController.graph)
-        binding.appBar.toolbar.setupWithNavController(navController, appBarConfig)
-    }
 
     private fun createRecyclerViewAdapter(): MoviesListRecyclerAdapter {
         val adapter =
             MoviesListRecyclerAdapter(MoviesListRecyclerAdapter.OnMovieClickListener { movie, view ->
-                if (movie != null){
-                    val action = MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetails(movie)
+                if (movie != null) {
+                    val action =
+                        MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetails(movie)
                     findNavController().navigate(action)
                 }
 

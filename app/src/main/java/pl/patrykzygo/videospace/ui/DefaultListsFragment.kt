@@ -7,16 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.FragmentDefaultListsBinding
 import pl.patrykzygo.videospace.others.MoviesRequestType
+import pl.patrykzygo.videospace.ui.delegate.AppBarDelegate
+import pl.patrykzygo.videospace.ui.delegate.AppBarDelegateImpl
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
 
 @AndroidEntryPoint
-class DefaultListsFragment() : Fragment() {
+class DefaultListsFragment() : Fragment(),
+    AppBarDelegate by AppBarDelegateImpl() {
 
     private var _binding: FragmentDefaultListsBinding? = null
     val binding get() = _binding!!
@@ -25,7 +26,7 @@ class DefaultListsFragment() : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentDefaultListsBinding.inflate(inflater)
         parentFragmentManager.setFragmentResultListener("movieResult", this) { _, bundle ->
             val movie = bundle.getParcelable<Movie>("movie")
@@ -39,7 +40,7 @@ class DefaultListsFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpAppBar()
+        setUpAppBar(findNavController(), binding.appBar.toolbar)
         addFragmentToContainer(
             binding.mostPopularMoviesContainer.id,
             MoviesRequestType.POPULAR,
@@ -79,9 +80,4 @@ class DefaultListsFragment() : Fragment() {
         }
     }
 
-    fun setUpAppBar() {
-        val navController = findNavController()
-        val appBarConfig = AppBarConfiguration(navController.graph)
-        binding.appBar.toolbar.setupWithNavController(navController, appBarConfig)
-    }
 }
