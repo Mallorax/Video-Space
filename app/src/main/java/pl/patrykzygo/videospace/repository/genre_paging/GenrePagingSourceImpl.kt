@@ -3,13 +3,17 @@ package pl.patrykzygo.videospace.repository.genre_paging
 import androidx.paging.PagingState
 import pl.patrykzygo.videospace.data.network.MovieResponse
 import pl.patrykzygo.videospace.networking.DiscoverEntryPoint
+import pl.patrykzygo.videospace.repository.delegate.DelegateMovieRefreshKey
+import pl.patrykzygo.videospace.repository.delegate.DelegateMovieRefreshKeyImpl
+import pl.patrykzygo.videospace.repository.delegate.MovieCalcKeyPositionDelegate
+import pl.patrykzygo.videospace.repository.delegate.MovieCalcNextKeyDelegateImpl
 import retrofit2.HttpException
 import javax.inject.Inject
 
-//TODO: There is some temporary code duplication between here and MoviesPagingSource, don't forget to handle it
-//meant to provide movies of specific genre
 class GenrePagingSourceImpl @Inject constructor(private val entryPoint: DiscoverEntryPoint) :
-    GenrePagingSource() {
+    GenrePagingSource(),
+    MovieCalcKeyPositionDelegate by MovieCalcNextKeyDelegateImpl(),
+    DelegateMovieRefreshKey by DelegateMovieRefreshKeyImpl(){
 
     private var genreId: String = ""
 
@@ -18,10 +22,7 @@ class GenrePagingSourceImpl @Inject constructor(private val entryPoint: Discover
     }
 
     override fun getRefreshKey(state: PagingState<Int, MovieResponse>): Int? {
-        return state.anchorPosition?.let { anchorPosition ->
-            val anchorPage = state.closestPageToPosition(anchorPosition)
-            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
-        }
+        return refreshKey(state)
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieResponse> {
@@ -52,19 +53,4 @@ class GenrePagingSourceImpl @Inject constructor(private val entryPoint: Discover
         }
     }
 
-    private fun previousKey(currKey: Int): Int? {
-        return if (currKey == 1) {
-            null
-        } else {
-            currKey - 1
-        }
-    }
-
-    private fun nextKey(currKey: Int, lastKey: Int): Int? {
-        return if (currKey == lastKey) {
-            null
-        } else {
-            currKey + 1
-        }
-    }
 }
