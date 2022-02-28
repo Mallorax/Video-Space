@@ -1,14 +1,18 @@
-package pl.patrykzygo.videospace
+package pl.patrykzygo.videospace.fakes
 
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
-import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
 import pl.patrykzygo.videospace.repository.RepositoryResponse
+import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
 import javax.inject.Inject
 
 open class FakeLocalStoreRepositoryAndroid @Inject constructor() : LocalStoreRepository {
 
     private val movieList = mutableListOf<MovieEntity>()
+
+    override suspend fun getGenreId(genreName: String): RepositoryResponse<Int> {
+        return RepositoryResponse.success(1)
+    }
 
     override suspend fun insertFavourite(movie: MovieEntity) {
         movieList.add(movie)

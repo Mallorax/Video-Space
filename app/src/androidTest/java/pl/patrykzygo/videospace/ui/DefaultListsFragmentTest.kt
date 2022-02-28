@@ -13,7 +13,6 @@ import org.junit.Rule
 import org.junit.Test
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.TestFragmentFactory
-import pl.patrykzygo.videospace.UICoroutineRule
 import pl.patrykzygo.videospace.others.MoviesRequestType
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
 import pl.patrykzygo.videospace.util.provideMovieWithIdUi
@@ -30,8 +29,6 @@ class DefaultListsFragmentTest {
     @get:Rule
     var taskExecutorRule = InstantTaskExecutorRule()
 
-    @get:Rule
-    var coroutineRule = UICoroutineRule()
 
     @Inject
     lateinit var testFragmentFactory: TestFragmentFactory

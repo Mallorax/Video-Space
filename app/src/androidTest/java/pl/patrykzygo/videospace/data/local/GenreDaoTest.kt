@@ -6,7 +6,7 @@ import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -42,7 +42,7 @@ class GenreDaoTest {
     }
 
     @Test
-    fun insertAndReadGenreTest() = runBlockingTest {
+    fun insertAndReadGenreTest() = runTest {
         val genre = GenreEntity(1, "genre")
         dao.insertGenre(genre)
         val requestedGenre = dao.getGenre(genre.id)
@@ -51,7 +51,7 @@ class GenreDaoTest {
     }
 
     @Test
-    fun updateAndReadTest() = runBlockingTest {
+    fun updateAndReadTest() = runTest {
         val genre1 = GenreEntity(1, "genre")
         val genre2 = GenreEntity(1, "genre2")
         dao.insertGenre(genre1)
@@ -62,7 +62,7 @@ class GenreDaoTest {
     }
 
     @Test
-    fun insertMultipleGenresTest() = runBlockingTest {
+    fun insertMultipleGenresTest() = runTest {
         val genre1 = GenreEntity(1, "genre1")
         val genre2 = GenreEntity(2, "genre2")
         val genre3 = GenreEntity(3, "genre3")
@@ -75,13 +75,13 @@ class GenreDaoTest {
     }
 
     @Test
-    fun readNotExistTest() = runBlockingTest {
+    fun readNotExistTest() = runTest {
         val requestedGenre = dao.getGenre(1)
         assertThat(requestedGenre?.id).isEqualTo(null)
     }
 
     @Test
-    fun readGenresWhenTableIsEmptyTest() = runBlockingTest {
+    fun readGenresWhenTableIsEmptyTest() = runTest {
         val requestedGenres = dao.getGenres()
         assertThat(requestedGenres).isEmpty()
     }

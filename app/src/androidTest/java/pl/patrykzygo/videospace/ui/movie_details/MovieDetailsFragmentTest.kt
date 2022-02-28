@@ -17,16 +17,15 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import pl.patrykzygo.videospace.R
-import pl.patrykzygo.videospace.UICoroutineRule
-import pl.patrykzygo.videospace.data.app.Movie
-import pl.patrykzygo.videospace.others.MoviesRequestType
 import pl.patrykzygo.videospace.TestFragmentFactory
+import pl.patrykzygo.videospace.data.app.Movie
+import pl.patrykzygo.videospace.di.TestFragmentFactoryQualifier
+import pl.patrykzygo.videospace.others.MoviesRequestType
 import pl.patrykzygo.videospace.ui.movies_gallery.getAverageVoteString
 import pl.patrykzygo.videospace.ui.movies_gallery.getVoteCountString
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
 import pl.patrykzygo.videospace.util.provideMovieWithIdUi
 import javax.inject.Inject
-import javax.inject.Named
 
 @MediumTest
 @HiltAndroidTest
@@ -39,15 +38,12 @@ class MovieDetailsFragmentTest() {
     @get:Rule
     var taskExecutorRule = InstantTaskExecutorRule()
 
-    @get:Rule
-    var coroutineRule = UICoroutineRule()
 
-
+    @TestFragmentFactoryQualifier
     @Inject
     lateinit var testFragmentFactory: TestFragmentFactory
 
     lateinit var expectedMovie: Movie
-
 
 
     @Before

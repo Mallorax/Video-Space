@@ -1,4 +1,4 @@
-package pl.patrykzygo.videospace
+package pl.patrykzygo.videospace.fakes
 
 import androidx.paging.PagingState
 import pl.patrykzygo.videospace.data.network.MovieResponse

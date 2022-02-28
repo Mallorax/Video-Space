@@ -3,18 +3,17 @@ package pl.patrykzygo.videospace.ui.movie_dialogs
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito.spy
 import org.mockito.Mockito.verify
 import org.mockito.Spy
-import pl.patrykzygo.videospace.MainCoroutineRule
 import pl.patrykzygo.videospace.data.mapMovieToMovieEntity
-import pl.patrykzygo.videospace.getOrAwaitValueTest
 import pl.patrykzygo.videospace.repository.FakeLocalStoreRepository
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
+import pl.patrykzygo.videospace.util.getOrAwaitValueTest
 import pl.patrykzygo.videospace.util.provideMovieWithId
 
 @ExperimentalCoroutinesApi
@@ -25,10 +24,6 @@ class MovieBottomSheetViewModelTest {
 
     @get:Rule
     var taskExecutorRule = InstantTaskExecutorRule()
-
-
-    @get:Rule
-    var coroutineRule = MainCoroutineRule()
 
     @Spy
     private lateinit var repository: LocalStoreRepository
@@ -68,7 +63,7 @@ class MovieBottomSheetViewModelTest {
     }
 
     @Test
-    fun `test if isLiked toggle was saved to repo`() = runBlockingTest {
+    fun `test if isLiked toggle was saved to repo`() = runTest {
         val movie = provideMovieWithId(1)
         viewModel.setMovie(movie)
         viewModel.changeIsMovieLiked()
@@ -86,7 +81,7 @@ class MovieBottomSheetViewModelTest {
     }
 
     @Test
-    fun `test if isSavedToWatchLater toggle was saved to repo`() = runBlockingTest {
+    fun `test if isSavedToWatchLater toggle was saved to repo`() = runTest {
         val movie = provideMovieWithId(1)
         viewModel.setMovie(movie)
         viewModel.changeIsMovieSavedToWatchLater()
@@ -94,7 +89,7 @@ class MovieBottomSheetViewModelTest {
     }
 
     @Test
-    fun `test is favourite check when movie is favourite`() = runBlockingTest {
+    fun `test is favourite check when movie is favourite`() = runTest {
         val movie = provideMovieWithId(1)
         movie.isFavourite = true
         repository.insertFavourite(mapMovieToMovieEntity(movie))
@@ -105,7 +100,7 @@ class MovieBottomSheetViewModelTest {
     }
 
     @Test
-    fun `test is on watch later when movie is on watch later`() = runBlockingTest {
+    fun `test is on watch later when movie is on watch later`() = runTest {
         val movie = provideMovieWithId(1)
         movie.isOnWatchLater = true
         repository.insertFavourite(mapMovieToMovieEntity(movie))

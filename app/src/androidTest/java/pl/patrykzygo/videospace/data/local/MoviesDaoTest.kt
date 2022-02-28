@@ -6,7 +6,7 @@ import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -42,7 +42,7 @@ class MoviesDaoTest {
     }
 
     @Test
-    fun insertAndReadMovieTest() = runBlockingTest {
+    fun insertAndReadMovieTest() = runTest {
         val movie = MovieEntity(1, false, isOnWatchLater = false)
         dao.insertFavourite(movie)
         val requestedMovie = dao.getAllFavourites()
@@ -50,7 +50,7 @@ class MoviesDaoTest {
     }
 
     @Test
-    fun updateAndReadMovieTest() = runBlockingTest {
+    fun updateAndReadMovieTest() = runTest {
         val movie = MovieEntity(1, false, isOnWatchLater = false)
         val movie2 = MovieEntity(1, true, isOnWatchLater = false)
         dao.insertFavourite(movie)
@@ -60,7 +60,7 @@ class MoviesDaoTest {
     }
 
     @Test
-    fun insertMultipleMoviesTest() = runBlockingTest {
+    fun insertMultipleMoviesTest() = runTest {
         val movie = MovieEntity(1, false, isOnWatchLater = false)
         val movie2 = MovieEntity(2, true, isOnWatchLater = false)
         val movie3 = MovieEntity(3, false, isOnWatchLater = false)
@@ -73,7 +73,7 @@ class MoviesDaoTest {
     }
 
     @Test
-    fun readMoviesWhenTableIsEmptyTest() = runBlockingTest {
+    fun readMoviesWhenTableIsEmptyTest() = runTest {
         val requestedMovies = dao.getAllFavourites()
         assertThat(requestedMovies).isEmpty()
     }

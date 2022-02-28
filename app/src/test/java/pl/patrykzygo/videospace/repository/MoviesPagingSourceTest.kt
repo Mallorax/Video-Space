@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingSource
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -26,6 +26,7 @@ class MoviesPagingSourceTest {
     @get:Rule
     var rule = InstantTaskExecutorRule()
 
+
     @Mock
     private lateinit var mockMoviesEntryPoint: MoviesEntryPoint
 
@@ -37,7 +38,7 @@ class MoviesPagingSourceTest {
 
 
     @Test
-    fun `videos paging source refresh is success test`() = runBlockingTest {
+    fun `videos paging source refresh is success test`() = runTest {
         val fakeMoviesResponse = fakeCorrectMoviesResponse(1, 2)
 
         Mockito.`when`(mockMoviesEntryPoint.requestPopularMovies(page = 1))
@@ -61,7 +62,7 @@ class MoviesPagingSourceTest {
     }
 
     @Test
-    fun `movies paging source load is http error`() = runBlockingTest {
+    fun `movies paging source load is http error`() = runTest {
         val error = fakeHttpErrorResponse()
         Mockito.`when`(mockMoviesEntryPoint.requestPopularMovies(page = 1))
             .thenAnswer { error }
@@ -77,7 +78,7 @@ class MoviesPagingSourceTest {
     }
 
     @Test
-    fun `videos paging source append last page is success test`() = runBlockingTest {
+    fun `videos paging source append last page is success test`() = runTest {
         val fakeResponse = fakeCorrectMoviesResponse(2, 2)
 
         Mockito.`when`(mockMoviesEntryPoint.requestPopularMovies(page = 2))
@@ -100,7 +101,7 @@ class MoviesPagingSourceTest {
     }
 
     @Test
-    fun `videos paging source prepend first page is success test`() = runBlockingTest {
+    fun `videos paging source prepend first page is success test`() = runTest {
         val fakeResponse = fakeCorrectMoviesResponse(1, 2)
 
         Mockito.`when`(mockMoviesEntryPoint.requestPopularMovies(page = 1))

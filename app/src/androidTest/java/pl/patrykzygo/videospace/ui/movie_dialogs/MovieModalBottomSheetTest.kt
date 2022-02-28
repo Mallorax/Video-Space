@@ -1,7 +1,6 @@
 package pl.patrykzygo.videospace.ui.movie_dialogs
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagingData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -15,23 +14,18 @@ import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import pl.patrykzygo.videospace.CustomMatchers.withDrawable
-import pl.patrykzygo.videospace.FakeLocalStoreRepositoryAndroid
 import pl.patrykzygo.videospace.R
-import pl.patrykzygo.videospace.UICoroutineRule
+import pl.patrykzygo.videospace.TestFragmentFactory
 import pl.patrykzygo.videospace.data.app.Movie
-import pl.patrykzygo.videospace.di.FakeMoviePagingSourceQualifier
-import pl.patrykzygo.videospace.util.getOrAwaitValueTestAndroid
-import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
+import pl.patrykzygo.videospace.di.TestFragmentFactoryQualifier
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryRecyclerAdapter
-import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryVMFactory
-import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryViewModel
 import pl.patrykzygo.videospace.util.clickChildWithId
+import pl.patrykzygo.videospace.util.getOrAwaitValueTestAndroid
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
 import pl.patrykzygo.videospace.util.provideMovieWithIdUi
 import javax.inject.Inject
@@ -50,30 +44,22 @@ class MovieModalBottomSheetTest {
     @get:Rule
     var taskExecutorRule = InstantTaskExecutorRule()
 
-    @get:Rule
-    var coroutineRule = UICoroutineRule()
 
     @Inject
-    @FakeMoviePagingSourceQualifier
-    lateinit var pagingSource: MoviesPagingSource
-
-
-    lateinit var viewModel: MovieBottomSheetViewModel
+    @TestFragmentFactoryQualifier
+    lateinit var fragmentFactory: TestFragmentFactory
 
     @Before
     fun setup() {
         hiltRule.inject()
-        viewModel = MovieBottomSheetViewModel(FakeLocalStoreRepositoryAndroid())
     }
 
     //Test is sensitive to tint changes in layout's ImageView
     @Test
     fun testIfFavouriteImageWasChangedOnClick() {
-        launchFragmentInHiltContainer<MoviesGalleryFragment> {
-            val factory = MoviesGalleryVMFactory(pagingSource)
-            viewModel = ViewModelProvider(this, factory)[MoviesGalleryViewModel::class.java]
+        launchFragmentInHiltContainer<MoviesGalleryFragment>(fragmentFactory = fragmentFactory) {
             val movies = PagingData.from(listOf(provideMovieWithIdUi(1), provideMovieWithIdUi(2)))
-            runBlockingTest { adapter.submitData(movies) }
+            adapter.submitData(lifecycle, movies)
             this.binding.moviesListRecycler.adapter = adapter
         }
         onView(withId(R.id.movies_list_recycler)).perform(
@@ -95,11 +81,9 @@ class MovieModalBottomSheetTest {
     //Test is sensitive to tint changes in layout's ImageView
     @Test
     fun testIfIsOnWatchLaterImageWasChangedOnClick() {
-        launchFragmentInHiltContainer<MoviesGalleryFragment> {
-            val factory = MoviesGalleryVMFactory(pagingSource)
-            viewModel = ViewModelProvider(this, factory)[MoviesGalleryViewModel::class.java]
+        launchFragmentInHiltContainer<MoviesGalleryFragment>(fragmentFactory = fragmentFactory) {
             val movies = PagingData.from(listOf(provideMovieWithIdUi(1), provideMovieWithIdUi(2)))
-            runBlockingTest { adapter.submitData(movies) }
+            adapter.submitData(lifecycle, movies)
             this.binding.moviesListRecycler.adapter = adapter
         }
         onView(withId(R.id.movies_list_recycler)).perform(
@@ -119,14 +103,15 @@ class MovieModalBottomSheetTest {
     }
 
     @Test
-    fun testSetMovieToViewModel() = runBlockingTest {
+    fun testSetMovieToViewModel() {
         val movie = provideMovieWithIdUi(1)
-        launchFragmentInHiltContainer<MovieModalBottomSheet> {
-            this.viewModel = this@MovieModalBottomSheetTest.viewModel
+        var testViewModel: MovieBottomSheetViewModel? = null
+        launchFragmentInHiltContainer<MovieModalBottomSheet>(fragmentFactory = fragmentFactory) {
+            testViewModel = viewModel
             viewModel.setMovie(movie)
         }
 
-        val value = viewModel.movie.getOrAwaitValueTestAndroid()
+        val value = testViewModel?.movie?.getOrAwaitValueTestAndroid()
         assertThat(value).isEqualTo(movie)
     }
 
@@ -134,11 +119,9 @@ class MovieModalBottomSheetTest {
     fun testIfFragmentResultIsSet() {
         val expectedMovie = provideMovieWithIdUi(1)
         var resultedMovie: Movie? = null
-        launchFragmentInHiltContainer<MoviesGalleryFragment> {
-            val factory = MoviesGalleryVMFactory(pagingSource)
-            viewModel = ViewModelProvider(this, factory)[MoviesGalleryViewModel::class.java]
+        launchFragmentInHiltContainer<MoviesGalleryFragment>(fragmentFactory = fragmentFactory) {
             val movies = PagingData.from(listOf(provideMovieWithIdUi(1), provideMovieWithIdUi(2)))
-            runBlockingTest { adapter.submitData(movies) }
+            adapter.submitData(lifecycle, movies)
             this.binding.moviesListRecycler.adapter = adapter
             parentFragmentManager.setFragmentResultListener("movieResult", this) { _, bundle ->
                 resultedMovie = bundle.getParcelable("movie")

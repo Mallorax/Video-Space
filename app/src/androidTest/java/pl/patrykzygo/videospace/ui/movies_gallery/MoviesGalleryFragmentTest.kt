@@ -13,13 +13,11 @@ import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.TestFragmentFactory
-import pl.patrykzygo.videospace.UICoroutineRule
 import pl.patrykzygo.videospace.util.clickChildWithId
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
 import pl.patrykzygo.videospace.util.provideMovieWithIdUi
@@ -36,11 +34,6 @@ class MoviesGalleryFragmentTest {
 
     @get:Rule
     var taskExecutorRule = InstantTaskExecutorRule()
-
-    @get:Rule
-    var coroutineRule = UICoroutineRule()
-
-
 
     @Inject
     lateinit var testFragmentFactory: TestFragmentFactory
@@ -65,7 +58,7 @@ class MoviesGalleryFragmentTest {
     fun clickMovieListItem_showBottomSheetDialog() {
         launchFragmentInHiltContainer<MoviesGalleryFragment>(fragmentFactory = testFragmentFactory) {
             val movies = PagingData.from(listOf(provideMovieWithIdUi(1), provideMovieWithIdUi(2)))
-            runBlockingTest { adapter.submitData(movies) }
+            adapter.submitData(lifecycle, movies)
             this.binding.moviesListRecycler.adapter = adapter
         }
         onView(withId(R.id.movies_list_recycler)).perform(

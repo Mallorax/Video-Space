@@ -8,6 +8,10 @@ open class FakeLocalStoreRepository : LocalStoreRepository {
 
     private val movieList = mutableListOf<MovieEntity>()
 
+    override suspend fun getGenreId(genreName: String): RepositoryResponse<Int> {
+        return RepositoryResponse.success(1)
+    }
+
     override suspend fun insertFavourite(movie: MovieEntity) {
         movieList.add(movie)
     }

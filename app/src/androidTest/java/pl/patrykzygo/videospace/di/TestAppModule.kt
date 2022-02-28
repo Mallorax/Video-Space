@@ -9,13 +9,15 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
-import pl.patrykzygo.videospace.FakeLocalStoreRepositoryAndroid
-import pl.patrykzygo.videospace.FakeMoviesPagingSource
+import kotlinx.coroutines.runBlocking
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.TestFragmentFactory
 import pl.patrykzygo.videospace.data.local.VideoSpaceDatabase
 import pl.patrykzygo.videospace.data.mapMovieToMovieEntity
+import pl.patrykzygo.videospace.fakes.FakeGenrePagingSourceAndroid
+import pl.patrykzygo.videospace.fakes.FakeLocalStoreRepositoryAndroid
+import pl.patrykzygo.videospace.fakes.FakeMoviesPagingSource
+import pl.patrykzygo.videospace.repository.genre_paging.GenrePagingSource
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
 import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
 import pl.patrykzygo.videospace.ui.MainViewModelFactory
@@ -43,7 +45,7 @@ object TestAppModule {
     @Provides
     fun provideFakeRepoWithMovies(): LocalStoreRepository {
         val repo = FakeLocalStoreRepositoryAndroid()
-        runBlockingTest {
+        runBlocking {
             repo.insertFavourites(
                 mapMovieToMovieEntity(provideMovieWithIdUi(1)),
                 mapMovieToMovieEntity(provideMovieWithIdUi(2)),
@@ -66,21 +68,29 @@ object TestAppModule {
         return FakeMoviesPagingSource()
     }
 
-
+    @FakeGenrePagingSourceQualifier
     @Provides
-    @Named("test_vm_factory")
-    fun provideViewModelFactory(
-        @FakeLocalRepoQualifier localStoreRepository: LocalStoreRepository,
-        @FakeMoviePagingSourceQualifier moviesPagingSource: MoviesPagingSource
-    ): MainViewModelFactory {
-        return MainViewModelFactory(localStoreRepository, moviesPagingSource)
+    fun provideFakeGenrePagingSource(): GenrePagingSource {
+        return FakeGenrePagingSourceAndroid()
     }
 
 
+    @TestVMFactoryQualifier
+    @Provides
+    fun provideViewModelFactory(
+        @FakeLocalRepoQualifier localStoreRepository: LocalStoreRepository,
+        @FakeMoviePagingSourceQualifier moviesPagingSource: MoviesPagingSource,
+        @FakeGenrePagingSourceQualifier genrePagingSource: GenrePagingSource
+    ): MainViewModelFactory {
+        return MainViewModelFactory(localStoreRepository, moviesPagingSource, genrePagingSource)
+    }
+
+
+    @TestFragmentFactoryQualifier
     @Provides
     fun providesTestFragmentFactory(
         testNavHostController: TestNavHostController,
-        @Named("test_vm_factory") viewModelFactory: MainViewModelFactory
+        @TestVMFactoryQualifier viewModelFactory: MainViewModelFactory
     ): TestFragmentFactory {
         return TestFragmentFactory(testNavHostController, viewModelFactory)
     }
