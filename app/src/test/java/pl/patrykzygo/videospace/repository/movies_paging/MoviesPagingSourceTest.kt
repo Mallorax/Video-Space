@@ -1,4 +1,4 @@
-package pl.patrykzygo.videospace.repository
+package pl.patrykzygo.videospace.repository.movies_paging
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingSource
@@ -13,7 +13,6 @@ import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import pl.patrykzygo.videospace.data.network.MovieResponse
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
-import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSourceImpl
 import pl.patrykzygo.videospace.util.fakeCorrectMoviesResponse
 import pl.patrykzygo.videospace.util.fakeHttpErrorResponse
 import retrofit2.HttpException
@@ -21,14 +20,14 @@ import retrofit2.HttpException
 @ExperimentalCoroutinesApi
 class MoviesPagingSourceTest {
 
-    private lateinit var moviesPagingSourceImpl: MoviesPagingSourceImpl
-
     @get:Rule
     var rule = InstantTaskExecutorRule()
 
 
     @Mock
     private lateinit var mockMoviesEntryPoint: MoviesEntryPoint
+
+    private lateinit var moviesPagingSourceImpl: MoviesPagingSourceImpl
 
     @Before
     fun setup() {
@@ -74,7 +73,7 @@ class MoviesPagingSourceTest {
                 placeholdersEnabled = false
             )
         )
-        assertThat(expected::class).isEqualTo(actual::class)
+        assertThat(actual::class).isEqualTo(expected::class)
     }
 
     @Test

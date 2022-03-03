@@ -17,6 +17,7 @@ class GenrePagingSourceImpl @Inject constructor(private val entryPoint: Discover
 
     private var genreId: String = ""
 
+    //Id of a genre is needed to fetch movies from entry point
     override fun setGenre(genreId: Int) {
         this.genreId = genreId.toString()
     }
