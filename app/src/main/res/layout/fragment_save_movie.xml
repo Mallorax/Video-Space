@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/app_bar"
+            layout="@layout/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/save_movie_title_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/averia_serif_libre"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintEnd_toStartOf="@id/save_movie_guideline_right"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/save_movie_guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/app_bar"
+            tools:text="Movie title" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/save_movie_status_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/averia_serif_libre"
+            android:text="@string/status"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            app:layout_constraintStart_toEndOf="@id/save_movie_guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/save_movie_title_textview" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/save_movie_chip_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@id/save_movie_guideline_right"
+            app:layout_constraintStart_toEndOf="@id/save_movie_guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/save_movie_status_textview">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/save_movie_watching_chip"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/averia_serif_libre"
+                android:text="@string/watching" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/save_movie_completed_chip"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/averia_serif_libre"
+                android:text="@string/completed" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/save_movie_plan_to_watch_chip"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/averia_serif_libre"
+                android:text="@string/plan_to_watch" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/save_movie_on_hold_chip"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/averia_serif_libre"
+                android:text="@string/on_hold" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/save_movie_dropped_chip"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/averia_serif_libre"
+                android:text="@string/dropped" />
+
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/save_movie_score_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/averia_serif_libre"
+            android:text="@string/score"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            app:layout_constraintEnd_toStartOf="@id/save_movie_guideline_right"
+            app:layout_constraintStart_toEndOf="@id/save_movie_guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/save_movie_chip_group" />
+
+        <com.shawnlin.numberpicker.NumberPicker
+            android:id="@+id/save_movie_score_picker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@id/save_movie_guideline_right"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/save_movie_guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/save_movie_score_textview"
+            app:np_max="10"
+            app:np_orientation="horizontal"
+            app:np_scrollerEnabled="true" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/save_movie_notes_text_input_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/notes"
+            app:endIconMode="clear_text"
+            app:counterEnabled="true"
+            app:counterMaxLength="200"
+            app:layout_constraintEnd_toStartOf="@id/save_movie_guideline_right"
+            app:layout_constraintStart_toEndOf="@id/save_movie_guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/save_movie_score_picker"
+            app:startIconDrawable="@drawable/ic_baseline_notes">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/save_movie_notes_text_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/details_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            android:backgroundTint="@color/purple_200"
+            android:src="@drawable/ic_baseline_playlist_add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:tint="@color/white" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/save_movie_guideline_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/save_movie_guideline_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

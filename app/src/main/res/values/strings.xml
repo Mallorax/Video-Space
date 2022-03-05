@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">VideoSpace</string>
+    <string name="app_name">Video Space</string>
     <string name="most_popular_section_label_string">Most popular</string>
     <string name="film_thumbnail_string">Film thumbnail</string>
     <string name="main_app_label">Video Space</string>
@@ -14,5 +14,13 @@
     <string name="lorem_ipsum">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velitur</string>
     <string name="number_of_votes">Number of votes:</string>
     <string name="add_movie_to_list">Add movie to list</string>
+    <string name="status">Status</string>
+    <string name="watching">Watching</string>
+    <string name="completed">Completed</string>
+    <string name="plan_to_watch">Plan to Watch</string>
+    <string name="on_hold">On Hold</string>
+    <string name="dropped">Dropped</string>
+    <string name="score">Score</string>
+    <string name="notes">Notes</string>
 
 </resources>
