@@ -49,7 +49,6 @@ class MoviesListViewModel constructor(
         } else {
             throw Exception(response?.message)
         }
-
     }
 
 }

@@ -72,7 +72,9 @@ object AppModule {
             context,
             VideoSpaceDatabase::class.java,
             VIDEO_SPACE_DB_NAME
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
 
@@ -108,7 +110,7 @@ object AppModule {
 
     @GenrePagingSourceImplQualifier
     @Provides
-    fun provideGenrePagingSource(discoverEntryPoint: DiscoverEntryPoint): GenrePagingSource{
+    fun provideGenrePagingSource(discoverEntryPoint: DiscoverEntryPoint): GenrePagingSource {
         return GenrePagingSourceImpl(discoverEntryPoint)
     }
 
@@ -124,7 +126,7 @@ object AppModule {
 
     @DefaultFragmentFactoryQualifier
     @Provides
-    fun provideDefaultFragmentFactory(@Named("main_vm_factory") vmFactory: MainViewModelFactory): DefaultFragmentFactory{
+    fun provideDefaultFragmentFactory(@Named("main_vm_factory") vmFactory: MainViewModelFactory): DefaultFragmentFactory {
         return DefaultFragmentFactory(vmFactory)
     }
 }

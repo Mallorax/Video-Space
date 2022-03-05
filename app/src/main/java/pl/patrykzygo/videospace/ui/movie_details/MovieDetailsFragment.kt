@@ -40,13 +40,7 @@ class MovieDetailsFragment constructor(private val viewModelFactory: MainViewMod
         _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
         movie = arguments?.let { MovieDetailsFragmentArgs.fromBundle(it).movie }
         viewModel = viewModelFactory.create(MovieDetailsViewModel::class.java)
-        parentFragmentManager.setFragmentResultListener("movieResult", this) { _, bundle ->
-            val movie = bundle.getParcelable<Movie>("movie")
-            if (movie != null) {
-                val action = MovieDetailsFragmentDirections.actionMovieDetailsSelf(movie)
-                findNavController().navigate(action)
-            }
-        }
+        setFragmentResultListener()
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
@@ -76,6 +70,16 @@ class MovieDetailsFragment constructor(private val viewModelFactory: MainViewMod
             MoviesRequestType.SIMILAR,
             MoviesGalleryFragment()
         )
+    }
+
+    private fun setFragmentResultListener(){
+        parentFragmentManager.setFragmentResultListener("movieResult", this) { _, bundle ->
+            val movie = bundle.getParcelable<Movie>("movie")
+            if (movie != null) {
+                val action = MovieDetailsFragmentDirections.actionMovieDetailsSelf(movie)
+                findNavController().navigate(action)
+            }
+        }
     }
 
 
