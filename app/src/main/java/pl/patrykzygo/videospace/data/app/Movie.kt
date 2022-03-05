@@ -2,6 +2,7 @@ package pl.patrykzygo.videospace.data.app
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import pl.patrykzygo.videospace.others.MovieStatus
 
 @Parcelize
 data class Movie(
@@ -20,7 +21,9 @@ data class Movie(
     val voteAverage: Double,
     val voteCount: Int,
     var isFavourite: Boolean = false,
-    var isOnWatchLater: Boolean = false
+    var isOnWatchLater: Boolean = false,
+    val score: Int = 0,
+    val status: String = MovieStatus.UNASSIGNED
 ) : Parcelable {
 
 }

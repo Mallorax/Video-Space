@@ -47,6 +47,6 @@ fun mapMovieToMovieEntity(movie: Movie): MovieEntity {
     return MovieEntity(
         movie.id,
         isFavourite = movie.isFavourite,
-        isOnWatchLater = movie.isOnWatchLater
+        isOnWatchLater = movie.isOnWatchLater,
     )
 }
