@@ -38,7 +38,7 @@ class MainViewModelFactory @Inject constructor(
             return modelClass.getConstructor(GenrePagingSource::class.java, LocalStoreRepository::class.java)
                 .newInstance(genrePagingSource, localRepo)
         if (modelClass.isAssignableFrom(SaveMovieViewModel::class.java)){
-            return modelClass.getConstructor().newInstance()
+            return modelClass.getConstructor(LocalStoreRepository::class.java).newInstance(localRepo)
         }
         throw  IllegalArgumentException("Unknown ViewModel class")
     }
