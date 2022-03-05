@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--Navigation in this app runs in a loop, so I'm not entirely sure,
+If it's possible for user to navigate so much to overflow navigation stack,
+or if it's handled internally. Couldn't really find much info about it either -->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -22,13 +25,13 @@
         android:id="@+id/movies_gallery_fragment"
         android:name="pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment"
         android:label="@string/main_app_label"
-        tools:layout="@layout/fragment_movies_gallery"/>
+        tools:layout="@layout/fragment_movies_gallery" />
 
     <fragment
         android:id="@+id/movies_modal_bottom_sheet"
         android:name="pl.patrykzygo.videospace.ui.movie_dialogs.MovieModalBottomSheet"
         android:label="@string/main_app_label"
-        tools:layout="@layout/movie_bottom_sheet"/>
+        tools:layout="@layout/movie_bottom_sheet" />
 
     <fragment
         android:id="@+id/save_movie_fragment"
@@ -55,8 +58,7 @@
             app:argType="string" />
         <action
             android:id="@+id/action_movies_list_fragment_to_movie_details"
-            app:destination="@id/movie_details"
-            app:launchSingleTop="true" />
+            app:destination="@id/movie_details" />
         <action
             android:id="@+id/action_movies_list_fragment_to_save_movie_fragment"
             app:destination="@id/save_movie_fragment" />
@@ -76,7 +78,6 @@
 
         <action
             android:id="@+id/action_movie_details_self"
-            app:launchSingleTop="true"
             app:destination="@id/movie_details" />
         <action
             android:id="@+id/action_movie_details_to_movies_list_fragment"
