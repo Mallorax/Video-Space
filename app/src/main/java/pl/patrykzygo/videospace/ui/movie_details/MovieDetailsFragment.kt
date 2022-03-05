@@ -99,6 +99,10 @@ class MovieDetailsFragment constructor(private val viewModelFactory: MainViewMod
         binding.addToFavouritesButton.setOnClickListener {
             viewModel.toggleFavourite()
         }
+
+        binding.detailsFab.setOnClickListener {
+            viewModel.saveMovieEvent()
+        }
     }
 
     private fun observeViewModel() {
@@ -110,6 +114,10 @@ class MovieDetailsFragment constructor(private val viewModelFactory: MainViewMod
         })
         viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
             Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
+        })
+        viewModel.saveMovieEvent.observe(viewLifecycleOwner, Observer {
+            val action = MovieDetailsFragmentDirections.actionMovieDetailsToSaveMovieFragment(it.id, it.title)
+            findNavController().navigate(action)
         })
     }
 

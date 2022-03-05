@@ -27,6 +27,10 @@ class MovieDetailsViewModel constructor(
     private val _genres = LiveEvent<List<String>>()
     val genres: LiveData<List<String>> get() = _genres
 
+    private val _saveMovieEvent = LiveEvent<Movie>()
+    val saveMovieEvent: LiveData<Movie> get() = _saveMovieEvent
+
+
     fun setMovie(movie: Movie?) {
         if (movie != null) {
             viewModelScope.launch(Dispatchers.IO) {
@@ -42,6 +46,10 @@ class MovieDetailsViewModel constructor(
                 }
             }
         }
+    }
+
+    fun saveMovieEvent(){
+        _saveMovieEvent.value = _movie.value
     }
 
     fun toggleFavourite(){

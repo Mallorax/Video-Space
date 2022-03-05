@@ -21,16 +21,15 @@ class SaveMovieFragment constructor(private val viewModelFactory: MainViewModelF
     val binding get() = _binding!!
     lateinit var viewModel: SaveMovieViewModel
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSaveMovieBinding.inflate(inflater, container, false)
+        viewModel = viewModelFactory.create(SaveMovieViewModel::class.java)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        viewModel = viewModelFactory.create(SaveMovieViewModel::class.java)
 
         return binding.root
     }
@@ -38,5 +37,7 @@ class SaveMovieFragment constructor(private val viewModelFactory: MainViewModelF
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpAppBar(findNavController(), binding.appBar.toolbar)
+        binding.saveMovieTitleTextview.text =
+            arguments?.let { SaveMovieFragmentArgs.fromBundle(it).movieTitle }
     }
 }

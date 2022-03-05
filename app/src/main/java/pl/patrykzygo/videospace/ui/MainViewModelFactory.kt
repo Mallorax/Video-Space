@@ -12,6 +12,7 @@ import pl.patrykzygo.videospace.ui.movie_details.MovieDetailsViewModel
 import pl.patrykzygo.videospace.ui.movie_dialogs.MovieBottomSheetViewModel
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryViewModel
 import pl.patrykzygo.videospace.ui.movies_list.MoviesListViewModel
+import pl.patrykzygo.videospace.ui.save_movie.SaveMovieViewModel
 import javax.inject.Inject
 
 class MainViewModelFactory @Inject constructor(
@@ -36,6 +37,9 @@ class MainViewModelFactory @Inject constructor(
         if (modelClass.isAssignableFrom(MoviesListViewModel::class.java))
             return modelClass.getConstructor(GenrePagingSource::class.java, LocalStoreRepository::class.java)
                 .newInstance(genrePagingSource, localRepo)
+        if (modelClass.isAssignableFrom(SaveMovieViewModel::class.java)){
+            return modelClass.getConstructor().newInstance()
+        }
         throw  IllegalArgumentException("Unknown ViewModel class")
     }
 }

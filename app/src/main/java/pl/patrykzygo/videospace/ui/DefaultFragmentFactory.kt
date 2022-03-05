@@ -6,6 +6,7 @@ import pl.patrykzygo.videospace.ui.movie_details.MovieDetailsFragment
 import pl.patrykzygo.videospace.ui.movie_dialogs.MovieModalBottomSheet
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
 import pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment
+import pl.patrykzygo.videospace.ui.save_movie.SaveMovieFragment
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -22,6 +23,7 @@ class DefaultFragmentFactory
             MoviesGalleryFragment::class.java.name -> MoviesGalleryFragment()
             MovieModalBottomSheet::class.java.name -> MovieModalBottomSheet()
             MovieDetailsFragment::class.java.name -> MovieDetailsFragment(viewModelFactory)
+            SaveMovieFragment::class.java.name -> SaveMovieFragment(viewModelFactory)
             else -> super.instantiate(classLoader, className)
         }
     }
