@@ -2,17 +2,13 @@ package pl.patrykzygo.videospace.ui.movies_list
 
 import androidx.lifecycle.*
 import androidx.paging.*
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.mapMoviesResponseToMovie
+import pl.patrykzygo.videospace.others.SortOptions
 import pl.patrykzygo.videospace.repository.RepositoryResponse
 import pl.patrykzygo.videospace.repository.genre_paging.GenrePagingSource
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
-import java.lang.Exception
-import javax.inject.Inject
 
 class MoviesListViewModel constructor(
     private val repo: GenrePagingSource,
@@ -21,6 +17,13 @@ class MoviesListViewModel constructor(
 
     private var _genre = MutableLiveData<String>()
     val genre: LiveData<String> get() = _genre
+
+    private var _sortOption = MutableLiveData(SortOptions.POPULARITY_DESC)
+    val sortOption: LiveData<String> get() = _sortOption
+
+    fun setSortingOption(sortOption: String){
+        _sortOption.value = sortOption
+    }
 
 
     fun getMoviesInGenre(genre: String): LiveData<PagingData<Movie>> {
@@ -53,6 +56,59 @@ class MoviesListViewModel constructor(
         } else {
             throw Exception(response?.message)
         }
+    }
+
+    fun triggerSortByMostPopular() {
+        val currentSortOption = _sortOption.value
+        if (currentSortOption == SortOptions.POPULARITY_DESC){
+            _sortOption.value = SortOptions.POPULARITY_ASC
+            return
+        }
+        if (currentSortOption == SortOptions.POPULARITY_ASC){
+            _sortOption.value = SortOptions.POPULARITY_DESC
+            return
+        }
+        _sortOption.value = SortOptions.POPULARITY_DESC
+    }
+
+    fun triggerSortByReleaseDate() {
+        val currentSortOption = _sortOption.value
+        if (currentSortOption == SortOptions.RELEASE_DATE_DESC){
+            _sortOption.value = SortOptions.RELEASE_DATE_ASC
+            return
+        }
+        if (currentSortOption == SortOptions.RELEASE_DATE_ASC){
+            _sortOption.value = SortOptions.SCORE_AVERAGE_DESC
+            return
+        }
+
+        _sortOption.value = SortOptions.RELEASE_DATE_DESC
+    }
+
+    fun triggerSortByAverageScore() {
+        val currentSortOption = _sortOption.value
+        if (currentSortOption == SortOptions.SCORE_AVERAGE_DESC){
+            _sortOption.value = SortOptions.SCORE_AVERAGE_ASC
+            return
+        }
+        if (currentSortOption == SortOptions.SCORE_AVERAGE_ASC){
+            _sortOption.value = SortOptions.SCORE_AVERAGE_DESC
+            return
+        }
+        _sortOption.value = SortOptions.SCORE_AVERAGE_DESC
+    }
+
+    fun triggerSortByVoteCount() {
+        val currentSortOption = _sortOption.value
+        if (currentSortOption == SortOptions.VOTE_COUNT_DESC){
+            _sortOption.value = SortOptions.VOTE_COUNT_ASC
+            return
+        }
+        if (currentSortOption == SortOptions.VOTE_COUNT_ASC){
+            _sortOption.value = SortOptions.VOTE_COUNT_DESC
+            return
+        }
+        _sortOption.value = SortOptions.VOTE_COUNT_DESC
     }
 
 }

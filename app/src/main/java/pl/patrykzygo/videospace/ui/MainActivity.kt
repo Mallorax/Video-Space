@@ -1,6 +1,7 @@
 package pl.patrykzygo.videospace.ui
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +31,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        super.onOptionsItemSelected(item)
+        return false
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp()

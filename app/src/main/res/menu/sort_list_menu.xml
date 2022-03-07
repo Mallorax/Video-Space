@@ -3,36 +3,39 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/main_menu_item"
         android:icon="@drawable/ic_baseline_more_vert"
         android:title="Main menu"
         app:showAsAction="always">
         <menu>
+
+
             <item
                 android:id="@+id/most_popular_sort_option"
                 android:icon="@drawable/ic_baseline_arrow_downward"
                 android:title="@string/most_popular_string"
-                app:iconTint="@color/black"
-                app:showAsAction="never" />
+                app:showAsAction="never"
+                app:tint="@color/black" />
 
             <item
                 android:id="@+id/release_date_sort_option"
                 android:icon="@drawable/ic_baseline_arrow_downward"
                 android:title="@string/release_date_string"
-                app:iconTint="@color/black"
-                app:showAsAction="never" />
+                app:showAsAction="never"
+                app:tint="@color/black" />
 
             <item
-                android:id="@+id/average_score_sort_option"
+                android:id="@+id/score_average_sort_option"
                 android:icon="@drawable/ic_baseline_arrow_downward"
                 android:title="@string/average_score_string"
-                app:iconTint="@color/black"
-                app:showAsAction="never" />
+                app:showAsAction="never"
+                app:tint="@color/black" />
             <item
                 android:id="@+id/vote_count_sort_option"
                 android:icon="@drawable/ic_baseline_arrow_downward"
                 android:title="@string/vote_count_string"
-                app:iconTint="@color/black"
-                app:showAsAction="never" />
+                app:showAsAction="never"
+                app:tint="@color/black" />
 
         </menu>
 

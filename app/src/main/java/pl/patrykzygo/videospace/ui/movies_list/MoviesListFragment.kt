@@ -1,14 +1,22 @@
 package pl.patrykzygo.videospace.ui.movies_list
 
-import android.content.res.ColorStateList
+import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.*
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.databinding.FragmentMoviesListBinding
+import pl.patrykzygo.videospace.others.SortOptions
 import pl.patrykzygo.videospace.ui.MainViewModelFactory
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegate
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegateImpl
@@ -34,6 +42,8 @@ class MoviesListFragment(val viewModelFactory: MainViewModelFactory) : Fragment(
         viewModel = viewModelFactory.create(MoviesListViewModel::class.java)
         movieGenre = MoviesListFragmentArgs.fromBundle(requireArguments()).genre
 
+        createMenu()
+
         return binding.root
     }
 
@@ -47,17 +57,46 @@ class MoviesListFragment(val viewModelFactory: MainViewModelFactory) : Fragment(
         subscribeObservers()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
+    private fun createMenu() {
+        binding.toolbar.inflateMenu(R.menu.sort_list_menu)
+        resetMenuItems()
+        binding.toolbar.setOnMenuItemClickListener {
+            onOptionsItemSelected(it)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
+        return when (item.itemId) {
+            R.id.most_popular_sort_option -> {
+                resetMenuItems()
+                viewModel.triggerSortByMostPopular()
+                true
+            }
+            R.id.release_date_sort_option -> {
+                resetMenuItems()
+                viewModel.triggerSortByReleaseDate()
+                true
+            }
+            R.id.score_average_sort_option -> {
+                resetMenuItems()
+                viewModel.triggerSortByAverageScore()
+                true
+            }
+            R.id.vote_count_sort_option -> {
+                resetMenuItems()
+                viewModel.triggerSortByVoteCount()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun subscribeObservers() {
         viewModel.getMoviesInGenre(movieGenre).observe(viewLifecycleOwner, Observer { moviesList ->
             adapter.submitData(viewLifecycleOwner.lifecycle, moviesList)
+        })
+        viewModel.sortOption.observe(viewLifecycleOwner, Observer {
+            displaySelectedSortOption(it)
         })
     }
 
@@ -74,4 +113,72 @@ class MoviesListFragment(val viewModelFactory: MainViewModelFactory) : Fragment(
             })
         return adapter
     }
+
+    private fun displaySelectedSortOption(sortOption: String) {
+        val iconDesc =
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_arrow_downward)
+        val iconAsc =
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_arrow_upward)
+        val menu = binding.toolbar.menu
+        when (sortOption) {
+            SortOptions.POPULARITY_DESC -> {
+                selectMenuItem(menu.findItem(R.id.most_popular_sort_option), iconDesc)
+            }
+            SortOptions.POPULARITY_ASC -> {
+                selectMenuItem(menu.findItem(R.id.most_popular_sort_option), iconAsc)
+            }
+            SortOptions.VOTE_COUNT_DESC -> {
+                selectMenuItem(menu.findItem(R.id.vote_count_sort_option), iconDesc)
+            }
+            SortOptions.VOTE_COUNT_ASC -> {
+                selectMenuItem(menu.findItem(R.id.vote_count_sort_option), iconAsc)
+            }
+            SortOptions.SCORE_AVERAGE_DESC -> {
+                selectMenuItem(menu.findItem(R.id.score_average_sort_option), iconDesc)
+            }
+            SortOptions.SCORE_AVERAGE_ASC -> {
+                selectMenuItem(menu.findItem(R.id.score_average_sort_option), iconAsc)
+            }
+            SortOptions.RELEASE_DATE_DESC -> {
+                selectMenuItem(menu.findItem(R.id.release_date_sort_option), iconDesc)
+            }
+            SortOptions.RELEASE_DATE_ASC -> {
+                selectMenuItem(menu.findItem(R.id.release_date_sort_option), iconAsc)
+            }
+            else -> return
+        }
+
+    }
+
+    private fun selectMenuItem(item: MenuItem, iconDrawable: Drawable?) {
+        val textColor = ContextCompat.getColor(requireContext(), R.color.purple_200)
+        val icon = iconDrawable?.let { DrawableCompat.wrap(it) }
+        iconDrawable?.setTint(textColor)
+
+        item.icon = icon
+
+        val title = SpannableString(item.title)
+        title.setSpan(ForegroundColorSpan(textColor), 0, title.length, 0)
+        item.title = title
+    }
+
+    private fun resetMenuItems() {
+        val textColor = ContextCompat.getColor(requireContext(), R.color.black)
+        val defaultImage =
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_arrow_upward)
+        val subMenu = binding.toolbar.menu.findItem(R.id.main_menu_item).subMenu
+        for (i in 0 until subMenu.size()) {
+            val item = subMenu.getItem(i)
+
+            item.icon = defaultImage
+
+            val title = SpannableString(item.title)
+            title.setSpan(ForegroundColorSpan(textColor), 0, title.length, 0)
+            item.title = title
+        }
+
+
+    }
+
+
 }
