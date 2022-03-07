@@ -25,7 +25,7 @@ class MoviesListViewModel constructor(
 
     fun getMoviesInGenre(genre: String): LiveData<PagingData<Movie>> {
         _genre.value = genre
-        var response: RepositoryResponse<Int>? = null
+        var response: RepositoryResponse<Int>?
         runBlocking {
             response = localRepo.getGenreId(genre)
         }

@@ -22,5 +22,9 @@
     <string name="dropped">Dropped</string>
     <string name="score">Score</string>
     <string name="notes">Notes</string>
+    <string name="most_popular_string">Most popular</string>
+    <string name="release_date_string">Release date</string>
+    <string name="average_score_string">Average score</string>
+    <string name="vote_count_string">Vote count</string>
 
 </resources>

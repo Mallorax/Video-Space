@@ -65,7 +65,7 @@ class MoviesGalleryFragment : Fragment() {
 
     private fun createRecyclerViewAdapter(): MoviesGalleryRecyclerAdapter {
         val adapter =
-            MoviesGalleryRecyclerAdapter(MoviesGalleryRecyclerAdapter.OnMovieClickListener { movie, view ->
+            MoviesGalleryRecyclerAdapter(MoviesGalleryRecyclerAdapter.OnMovieClickListener { movie, _ ->
                 val bundle = Bundle()
                 bundle.putParcelable("movie", movie)
                 val modalBottomSheet = MovieModalBottomSheet()

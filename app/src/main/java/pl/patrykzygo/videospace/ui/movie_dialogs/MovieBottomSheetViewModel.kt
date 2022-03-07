@@ -36,7 +36,7 @@ constructor(private val repository: LocalStoreRepository) : ViewModel() {
         val movie = _movie.value
         if (movie != null) {
             movie.isFavourite = !movie.isFavourite
-            _movie.value = movie!!
+            _movie.value = movie
             viewModelScope.launch(Dispatchers.IO) {
                 repository.insertFavourite(mapMovieToMovieEntity(movie))
             }
@@ -47,7 +47,7 @@ constructor(private val repository: LocalStoreRepository) : ViewModel() {
         val movie = _movie.value
         if (movie != null) {
             movie.isOnWatchLater = !movie.isOnWatchLater
-            _movie.value = movie!!
+            _movie.value = movie
             viewModelScope.launch(Dispatchers.IO) {
                 repository.insertFavourite(mapMovieToMovieEntity(movie))
             }

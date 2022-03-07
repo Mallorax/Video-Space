@@ -44,7 +44,7 @@ class LocalStoreRepositoryImpl @Inject constructor(
                 val genreResponseBody = genreResponse.body()?.genres
                 GlobalScope.launch(Dispatchers.IO) {
                     val genreEntities = genreResponseBody?.mapNotNull {
-                        if (it?.id != null && it?.name != null) {
+                        if (it?.id != null && it.name != null) {
                             GenreEntity(it.id, it.name)
                         } else {
                             null
