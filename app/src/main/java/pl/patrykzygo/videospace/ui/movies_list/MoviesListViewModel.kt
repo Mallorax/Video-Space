@@ -42,6 +42,10 @@ class MoviesListViewModel constructor(
             )
                 .liveData
                 .cachedIn(viewModelScope)
+                    //seems like API doesn't filter genres correctly, so doing it here is necessary
+                .map { pagingData ->
+                    pagingData.filter { it.genreIds.contains(response!!.data!!)}
+                }
                 .map { pagingData ->
                     pagingData.map { mapMoviesResponseToMovie(it) }
                 }
