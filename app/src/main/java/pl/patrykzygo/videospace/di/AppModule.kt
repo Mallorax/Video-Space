@@ -24,7 +24,9 @@ import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepositoryImpl
 import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
 import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSourceImpl
 import pl.patrykzygo.videospace.ui.DefaultFragmentFactory
+import pl.patrykzygo.videospace.ui.DispatchersProvider
 import pl.patrykzygo.videospace.ui.MainViewModelFactory
+import pl.patrykzygo.videospace.ui.StandardDispatchers
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
@@ -90,6 +92,12 @@ object AppModule {
         return db.moviesDao()
     }
 
+    @Singleton
+    @Provides
+    fun provideDispatchersProvider(): DispatchersProvider{
+        return StandardDispatchers()
+    }
+
     @LocalRepoImplQualifier
     @Provides
     fun provideLocalStoreRepository(
@@ -119,9 +127,10 @@ object AppModule {
     fun provideViewModelFactory(
         @LocalRepoImplQualifier localStoreRepository: LocalStoreRepository,
         @MoviesPagingSourceImplQualifier moviesPagingSource: MoviesPagingSource,
-        @GenrePagingSourceImplQualifier genresPagingSource: GenrePagingSource
+        @GenrePagingSourceImplQualifier genresPagingSource: GenrePagingSource,
+        dispatcher: DispatchersProvider
     ): MainViewModelFactory {
-        return MainViewModelFactory(localStoreRepository, moviesPagingSource, genresPagingSource)
+        return MainViewModelFactory(localStoreRepository, moviesPagingSource, genresPagingSource, dispatcher)
     }
 
     @DefaultFragmentFactoryQualifier

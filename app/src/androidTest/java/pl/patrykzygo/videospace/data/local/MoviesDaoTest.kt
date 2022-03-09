@@ -6,11 +6,16 @@ import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import pl.patrykzygo.videospace.AndroidMainDispatcherRule
+import pl.patrykzygo.videospace.util.createMovieEntity
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -23,7 +28,7 @@ class MoviesDaoTest {
     var hiltRule = HiltAndroidRule(this)
 
     @get:Rule
-    var instantTaskExecutorRule = InstantTaskExecutorRule()
+    var mainDispatcherRule = AndroidMainDispatcherRule()
 
     @Inject
     @Named("test_db")
@@ -43,38 +48,54 @@ class MoviesDaoTest {
 
     @Test
     fun insertAndReadMovieTest() = runTest {
-        val movie = MovieEntity(1, false, isOnWatchLater = false)
-        dao.insertFavourite(movie)
-        val requestedMovie = dao.getAllFavourites()
+        val movie = createMovieEntity(1)
+        var requestedMovie: List<MovieEntity> = listOf()
+        val job = launch(mainDispatcherRule.dispatcher){
+            dao.insertFavourite(movie)
+            requestedMovie = dao.getAllMovies()
+        }
+        job.join()
         assertThat(requestedMovie).contains(movie)
     }
 
     @Test
     fun updateAndReadMovieTest() = runTest {
-        val movie = MovieEntity(1, false, isOnWatchLater = false)
-        val movie2 = MovieEntity(1, true, isOnWatchLater = false)
-        dao.insertFavourite(movie)
-        dao.insertFavourite(movie2)
-        val requestedMovie = dao.getAllFavourites()
-        assertThat(requestedMovie).doesNotContain(movie)
+        val movie = createMovieEntity(1)
+        val movie2 = createMovieEntity(2, isFavourite = true)
+        var requestedMovies: List<MovieEntity> = listOf()
+        val job = launch(mainDispatcherRule.dispatcher) {
+            dao.insertFavourite(movie)
+            dao.insertFavourite(movie2)
+            requestedMovies = dao.getAllFavourites()
+        }
+        job.join()
+        assertThat(requestedMovies).doesNotContain(movie)
     }
 
     @Test
     fun insertMultipleMoviesTest() = runTest {
-        val movie = MovieEntity(1, false, isOnWatchLater = false)
-        val movie2 = MovieEntity(2, true, isOnWatchLater = false)
-        val movie3 = MovieEntity(3, false, isOnWatchLater = false)
-        val movie4 = MovieEntity(4, true, isOnWatchLater = false)
+        val movie = createMovieEntity(1, isFavourite = true)
+        val movie2 = createMovieEntity(2, isFavourite = true)
+        val movie3 = createMovieEntity(3, isFavourite = true)
+        val movie4 = createMovieEntity(4, isFavourite = true)
         val movies = mutableListOf(movie, movie2, movie3)
-        dao.insertFavourites(*movies.toTypedArray(), movie4)
-        val requestedMovies = dao.getAllFavourites()
+        var requestedMovies: List<MovieEntity> = listOf()
+        val job = launch(mainDispatcherRule.dispatcher){
+            dao.insertFavourites(*movies.toTypedArray(), movie4)
+            requestedMovies = dao.getAllMovies()
+        }
         movies.add(movie4)
+        job.join()
         assertThat(requestedMovies).containsExactlyElementsIn(movies)
     }
 
     @Test
     fun readMoviesWhenTableIsEmptyTest() = runTest {
-        val requestedMovies = dao.getAllFavourites()
+        var requestedMovies: List<MovieEntity> = listOf()
+        val job = launch(mainDispatcherRule.dispatcher){
+            requestedMovies = dao.getAllFavourites()
+        }
+        job.join()
         assertThat(requestedMovies).isEmpty()
     }
 }

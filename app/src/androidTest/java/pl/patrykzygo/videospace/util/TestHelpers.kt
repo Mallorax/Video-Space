@@ -8,6 +8,7 @@ import okhttp3.MediaType
 import okhttp3.ResponseBody
 import org.hamcrest.Matcher
 import pl.patrykzygo.videospace.data.app.Movie
+import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.network.EntryPointMoviesResponse
 import pl.patrykzygo.videospace.data.network.MovieResponse
 import retrofit2.Response
@@ -65,6 +66,11 @@ fun provideMovieWithIdUi(id: Int): Movie {
         "title $id", false, 1.00, 323
     )
 }
+
+fun createMovieEntity(id: Int,  isFavourite: Boolean = false): MovieEntity{
+    return MovieEntity(id, isFavourite,  isOnWatchLater = false, title = "title $id")
+}
+
 
 
 fun clickChildWithId(id: Int): ViewAction {

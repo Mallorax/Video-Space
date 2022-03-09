@@ -14,8 +14,11 @@ interface MoviesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFavourites(vararg moviesDao: MovieEntity)
 
-    @Query("SELECT * FROM movies")
+    @Query("SELECT * FROM movies WHERE is_favourite == 1")
     suspend fun getAllFavourites(): List<MovieEntity>
+
+    @Query("SELECT * FROM movies")
+    suspend fun getAllMovies(): List<MovieEntity>
 
     @Query("SELECT * FROM movies WHERE movie_id = :id")
     suspend fun getFavourite(id: Int): MovieEntity?

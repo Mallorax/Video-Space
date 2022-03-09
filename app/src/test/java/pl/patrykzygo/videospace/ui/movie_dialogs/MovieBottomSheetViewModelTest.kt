@@ -2,25 +2,34 @@ package pl.patrykzygo.videospace.ui.movie_dialogs
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
+import io.mockk.coVerify
+import io.mockk.spyk
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito.spy
 import org.mockito.Mockito.verify
 import org.mockito.Spy
+import pl.patrykzygo.MainDispatcherRule
 import pl.patrykzygo.videospace.data.mapMovieToMovieEntity
 import pl.patrykzygo.videospace.repository.FakeLocalStoreRepository
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
+import pl.patrykzygo.videospace.util.TestDispatchers
 import pl.patrykzygo.videospace.util.getOrAwaitValueTest
 import pl.patrykzygo.videospace.util.provideMovieWithId
 
 @ExperimentalCoroutinesApi
-
 class MovieBottomSheetViewModelTest {
 
     private lateinit var viewModel: MovieBottomSheetViewModel
+
+    @get:Rule
+    val mainDispatchersRule = MainDispatcherRule()
 
     @get:Rule
     var taskExecutorRule = InstantTaskExecutorRule()
@@ -30,8 +39,8 @@ class MovieBottomSheetViewModelTest {
 
     @Before
     fun setup() {
-        repository = spy(FakeLocalStoreRepository())
-        viewModel = MovieBottomSheetViewModel(repository)
+        repository = spyk(FakeLocalStoreRepository())
+        viewModel = MovieBottomSheetViewModel(repository, TestDispatchers(mainDispatchersRule.dispatcher))
 
     }
 
@@ -63,11 +72,11 @@ class MovieBottomSheetViewModelTest {
     }
 
     @Test
-    fun `test if isLiked toggle was saved to repo`() = runTest {
+    fun `test if isLiked toggle was saved to repo`(){
         val movie = provideMovieWithId(1)
         viewModel.setMovie(movie)
         viewModel.changeIsMovieLiked()
-        verify(repository).insertFavourite(mapMovieToMovieEntity(movie))
+        coVerify { repository.insertFavourite(any()) }
     }
 
     @Test
@@ -85,7 +94,8 @@ class MovieBottomSheetViewModelTest {
         val movie = provideMovieWithId(1)
         viewModel.setMovie(movie)
         viewModel.changeIsMovieSavedToWatchLater()
-        verify(repository).insertFavourite(mapMovieToMovieEntity(movie))
+        coVerify { repository.insertFavourite(any()) }
+
     }
 
     @Test

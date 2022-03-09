@@ -18,7 +18,8 @@ import javax.inject.Inject
 class MainViewModelFactory @Inject constructor(
     @LocalRepoImplQualifier val localRepo: LocalStoreRepository,
     @MoviesPagingSourceImplQualifier val moviesPagingSource: MoviesPagingSource,
-    @GenrePagingSourceImplQualifier val genrePagingSource: GenrePagingSource
+    @GenrePagingSourceImplQualifier val genrePagingSource: GenrePagingSource,
+    val dispatchersProvider: DispatchersProvider
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -31,8 +32,8 @@ class MainViewModelFactory @Inject constructor(
                 .newInstance(moviesPagingSource)
         }
         if (modelClass.isAssignableFrom(MovieBottomSheetViewModel::class.java)) {
-            return modelClass.getConstructor(LocalStoreRepository::class.java)
-                .newInstance(localRepo)
+            return modelClass.getConstructor(LocalStoreRepository::class.java, DispatchersProvider::class.java)
+                .newInstance(localRepo, dispatchersProvider)
         }
         if (modelClass.isAssignableFrom(MoviesListViewModel::class.java))
             return modelClass.getConstructor(GenrePagingSource::class.java, LocalStoreRepository::class.java)

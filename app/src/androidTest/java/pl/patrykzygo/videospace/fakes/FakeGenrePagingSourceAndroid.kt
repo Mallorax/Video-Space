@@ -7,7 +7,7 @@ import pl.patrykzygo.videospace.util.fakeCorrectMoviesResponseUi
 
 class FakeGenrePagingSourceAndroid : GenrePagingSource() {
 
-    override fun setGenre(genreId: Int) {
+    override fun setParameters(genreId: Int, sortingOption: String) {
         TODO("Not yet implemented")
     }
 

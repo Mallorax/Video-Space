@@ -5,15 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.mapMovieToMovieEntity
-import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
 import pl.patrykzygo.videospace.repository.RepositoryResponse
+import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
+import pl.patrykzygo.videospace.ui.DispatchersProvider
 
 class MovieBottomSheetViewModel
-constructor(private val repository: LocalStoreRepository) : ViewModel() {
+constructor(
+    private val repository: LocalStoreRepository,
+    private val dispatchers: DispatchersProvider
+) : ViewModel() {
 
 
     private val _movie = MutableLiveData<Movie?>()
@@ -37,8 +42,9 @@ constructor(private val repository: LocalStoreRepository) : ViewModel() {
         if (movie != null) {
             movie.isFavourite = !movie.isFavourite
             _movie.value = movie
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch(dispatchers.io) {
                 repository.insertFavourite(mapMovieToMovieEntity(movie))
+                delay(100)
             }
         }
     }
@@ -48,7 +54,7 @@ constructor(private val repository: LocalStoreRepository) : ViewModel() {
         if (movie != null) {
             movie.isOnWatchLater = !movie.isOnWatchLater
             _movie.value = movie
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch(dispatchers.io) {
                 repository.insertFavourite(mapMovieToMovieEntity(movie))
             }
         }
