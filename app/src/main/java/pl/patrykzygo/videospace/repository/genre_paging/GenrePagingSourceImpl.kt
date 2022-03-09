@@ -3,6 +3,7 @@ package pl.patrykzygo.videospace.repository.genre_paging
 import androidx.paging.PagingState
 import pl.patrykzygo.videospace.data.network.MovieResponse
 import pl.patrykzygo.videospace.networking.DiscoverEntryPoint
+import pl.patrykzygo.videospace.others.SortOptions
 import pl.patrykzygo.videospace.repository.delegate.DelegateMovieRefreshKey
 import pl.patrykzygo.videospace.repository.delegate.DelegateMovieRefreshKeyImpl
 import pl.patrykzygo.videospace.repository.delegate.MovieCalcKeyPositionDelegate
@@ -16,10 +17,12 @@ class GenrePagingSourceImpl @Inject constructor(private val entryPoint: Discover
     DelegateMovieRefreshKey by DelegateMovieRefreshKeyImpl(){
 
     private var genreId: String = ""
+    private var sortOption: String = SortOptions.POPULARITY_DESC
 
     //Id of a genre is needed to fetch movies from entry point
-    override fun setGenre(genreId: Int) {
+    override fun setParameters(genreId: Int, sortingOption: String) {
         this.genreId = genreId.toString()
+        this.sortOption = sortingOption
     }
 
     override fun getRefreshKey(state: PagingState<Int, MovieResponse>): Int? {
@@ -31,7 +34,8 @@ class GenrePagingSourceImpl @Inject constructor(private val entryPoint: Discover
             val currentPage = params.key ?: 1
             val response = entryPoint.getMoviesWithGenre(
                 includedGenres = genreId,
-                page = currentPage
+                page = currentPage,
+                sortOptions = sortOption
             )
             return if (response.isSuccessful) {
                 LoadResult.Page(

@@ -12,8 +12,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.databinding.FragmentMoviesListBinding
 import pl.patrykzygo.videospace.others.SortOptions
@@ -30,7 +34,7 @@ class MoviesListFragment(val viewModelFactory: MainViewModelFactory) : Fragment(
     lateinit var viewModel: MoviesListViewModel
     private val adapter = createRecyclerViewAdapter()
 
-    lateinit var movieGenre: String
+    private lateinit var movieGenre: String
 
 
     override fun onCreateView(
@@ -41,6 +45,7 @@ class MoviesListFragment(val viewModelFactory: MainViewModelFactory) : Fragment(
         _binding = FragmentMoviesListBinding.inflate(inflater, container, false)
         viewModel = viewModelFactory.create(MoviesListViewModel::class.java)
         movieGenre = MoviesListFragmentArgs.fromBundle(requireArguments()).genre
+        viewModel.setGenre(movieGenre)
 
         createMenu()
 
@@ -92,11 +97,16 @@ class MoviesListFragment(val viewModelFactory: MainViewModelFactory) : Fragment(
     }
 
     private fun subscribeObservers() {
-        viewModel.getMoviesInGenre(movieGenre).observe(viewLifecycleOwner, Observer { moviesList ->
-            adapter.submitData(viewLifecycleOwner.lifecycle, moviesList)
-        })
+        lifecycleScope.launch {
+            viewModel.getMoviesInGenre().collectLatest {
+                adapter.submitData(it)
+            }
+        }
         viewModel.sortOption.observe(viewLifecycleOwner, Observer {
             displaySelectedSortOption(it)
+        })
+        viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
+            Snackbar.make(requireView(), "Error: $it", Snackbar.LENGTH_LONG).show()
         })
     }
 
