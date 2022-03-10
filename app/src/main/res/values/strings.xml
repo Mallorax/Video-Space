@@ -26,5 +26,13 @@
     <string name="release_date_string">Release date</string>
     <string name="average_score_string">Average score</string>
     <string name="vote_count_string">Vote count</string>
+    <string name="home">Home</string>
+    <string name="my_lists">My Lists</string>
+    <string name="search">Search</string>
+    <string name="search_fragment_headline">Select search options:</string>
+    <string name="include_genres">Include genres</string>
+    <string name="exclude_genres">Exclude genres</string>
+    <string name="minimum_vote_count_string">Minimum vote count:</string>
+    <string name="minimum_score_string">Minimum score:</string>
 
 </resources>

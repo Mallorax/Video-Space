@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="pl.patrykzygo.videospace.ui.movie_details.MovieDetailsViewModel" />
