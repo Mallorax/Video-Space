@@ -22,6 +22,29 @@ or if it's handled internally. Couldn't really find much info about it either --
     </fragment>
 
     <fragment
+        android:id="@+id/search_movie_fragment"
+        android:label="@string/search"
+        android:name="pl.patrykzygo.videospace.ui.movie_search.SearchMovieFragment"
+        tools:layout="@layout/fragment_movie_search">
+
+        <action
+            android:id="@+id/action_search_movie_fragment_to_movies_list_fragment"
+            app:destination="@id/movies_list_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/users_list_fragment"
+        android:label="@string/my_lists"
+        android:name="pl.patrykzygo.videospace.ui.user_lists.UserListsFragment"
+        tools:layout="@layout/fragment_user_lists">
+
+        <action
+            android:id="@+id/action_users_list_fragment_to_movie_details"
+            app:destination="@id/movie_details" />
+    </fragment>
+
+
+    <fragment
         android:id="@+id/movies_gallery_fragment"
         android:name="pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment"
         android:label="@string/main_app_label"
