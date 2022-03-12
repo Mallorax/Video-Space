@@ -44,7 +44,6 @@ class SearchMovieFragment(val viewModelFactory: MainViewModelFactory) : Fragment
         super.onViewCreated(view, savedInstanceState)
         setUpAppBar(findNavController(), binding.appBar.toolbar)
         subscribeObservers()
-        setListeners()
     }
 
     private fun displayGenres(genres: List<Genre>) {
@@ -54,39 +53,30 @@ class SearchMovieFragment(val viewModelFactory: MainViewModelFactory) : Fragment
         }
     }
 
-    private fun setListeners() {
-        binding.includeGenresChipGroup.forEach { chip ->
-            (chip as Chip).setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    viewModel.addIncludedGenres(chip.text.toString())
-                    Snackbar.make(requireView(), chip.text.toString(), Snackbar.LENGTH_LONG).show()
-                } else {
-                    viewModel.removeIncludedGenres(chip.text.toString())
-                }
-            }
-        }
 
-        binding.excludeGenresChipGroup.forEach { chip ->
-            (chip as Chip).setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    viewModel.addExcludedGenres(chip.text.toString())
-                    Snackbar.make(requireView(), chip.text.toString(), Snackbar.LENGTH_LONG).show()
-                } else {
-                    viewModel.removeExcludedGenres(chip.text.toString())
-                }
-            }
+    private fun onChipClickAction(isChecked: Boolean, chipText: String){
+        if (isChecked) {
+            viewModel.addIncludedGenres(chipText)
+        } else {
+            viewModel.removeIncludedGenres(chipText)
         }
     }
 
     private fun showIncludeChipInGroup(chipText: String){
         val chip = layoutInflater.inflate(R.layout.layout_include_chip_choice, binding.includeGenresChipGroup, false) as Chip
         chip.text = chipText
+        chip.setOnCheckedChangeListener{_, isChecked ->
+            onChipClickAction(isChecked, chip.text.toString())
+        }
         binding.includeGenresChipGroup.addView(chip)
     }
 
     private fun showExcludeChipInGroup(chipText: String){
         val chip = layoutInflater.inflate(R.layout.layout_exclude_chip_choice, binding.excludeGenresChipGroup, false) as Chip
         chip.text = chipText
+        chip.setOnCheckedChangeListener{_, isChecked ->
+            onChipClickAction(isChecked, chip.text.toString())
+        }
         binding.excludeGenresChipGroup.addView(chip)
     }
 
