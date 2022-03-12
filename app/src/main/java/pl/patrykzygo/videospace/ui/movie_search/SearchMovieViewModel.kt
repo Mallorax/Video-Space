@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
-import pl.patrykzygo.videospace.ui.DispatchersProvider
 import pl.patrykzygo.videospace.data.app.Genre
 import pl.patrykzygo.videospace.repository.RepositoryResponse
+import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
+import pl.patrykzygo.videospace.ui.DispatchersProvider
 
 class SearchMovieViewModel constructor(
     private val repo: LocalStoreRepository,
@@ -21,14 +21,36 @@ class SearchMovieViewModel constructor(
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> get() = _errorMessage
 
-    fun getAllGenres(){
+    private val includedGenres = mutableListOf<String>()
+    private val excludedGenres = mutableListOf<String>()
+
+
+    fun getAllGenres() {
         viewModelScope.launch(dispatchersProvider.io) {
             val repoResponse = repo.getAllGenres()
-            if (repoResponse.status == RepositoryResponse.Status.SUCCESS){
+            if (repoResponse.status == RepositoryResponse.Status.SUCCESS) {
                 _genres.postValue(repoResponse.data!!)
-            }else{
+            } else {
                 _errorMessage.postValue(repoResponse.message!!)
             }
         }
     }
+
+    fun addIncludedGenres(genreName: String) {
+        includedGenres.add(genreName)
+    }
+
+    fun removeIncludedGenres(genreName: String) {
+        includedGenres.remove(genreName)
+    }
+
+    fun addExcludedGenres(genreName: String) {
+        excludedGenres.add(genreName)
+    }
+
+    fun removeExcludedGenres(genreName: String) {
+        excludedGenres.remove(genreName)
+    }
+
+
 }

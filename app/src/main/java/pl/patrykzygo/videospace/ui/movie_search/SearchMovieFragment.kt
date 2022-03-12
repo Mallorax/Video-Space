@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
@@ -43,22 +44,53 @@ class SearchMovieFragment(val viewModelFactory: MainViewModelFactory) : Fragment
         super.onViewCreated(view, savedInstanceState)
         setUpAppBar(findNavController(), binding.appBar.toolbar)
         subscribeObservers()
+        setListeners()
     }
 
     private fun displayGenres(genres: List<Genre>) {
         genres.forEach { genre ->
-            binding.includeGenresChipGroup.addView(createGenreChip(genre.genreName))
-            binding.excludeGenresChipGroup.addView(createGenreChip(genre.genreName))
+            showIncludeChipInGroup(genre.genreName)
+            showExcludeChipInGroup(genre.genreName)
         }
     }
 
-    private fun createGenreChip(text: String): Chip {
-        val chip = Chip(requireContext())
-        chip.text = text
-        chip.setChipBackgroundColorResource(R.color.purple_200)
-        chip.setTextColor(ResourcesCompat.getColor(resources, R.color.white, null))
-        return chip
+    private fun setListeners() {
+        binding.includeGenresChipGroup.forEach { chip ->
+            (chip as Chip).setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    viewModel.addIncludedGenres(chip.text.toString())
+                    Snackbar.make(requireView(), chip.text.toString(), Snackbar.LENGTH_LONG).show()
+                } else {
+                    viewModel.removeIncludedGenres(chip.text.toString())
+                }
+            }
+        }
+
+        binding.excludeGenresChipGroup.forEach { chip ->
+            (chip as Chip).setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    viewModel.addExcludedGenres(chip.text.toString())
+                    Snackbar.make(requireView(), chip.text.toString(), Snackbar.LENGTH_LONG).show()
+                } else {
+                    viewModel.removeExcludedGenres(chip.text.toString())
+                }
+            }
+        }
     }
+
+    private fun showIncludeChipInGroup(chipText: String){
+        val chip = layoutInflater.inflate(R.layout.layout_include_chip_choice, binding.includeGenresChipGroup, false) as Chip
+        chip.text = chipText
+        binding.includeGenresChipGroup.addView(chip)
+    }
+
+    private fun showExcludeChipInGroup(chipText: String){
+        val chip = layoutInflater.inflate(R.layout.layout_exclude_chip_choice, binding.excludeGenresChipGroup, false) as Chip
+        chip.text = chipText
+        binding.excludeGenresChipGroup.addView(chip)
+    }
+
+
 
     private fun subscribeObservers() {
         viewModel.genres.observe(viewLifecycleOwner, Observer {

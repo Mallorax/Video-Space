@@ -20,6 +20,12 @@
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
     </style>
 
+    <style name="Exclude.Chip" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="checkedIcon">@drawable/ic_baseline_clear</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
 
     <style name="AppModalStyle"
         parent="Widget.Design.BottomSheet.Modal">
