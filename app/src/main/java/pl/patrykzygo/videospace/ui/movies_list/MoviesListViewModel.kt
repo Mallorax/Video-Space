@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import androidx.paging.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
+import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.mapMoviesResponseToMovie
 import pl.patrykzygo.videospace.others.SortOptions
@@ -28,9 +29,11 @@ class MoviesListViewModel constructor(
 
 
     //TODO: mutable state flow for sort options
-    fun setGenre(genre: String) {
-        _genre.value = genre
-        getMoviesInGenre()
+    fun setRequest(request: DiscoverMovieRequest) {
+        if (request.includedGenres != null){
+            _genre.value = request.includedGenres!!
+            getMoviesInGenre()
+        }
     }
 
     private fun setSortingOption(sortOption: String) {

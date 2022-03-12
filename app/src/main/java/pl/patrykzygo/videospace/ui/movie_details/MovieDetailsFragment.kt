@@ -123,6 +123,13 @@ class MovieDetailsFragment constructor(private val viewModelFactory: MainViewMod
             val action = MovieDetailsFragmentDirections.actionMovieDetailsToSaveMovieFragment(it.id, it.title)
             findNavController().navigate(action)
         })
+        viewModel.searchInGenreLiveEvent.observe(viewLifecycleOwner, Observer {
+            val action = MovieDetailsFragmentDirections.actionMovieDetailsToMoviesListFragment(it)
+            findNavController().navigate(action)
+        })
+        viewModel.searchInGenreErrorMessage.observe(viewLifecycleOwner, Observer {
+            Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
+        })
     }
 
     private fun showMovieGenres(genres: List<String>?) {
@@ -133,9 +140,7 @@ class MovieDetailsFragment constructor(private val viewModelFactory: MainViewMod
             chip.setTextColor(ResourcesCompat.getColor(resources, R.color.white, null))
             binding.genresChipGroup.addView(chip)
             chip.setOnClickListener {
-                val action =
-                    MovieDetailsFragmentDirections.actionMovieDetailsToMoviesListFragment(genre)
-                findNavController().navigate(action)
+                viewModel.moveToGenreList(genre)
             }
         }
     }

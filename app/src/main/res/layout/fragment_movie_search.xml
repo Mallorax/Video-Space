@@ -140,6 +140,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/search_score_picker" />
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/vote_count_input_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/small_margin"
@@ -149,6 +150,7 @@
                     app:layout_constraintTop_toBottomOf="@id/min_vote_count_label">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/vote_count_text_input"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number" />

@@ -76,15 +76,15 @@ or if it's handled internally. Couldn't really find much info about it either --
         android:label="{genre}"
         tools:layout="@layout/fragment_movies_list">
 
-        <argument
-            android:name="genre"
-            app:argType="string" />
         <action
             android:id="@+id/action_movies_list_fragment_to_movie_details"
             app:destination="@id/movie_details" />
         <action
             android:id="@+id/action_movies_list_fragment_to_save_movie_fragment"
             app:destination="@id/save_movie_fragment" />
+        <argument
+            android:name="request"
+            app:argType="pl.patrykzygo.videospace.data.app.DiscoverMovieRequest" />
 
     </fragment>
 

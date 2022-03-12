@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
@@ -44,6 +42,9 @@ class SearchMovieFragment(val viewModelFactory: MainViewModelFactory) : Fragment
         super.onViewCreated(view, savedInstanceState)
         setUpAppBar(findNavController(), binding.appBar.toolbar)
         subscribeObservers()
+        binding.searchFragmentFab.setOnClickListener {
+            viewModel.submitRequest(binding.searchScorePicker.value, binding.voteCountTextInput.text.toString())
+        }
     }
 
     private fun displayGenres(genres: List<Genre>) {
@@ -54,11 +55,21 @@ class SearchMovieFragment(val viewModelFactory: MainViewModelFactory) : Fragment
     }
 
 
-    private fun onChipClickAction(isChecked: Boolean, chipText: String){
+    private fun onIncludeChipClickAction(isChecked: Boolean, chipText: String){
         if (isChecked) {
             viewModel.addIncludedGenres(chipText)
+
         } else {
             viewModel.removeIncludedGenres(chipText)
+        }
+    }
+
+    private fun onExcludeChipClickAction(isChecked: Boolean, chipText: String){
+        if (isChecked) {
+            viewModel.addExcludedGenres(chipText)
+
+        } else {
+            viewModel.removeExcludedGenres(chipText)
         }
     }
 
@@ -66,7 +77,7 @@ class SearchMovieFragment(val viewModelFactory: MainViewModelFactory) : Fragment
         val chip = layoutInflater.inflate(R.layout.layout_include_chip_choice, binding.includeGenresChipGroup, false) as Chip
         chip.text = chipText
         chip.setOnCheckedChangeListener{_, isChecked ->
-            onChipClickAction(isChecked, chip.text.toString())
+            onIncludeChipClickAction(isChecked, chip.text.toString())
         }
         binding.includeGenresChipGroup.addView(chip)
     }
@@ -75,7 +86,7 @@ class SearchMovieFragment(val viewModelFactory: MainViewModelFactory) : Fragment
         val chip = layoutInflater.inflate(R.layout.layout_exclude_chip_choice, binding.excludeGenresChipGroup, false) as Chip
         chip.text = chipText
         chip.setOnCheckedChangeListener{_, isChecked ->
-            onChipClickAction(isChecked, chip.text.toString())
+            onExcludeChipClickAction(isChecked, chip.text.toString())
         }
         binding.excludeGenresChipGroup.addView(chip)
     }
@@ -88,6 +99,13 @@ class SearchMovieFragment(val viewModelFactory: MainViewModelFactory) : Fragment
         })
         viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
             Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
+        })
+        viewModel.voteCountErrorMessage.observe(viewLifecycleOwner, Observer {
+            binding.voteCountTextInput.error = it
+        })
+        viewModel.requestMoviesLiveEvent.observe(viewLifecycleOwner, Observer {
+            val action = SearchMovieFragmentDirections.actionSearchMovieFragmentToMoviesListFragment(it)
+            findNavController().navigate(action)
         })
     }
 }

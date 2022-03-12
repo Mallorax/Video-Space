@@ -19,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pl.patrykzygo.videospace.R
+import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
 import pl.patrykzygo.videospace.databinding.FragmentMoviesListBinding
 import pl.patrykzygo.videospace.others.SortOptions
 import pl.patrykzygo.videospace.ui.MainViewModelFactory
@@ -34,7 +35,7 @@ class MoviesListFragment(val viewModelFactory: MainViewModelFactory) : Fragment(
     lateinit var viewModel: MoviesListViewModel
     private val adapter = createRecyclerViewAdapter()
 
-    private lateinit var movieGenre: String
+    private lateinit var movieGenre: DiscoverMovieRequest
 
 
     override fun onCreateView(
@@ -44,8 +45,8 @@ class MoviesListFragment(val viewModelFactory: MainViewModelFactory) : Fragment(
     ): View {
         _binding = FragmentMoviesListBinding.inflate(inflater, container, false)
         viewModel = viewModelFactory.create(MoviesListViewModel::class.java)
-        movieGenre = MoviesListFragmentArgs.fromBundle(requireArguments()).genre
-        viewModel.setGenre(movieGenre)
+        movieGenre = MoviesListFragmentArgs.fromBundle(requireArguments()).request
+        viewModel.setRequest(movieGenre)
 
         createMenu()
 
