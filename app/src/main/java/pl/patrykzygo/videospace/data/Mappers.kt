@@ -1,8 +1,11 @@
 package pl.patrykzygo.videospace.data
 
+import pl.patrykzygo.videospace.data.app.Genre
 import pl.patrykzygo.videospace.data.app.Movie
+import pl.patrykzygo.videospace.data.local.GenreEntity
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.network.MovieResponse
+import pl.patrykzygo.videospace.data.network.movie_details.GenresItem
 import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
 
 fun mapMoviesResponseToMovie(movieResponse: MovieResponse): Movie {
@@ -24,7 +27,7 @@ fun mapMoviesResponseToMovie(movieResponse: MovieResponse): Movie {
     )
 }
 
-fun mapMovieDetailsResponseToMovie(movieDetailsResponse: MovieDetailsResponse): Movie{
+fun mapMovieDetailsResponseToMovie(movieDetailsResponse: MovieDetailsResponse): Movie {
     return Movie(
         movieDetailsResponse.adult ?: false,
         movieDetailsResponse.backdropPath.orEmpty(),
@@ -52,4 +55,19 @@ fun mapMovieToMovieEntity(movie: Movie): MovieEntity {
         status = movie.status,
         title = movie.title
     )
+}
+
+fun mapGenreEntityToGenre(genreEntity: GenreEntity): Genre {
+    return Genre(
+        genreEntity.id,
+        genreEntity.name
+    )
+}
+
+fun mapGenreItemToGenreNullable(genreItem: GenresItem?): Genre? {
+    return if (genreItem?.id != null && genreItem.name != null){
+        Genre(genreItem.id, genreItem.name)
+    }else{
+        null
+    }
 }

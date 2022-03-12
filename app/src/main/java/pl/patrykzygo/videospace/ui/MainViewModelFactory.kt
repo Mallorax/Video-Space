@@ -10,6 +10,7 @@ import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
 import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
 import pl.patrykzygo.videospace.ui.movie_details.MovieDetailsViewModel
 import pl.patrykzygo.videospace.ui.movie_dialogs.MovieBottomSheetViewModel
+import pl.patrykzygo.videospace.ui.movie_search.SearchMovieViewModel
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryViewModel
 import pl.patrykzygo.videospace.ui.movies_list.MoviesListViewModel
 import pl.patrykzygo.videospace.ui.save_movie.SaveMovieViewModel
@@ -32,14 +33,28 @@ class MainViewModelFactory @Inject constructor(
                 .newInstance(moviesPagingSource)
         }
         if (modelClass.isAssignableFrom(MovieBottomSheetViewModel::class.java)) {
-            return modelClass.getConstructor(LocalStoreRepository::class.java, DispatchersProvider::class.java)
+            return modelClass.getConstructor(
+                LocalStoreRepository::class.java,
+                DispatchersProvider::class.java
+            )
                 .newInstance(localRepo, dispatchersProvider)
         }
         if (modelClass.isAssignableFrom(MoviesListViewModel::class.java))
-            return modelClass.getConstructor(GenrePagingSource::class.java, LocalStoreRepository::class.java)
+            return modelClass.getConstructor(
+                GenrePagingSource::class.java,
+                LocalStoreRepository::class.java
+            )
                 .newInstance(genrePagingSource, localRepo)
-        if (modelClass.isAssignableFrom(SaveMovieViewModel::class.java)){
-            return modelClass.getConstructor(LocalStoreRepository::class.java).newInstance(localRepo)
+        if (modelClass.isAssignableFrom(SaveMovieViewModel::class.java)) {
+            return modelClass.getConstructor(LocalStoreRepository::class.java)
+                .newInstance(localRepo)
+        }
+        if (modelClass.isAssignableFrom(SearchMovieViewModel::class.java)) {
+            return modelClass.getConstructor(
+                LocalStoreRepository::class.java,
+                DispatchersProvider::class.java
+            )
+                .newInstance(localRepo, dispatchersProvider)
         }
         throw  IllegalArgumentException("Unknown ViewModel class")
     }

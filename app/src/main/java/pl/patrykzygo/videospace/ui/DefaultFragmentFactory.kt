@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import pl.patrykzygo.videospace.ui.movie_details.MovieDetailsFragment
 import pl.patrykzygo.videospace.ui.movie_dialogs.MovieModalBottomSheet
+import pl.patrykzygo.videospace.ui.movie_search.SearchMovieFragment
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
 import pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment
 import pl.patrykzygo.videospace.ui.save_movie.SaveMovieFragment
@@ -24,6 +25,7 @@ class DefaultFragmentFactory
             MovieModalBottomSheet::class.java.name -> MovieModalBottomSheet()
             MovieDetailsFragment::class.java.name -> MovieDetailsFragment(viewModelFactory)
             SaveMovieFragment::class.java.name -> SaveMovieFragment(viewModelFactory)
+            SearchMovieFragment::class.java.name -> SearchMovieFragment(viewModelFactory)
             else -> super.instantiate(classLoader, className)
         }
     }

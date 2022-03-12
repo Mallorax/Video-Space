@@ -3,10 +3,13 @@ package pl.patrykzygo.videospace.repository.local_store
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import pl.patrykzygo.videospace.data.app.Genre
 import pl.patrykzygo.videospace.data.local.GenreDao
 import pl.patrykzygo.videospace.data.local.GenreEntity
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.local.MoviesDao
+import pl.patrykzygo.videospace.data.mapGenreEntityToGenre
+import pl.patrykzygo.videospace.data.mapGenreItemToGenreNullable
 import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
 import pl.patrykzygo.videospace.networking.GenresEntryPoint
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
@@ -30,6 +33,20 @@ class LocalStoreRepositoryImpl @Inject constructor(
 
     override suspend fun getAllFavourites(): RepositoryResponse<List<MovieEntity>> {
         return RepositoryResponse.success(listOf())
+    }
+
+    override suspend fun getAllGenres(): RepositoryResponse<List<Genre>> {
+        val daoResponse = genreDao.getGenres()
+        if (daoResponse.isNotEmpty()) {
+            return RepositoryResponse.success(daoResponse.map { mapGenreEntityToGenre(it) })
+        }
+        val networkResponse = genreEntryPoint.getGenresForMovies()
+        if (networkResponse.isSuccessful) {
+            val data = networkResponse.body()?.genres
+                ?: return RepositoryResponse.error("Couldn't retrieve genres")
+            return RepositoryResponse.success(data.mapNotNull { mapGenreItemToGenreNullable(it) })
+        }
+        return RepositoryResponse.error("Couldn't retrieve genres")
     }
 
     override suspend fun getGenreId(genreName: String): RepositoryResponse<Int> {
