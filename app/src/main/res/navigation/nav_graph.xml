@@ -73,7 +73,7 @@ or if it's handled internally. Couldn't really find much info about it either --
     <fragment
         android:id="@+id/movies_list_fragment"
         android:name="pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment"
-        android:label="{genre}"
+        android:label="@string/list_of_movies_label"
         tools:layout="@layout/fragment_movies_list">
 
         <action

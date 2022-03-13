@@ -64,9 +64,9 @@ class MovieDetailsViewModel constructor(
             if (response.status == RepositoryResponse.Status.SUCCESS){
                 val genre = response.data!!.first { t-> t.genreName == searchedGenre }
                 val request = DiscoverMovieRequest(includedGenres = genre.genreId.toString())
-                _searchInGenreLiveEvent.value = request
+                _searchInGenreLiveEvent.postValue(request)
             }else{
-                _searchInGenreErrorMessage.value = "Check your internet connection"
+                _searchInGenreErrorMessage.postValue("Check your internet connection")
             }
         }
     }

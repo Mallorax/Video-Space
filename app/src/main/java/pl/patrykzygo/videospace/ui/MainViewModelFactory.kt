@@ -25,8 +25,11 @@ class MainViewModelFactory @Inject constructor(
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MovieDetailsViewModel::class.java)) {
-            return modelClass.getConstructor(LocalStoreRepository::class.java)
-                .newInstance(localRepo)
+            return modelClass.getConstructor(
+                LocalStoreRepository::class.java,
+                DispatchersProvider::class.java
+            )
+                .newInstance(localRepo, dispatchersProvider)
         }
         if (modelClass.isAssignableFrom(MoviesGalleryViewModel::class.java)) {
             return modelClass.getConstructor(MoviesPagingSource::class.java)
@@ -41,10 +44,9 @@ class MainViewModelFactory @Inject constructor(
         }
         if (modelClass.isAssignableFrom(MoviesListViewModel::class.java))
             return modelClass.getConstructor(
-                GenrePagingSource::class.java,
-                LocalStoreRepository::class.java
+                GenrePagingSource::class.java
             )
-                .newInstance(genrePagingSource, localRepo)
+                .newInstance(genrePagingSource)
         if (modelClass.isAssignableFrom(SaveMovieViewModel::class.java)) {
             return modelClass.getConstructor(LocalStoreRepository::class.java)
                 .newInstance(localRepo)

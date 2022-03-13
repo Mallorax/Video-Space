@@ -14,6 +14,9 @@ interface DiscoverEntryPoint {
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
         @Query("sort_by") sortOptions: String = SortOptions.POPULARITY_DESC,
         @Query("page") page: Int = 1,
-        @Query("with_genre") includedGenres: String
+        @Query("with_genres") includedGenres: String?,
+        @Query("without_genres") excludedGenres: String?,
+        @Query("vote_average.gte") minScore: Int?,
+        @Query("vote_count.gte") minVoteCount: Int?
     ): Response<EntryPointMoviesResponse>
 }
