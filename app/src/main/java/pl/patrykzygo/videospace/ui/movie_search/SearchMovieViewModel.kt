@@ -68,13 +68,11 @@ class SearchMovieViewModel constructor(
         excludedGenres.remove(genre)
     }
 
-    fun submitRequest(minScore: Int, minVotes: String) {
-        val minVotesInt: Int?
-        try {
-            minVotesInt = minVotes.toInt()
+    fun submitRequest(minScore: Int?, minVotes: String) {
+        val minVotesInt: Int? = try {
+            minVotes.toInt()
         } catch (e: NumberFormatException) {
-            _voteCountErrorMessage.value = "Vote count has to be a number"
-            return
+            null
         }
         val request = DiscoverMovieRequest(
             includedGenres.map { t -> t.genreId }.joinToString(separator = ","),
