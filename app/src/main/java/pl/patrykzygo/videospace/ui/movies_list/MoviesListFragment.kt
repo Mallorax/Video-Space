@@ -99,7 +99,7 @@ class MoviesListFragment(val viewModelFactory: MainViewModelFactory) : Fragment(
 
     private fun subscribeObservers() {
         lifecycleScope.launch {
-            viewModel.getMoviesInGenre().collectLatest {
+            viewModel.getMovies().collectLatest {
                 adapter.submitData(it)
             }
         }

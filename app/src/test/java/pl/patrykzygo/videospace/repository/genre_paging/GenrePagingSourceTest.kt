@@ -32,7 +32,7 @@ class GenrePagingSourceTest {
     fun setup() {
         MockitoAnnotations.openMocks(this)
         genrePagingSourceImpl = GenrePagingSourceImpl(mockDiscoverEntryPoint)
-        genrePagingSourceImpl.setParameters(genre)
+        genrePagingSourceImpl.setRequest(genre)
     }
 
     @Test

@@ -21,8 +21,11 @@ class GenrePagingSourceImpl @Inject constructor(private val entryPoint: Discover
     private var sortOption: String = SortOptions.POPULARITY_DESC
 
     //Id of a genre is needed to fetch movies from entry point
-    override fun setParameters(request: DiscoverMovieRequest, sortingOption: String) {
+    override fun setRequest(request: DiscoverMovieRequest) {
         this.request = request
+    }
+
+    override fun setSortingOption(sortingOption: String) {
         this.sortOption = sortingOption
     }
 

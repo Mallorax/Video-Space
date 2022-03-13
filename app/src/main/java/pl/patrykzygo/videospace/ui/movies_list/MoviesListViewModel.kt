@@ -11,7 +11,6 @@ import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.mapMoviesResponseToMovie
 import pl.patrykzygo.videospace.others.SortOptions
 import pl.patrykzygo.videospace.repository.genre_paging.GenrePagingSource
-import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
 
 class MoviesListViewModel constructor(
     private val repo: GenrePagingSource
@@ -26,8 +25,7 @@ class MoviesListViewModel constructor(
 
     //TODO: mutable state flow for sort options
     fun setRequest(request: DiscoverMovieRequest) {
-        repo.setParameters(request)
-        getMoviesInGenre()
+        repo.setRequest(request)
     }
 
     private fun setSortingOption(sortOption: String) {
@@ -35,8 +33,9 @@ class MoviesListViewModel constructor(
     }
 
 
-    fun getMoviesInGenre(): Flow<PagingData<Movie>> {
+    fun getMovies(): Flow<PagingData<Movie>> {
         return _sortOption.flatMapLatest {
+            repo.setSortingOption(it)
             val pager = Pager(
                 PagingConfig(
                     pageSize = 10,
