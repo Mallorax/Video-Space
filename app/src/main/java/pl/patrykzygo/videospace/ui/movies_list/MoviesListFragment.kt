@@ -46,7 +46,6 @@ class MoviesListFragment(val viewModelFactory: MainViewModelFactory) : Fragment(
         _binding = FragmentMoviesListBinding.inflate(inflater, container, false)
         viewModel = viewModelFactory.create(MoviesListViewModel::class.java)
         movieGenre = MoviesListFragmentArgs.fromBundle(requireArguments()).request
-        viewModel.setRequest(movieGenre)
 
         createMenu()
 
@@ -99,7 +98,7 @@ class MoviesListFragment(val viewModelFactory: MainViewModelFactory) : Fragment(
 
     private fun subscribeObservers() {
         lifecycleScope.launch {
-            viewModel.getMovies().collectLatest {
+            viewModel.getMovies(movieGenre).collectLatest {
                 adapter.submitData(it)
             }
         }

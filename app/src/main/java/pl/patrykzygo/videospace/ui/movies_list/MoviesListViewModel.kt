@@ -22,10 +22,9 @@ class MoviesListViewModel constructor(
     private val _sortOption = MutableStateFlow(SortOptions.POPULARITY_DESC)
     val sortOption: LiveData<String> get() = _sortOption.asLiveData()
 
-
-    //TODO: mutable state flow for sort options
-    fun setRequest(request: DiscoverMovieRequest) {
+    fun getMovies(request: DiscoverMovieRequest): Flow<PagingData<Movie>> {
         repo.setRequest(request)
+        return getMoviesPaging()
     }
 
     private fun setSortingOption(sortOption: String) {
@@ -33,7 +32,7 @@ class MoviesListViewModel constructor(
     }
 
 
-    fun getMovies(): Flow<PagingData<Movie>> {
+    private fun getMoviesPaging(): Flow<PagingData<Movie>> {
         return _sortOption.flatMapLatest {
             repo.setSortingOption(it)
             val pager = Pager(
@@ -47,7 +46,6 @@ class MoviesListViewModel constructor(
             )
                 .flow
                 .cachedIn(viewModelScope)
-                //seems like API doesn't filter genres correctly, so doing it here is necessary
                 .map { pagingData ->
                     pagingData.map { mapMoviesResponseToMovie(it) }
                 }
