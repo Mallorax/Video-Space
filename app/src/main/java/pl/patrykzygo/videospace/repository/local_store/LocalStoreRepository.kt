@@ -14,5 +14,6 @@ interface LocalStoreRepository {
     suspend fun getSpecificMovie(id: Int): RepositoryResponse<MovieDetailsResponse>
     suspend fun getSpecificFavourite(id: Int): RepositoryResponse<MovieEntity>
     suspend fun getAllGenres(): RepositoryResponse<List<Genre>>
+    suspend fun getAllMoviesWithStatus(status: String): RepositoryResponse<List<MovieEntity>>
 
 }

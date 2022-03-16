@@ -22,4 +22,7 @@ interface MoviesDao {
 
     @Query("SELECT * FROM movies WHERE movie_id = :id")
     suspend fun getFavourite(id: Int): MovieEntity?
+
+    @Query("SELECT * FROM movies WHERE status = :status")
+    suspend fun getAllMoviesWithStatus(status: String): List<MovieEntity>
 }

@@ -1,5 +1,6 @@
 package pl.patrykzygo.videospace.repository.local_store
 
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -23,6 +24,9 @@ class LocalStoreRepositoryImpl @Inject constructor(
     private val genreEntryPoint: GenresEntryPoint
 ) : LocalStoreRepository {
 
+    // It seems to me like this class does too much,
+    // some split of responsibilities could be in order
+
     override suspend fun insertFavourite(movie: MovieEntity) {
         moviesDao.insertFavourite(movie)
     }
@@ -33,6 +37,16 @@ class LocalStoreRepositoryImpl @Inject constructor(
 
     override suspend fun getAllFavourites(): RepositoryResponse<List<MovieEntity>> {
         return RepositoryResponse.success(listOf())
+    }
+
+    override suspend fun getAllMoviesWithStatus(status: String): RepositoryResponse<List<MovieEntity>> {
+        return try {
+            val data = moviesDao.getAllMoviesWithStatus(status)
+            RepositoryResponse.success(data)
+        } catch (e: Exception) {
+            checkForCancellationException(e)
+            RepositoryResponse.error(e.message.orEmpty())
+        }
     }
 
     override suspend fun getAllGenres(): RepositoryResponse<List<Genre>> {
@@ -80,6 +94,7 @@ class LocalStoreRepositoryImpl @Inject constructor(
             }
 
         } catch (e: Exception) {
+            checkForCancellationException(e)
             return RepositoryResponse.error(e.message.orEmpty())
         }
     }
@@ -103,8 +118,15 @@ class LocalStoreRepositoryImpl @Inject constructor(
             }
 
         } catch (e: Exception) {
+            checkForCancellationException(e)
             RepositoryResponse.error(e.message ?: "")
         }
 
+    }
+
+    private fun checkForCancellationException(e: Exception) {
+        if (e is CancellationException) {
+            throw e
+        }
     }
 }

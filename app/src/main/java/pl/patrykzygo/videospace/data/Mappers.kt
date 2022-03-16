@@ -27,6 +27,7 @@ fun mapMoviesResponseToMovie(movieResponse: MovieResponse): Movie {
     )
 }
 
+
 fun mapMovieDetailsResponseToMovie(movieDetailsResponse: MovieDetailsResponse): Movie {
     return Movie(
         movieDetailsResponse.adult ?: false,
