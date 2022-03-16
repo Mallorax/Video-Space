@@ -62,7 +62,7 @@ class MoviesGalleryFragmentTest {
             this.binding.moviesListRecycler.adapter = adapter
         }
         onView(withId(R.id.movies_list_recycler)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<MoviesGalleryRecyclerAdapter.MovieItemViewHolder>(
+            RecyclerViewActions.actionOnItemAtPosition<MoviesGalleryRecyclerAdapter.GalleryItemViewHolder>(
                 0,
                 clickChildWithId(R.id.image_view_more)
             )

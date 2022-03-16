@@ -111,9 +111,9 @@ class MoviesListFragment(val viewModelFactory: MainViewModelFactory) : Fragment(
     }
 
 
-    private fun createRecyclerViewAdapter(): MoviesListRecyclerAdapter {
+    private fun createRecyclerViewAdapter(): MoviesListPagingDataAdapter {
         val adapter =
-            MoviesListRecyclerAdapter(MoviesListRecyclerAdapter.OnMovieClickListener { movie, _ ->
+            MoviesListPagingDataAdapter(MoviesListPagingDataAdapter.OnMovieClickListener { movie, _ ->
                 if (movie != null) {
                     val action =
                         MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetails(movie)

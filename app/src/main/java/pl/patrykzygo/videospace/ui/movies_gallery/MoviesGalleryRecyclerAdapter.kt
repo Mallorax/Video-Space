@@ -5,15 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import pl.patrykzygo.videospace.data.app.Movie
-import pl.patrykzygo.videospace.databinding.MovieGalleryItemBinding
 import pl.patrykzygo.videospace.databinding.MovieGalleryItemBindingImpl
+import pl.patrykzygo.videospace.ui.view_holders.GalleryItemViewHolder
 
 class MoviesGalleryRecyclerAdapter(private val onMovieClickListener: OnMovieClickListener) :
-    PagingDataAdapter<Movie, MoviesGalleryRecyclerAdapter.MovieItemViewHolder>(DiffCallback) {
+    PagingDataAdapter<Movie, GalleryItemViewHolder>(DiffCallback) {
 
-    override fun onBindViewHolder(holder: MovieItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: GalleryItemViewHolder, position: Int) {
         val movie = getItem(position)
         val binding = holder.binding
         binding.imageViewMore.setOnClickListener {
@@ -24,20 +23,12 @@ class MoviesGalleryRecyclerAdapter(private val onMovieClickListener: OnMovieClic
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = MovieGalleryItemBindingImpl.inflate(inflater, parent, false)
-        return MovieItemViewHolder(binding)
+        return GalleryItemViewHolder(binding)
     }
 
-    class MovieItemViewHolder(val binding: MovieGalleryItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(movie: Movie) {
-            binding.movie = movie
-            binding.executePendingBindings()
-        }
-    }
 
     companion object DiffCallback : DiffUtil.ItemCallback<Movie>() {
         override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {

@@ -5,39 +5,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import pl.patrykzygo.videospace.data.app.Movie
-import pl.patrykzygo.videospace.databinding.MovieListItemBinding
 import pl.patrykzygo.videospace.databinding.MovieListItemBindingImpl
+import pl.patrykzygo.videospace.ui.view_holders.MovieListItemViewHolder
 
-class MoviesListRecyclerAdapter(private val onMovieClickListener: OnMovieClickListener) :
-    PagingDataAdapter<Movie, MoviesListRecyclerAdapter.MovieItemViewHolder>(DiffCallback) {
+class MoviesListPagingDataAdapter(private val onMovieClickListener: OnMovieClickListener) :
+    PagingDataAdapter<Movie, MovieListItemViewHolder>(DiffCallback) {
 
-    override fun onBindViewHolder(holder: MovieItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holderListItem: MovieListItemViewHolder, position: Int) {
         val movie = getItem(position)
-        val binding = holder.binding
+        val binding = holderListItem.binding
         binding.root.setOnClickListener {
             onMovieClickListener.onMovieClick(movie, it)
         }
         if (movie != null) {
-            holder.bind(movie)
+            holderListItem.bind(movie)
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = MovieListItemBindingImpl.inflate(inflater, parent, false)
-        return MovieItemViewHolder(binding)
+        return MovieListItemViewHolder(binding)
     }
 
-    class MovieItemViewHolder(val binding: MovieListItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(movie: Movie) {
-            binding.movie = movie
-            binding.executePendingBindings()
-        }
-    }
 
     companion object DiffCallback : DiffUtil.ItemCallback<Movie>() {
         override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {

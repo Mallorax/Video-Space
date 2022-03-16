@@ -30,7 +30,6 @@ class DefaultFragmentFactory
             SaveMovieFragment::class.java.name -> SaveMovieFragment(viewModelFactory)
             SearchMovieFragment::class.java.name -> SearchMovieFragment(viewModelFactory)
             UserListsFragment::class.java.name -> UserListsFragment(viewModelFactory)
-            StoredListFragment::class.java.name -> StoredListFragment(viewModelFactory)
             else -> super.instantiate(classLoader, className)
         }
     }
