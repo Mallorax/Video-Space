@@ -10,10 +10,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.databinding.FragmentUserListsBinding
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegate
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegateImpl
+import pl.patrykzygo.videospace.ui.factories.MainViewModelFactory
 
 @AndroidEntryPoint
-class UserListsFragment: Fragment(),
-AppBarDelegate by AppBarDelegateImpl(){
+class UserListsFragment(val viewModelFactory: MainViewModelFactory) : Fragment(),
+    AppBarDelegate by AppBarDelegateImpl() {
 
     private var _binding: FragmentUserListsBinding? = null
     val binding get() = _binding!!
@@ -22,7 +23,7 @@ AppBarDelegate by AppBarDelegateImpl(){
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentUserListsBinding.inflate(inflater, container, false)
 
         return binding.root

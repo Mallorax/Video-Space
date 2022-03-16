@@ -9,6 +9,8 @@ import pl.patrykzygo.videospace.ui.movie_search.SearchMovieFragment
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
 import pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment
 import pl.patrykzygo.videospace.ui.save_movie.SaveMovieFragment
+import pl.patrykzygo.videospace.ui.stored_list.StoredListFragment
+import pl.patrykzygo.videospace.ui.user_lists.UserListsFragment
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -27,6 +29,8 @@ class DefaultFragmentFactory
             MovieDetailsFragment::class.java.name -> MovieDetailsFragment(viewModelFactory)
             SaveMovieFragment::class.java.name -> SaveMovieFragment(viewModelFactory)
             SearchMovieFragment::class.java.name -> SearchMovieFragment(viewModelFactory)
+            UserListsFragment::class.java.name -> UserListsFragment(viewModelFactory)
+            StoredListFragment::class.java.name -> StoredListFragment(viewModelFactory)
             else -> super.instantiate(classLoader, className)
         }
     }

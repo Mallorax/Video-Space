@@ -15,6 +15,8 @@ import pl.patrykzygo.videospace.ui.movie_search.SearchMovieViewModel
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryViewModel
 import pl.patrykzygo.videospace.ui.movies_list.MoviesListViewModel
 import pl.patrykzygo.videospace.ui.save_movie.SaveMovieViewModel
+import pl.patrykzygo.videospace.ui.stored_list.StoredListViewModel
+import pl.patrykzygo.videospace.ui.user_lists.UserListsViewModel
 import javax.inject.Inject
 
 class MainViewModelFactory @Inject constructor(
@@ -29,8 +31,7 @@ class MainViewModelFactory @Inject constructor(
             return modelClass.getConstructor(
                 LocalStoreRepository::class.java,
                 DispatchersProvider::class.java
-            )
-                .newInstance(localRepo, dispatchersProvider)
+            ).newInstance(localRepo, dispatchersProvider)
         }
         if (modelClass.isAssignableFrom(MoviesGalleryViewModel::class.java)) {
             return modelClass.getConstructor(MoviesPagingSource::class.java)
@@ -40,14 +41,13 @@ class MainViewModelFactory @Inject constructor(
             return modelClass.getConstructor(
                 LocalStoreRepository::class.java,
                 DispatchersProvider::class.java
-            )
-                .newInstance(localRepo, dispatchersProvider)
+            ).newInstance(localRepo, dispatchersProvider)
         }
-        if (modelClass.isAssignableFrom(MoviesListViewModel::class.java))
+        if (modelClass.isAssignableFrom(MoviesListViewModel::class.java)) {
             return modelClass.getConstructor(
                 GenrePagingSource::class.java
-            )
-                .newInstance(genrePagingSource)
+            ).newInstance(genrePagingSource)
+        }
         if (modelClass.isAssignableFrom(SaveMovieViewModel::class.java)) {
             return modelClass.getConstructor(LocalStoreRepository::class.java)
                 .newInstance(localRepo)
@@ -56,8 +56,17 @@ class MainViewModelFactory @Inject constructor(
             return modelClass.getConstructor(
                 LocalStoreRepository::class.java,
                 DispatchersProvider::class.java
-            )
-                .newInstance(localRepo, dispatchersProvider)
+            ).newInstance(localRepo, dispatchersProvider)
+        }
+        if (modelClass.isAssignableFrom(UserListsViewModel::class.java)) {
+            return modelClass.getConstructor(
+                LocalStoreRepository::class.java,
+                DispatchersProvider::class.java
+            ).newInstance(localRepo, dispatchersProvider)
+        }
+        if (modelClass.isAssignableFrom(StoredListViewModel::class.java)) {
+            return modelClass.getConstructor(LocalStoreRepository::class.java)
+                .newInstance(localRepo)
         }
         throw  IllegalArgumentException("Unknown ViewModel class")
     }
