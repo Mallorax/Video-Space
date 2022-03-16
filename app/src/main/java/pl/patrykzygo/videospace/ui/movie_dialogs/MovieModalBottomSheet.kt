@@ -1,21 +1,17 @@
 package pl.patrykzygo.videospace.ui.movie_dialogs
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
-import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.MovieBottomSheetBinding
-import pl.patrykzygo.videospace.ui.MainViewModelFactory
+import pl.patrykzygo.videospace.ui.factories.MainViewModelFactory
 import javax.inject.Inject
 import javax.inject.Named
 

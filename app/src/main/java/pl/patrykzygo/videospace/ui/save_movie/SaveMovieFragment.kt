@@ -11,7 +11,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.databinding.FragmentSaveMovieBinding
-import pl.patrykzygo.videospace.ui.MainViewModelFactory
+import pl.patrykzygo.videospace.ui.factories.MainViewModelFactory
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegate
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegateImpl
 

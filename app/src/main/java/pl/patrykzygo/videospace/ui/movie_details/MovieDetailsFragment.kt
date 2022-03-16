@@ -16,7 +16,7 @@ import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.FragmentMovieDetailsBinding
 import pl.patrykzygo.videospace.others.MoviesRequestType
-import pl.patrykzygo.videospace.ui.MainViewModelFactory
+import pl.patrykzygo.videospace.ui.factories.MainViewModelFactory
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegate
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegateImpl
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment

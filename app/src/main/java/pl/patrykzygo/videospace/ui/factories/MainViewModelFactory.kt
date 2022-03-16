@@ -1,4 +1,4 @@
-package pl.patrykzygo.videospace.ui
+package pl.patrykzygo.videospace.ui.factories
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -8,6 +8,7 @@ import pl.patrykzygo.videospace.di.MoviesPagingSourceImplQualifier
 import pl.patrykzygo.videospace.repository.genre_paging.GenrePagingSource
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
 import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
+import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
 import pl.patrykzygo.videospace.ui.movie_details.MovieDetailsViewModel
 import pl.patrykzygo.videospace.ui.movie_dialogs.MovieBottomSheetViewModel
 import pl.patrykzygo.videospace.ui.movie_search.SearchMovieViewModel

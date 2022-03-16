@@ -10,7 +10,7 @@ import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
 import pl.patrykzygo.videospace.data.app.Genre
 import pl.patrykzygo.videospace.repository.RepositoryResponse
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
-import pl.patrykzygo.videospace.ui.DispatchersProvider
+import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
 
 class SearchMovieViewModel constructor(
     private val repo: LocalStoreRepository,

@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.data.app.Genre
 import pl.patrykzygo.videospace.databinding.FragmentMovieSearchBinding
-import pl.patrykzygo.videospace.ui.MainViewModelFactory
+import pl.patrykzygo.videospace.ui.factories.MainViewModelFactory
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegate
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegateImpl
 

@@ -1,4 +1,4 @@
-package pl.patrykzygo.videospace.ui
+package pl.patrykzygo.videospace.ui.dispatchers
 
 import kotlinx.coroutines.CoroutineDispatcher
 

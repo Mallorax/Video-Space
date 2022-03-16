@@ -23,10 +23,10 @@ import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepositoryImpl
 import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
 import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSourceImpl
-import pl.patrykzygo.videospace.ui.DefaultFragmentFactory
-import pl.patrykzygo.videospace.ui.DispatchersProvider
-import pl.patrykzygo.videospace.ui.MainViewModelFactory
-import pl.patrykzygo.videospace.ui.StandardDispatchers
+import pl.patrykzygo.videospace.ui.factories.DefaultFragmentFactory
+import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
+import pl.patrykzygo.videospace.ui.factories.MainViewModelFactory
+import pl.patrykzygo.videospace.ui.dispatchers.StandardDispatchers
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
@@ -94,7 +94,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideDispatchersProvider(): DispatchersProvider{
+    fun provideDispatchersProvider(): DispatchersProvider {
         return StandardDispatchers()
     }
 

@@ -1,7 +1,8 @@
-package pl.patrykzygo.videospace.ui
+package pl.patrykzygo.videospace.ui.factories
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
+import pl.patrykzygo.videospace.ui.DefaultListsFragment
 import pl.patrykzygo.videospace.ui.movie_details.MovieDetailsFragment
 import pl.patrykzygo.videospace.ui.movie_dialogs.MovieModalBottomSheet
 import pl.patrykzygo.videospace.ui.movie_search.SearchMovieFragment

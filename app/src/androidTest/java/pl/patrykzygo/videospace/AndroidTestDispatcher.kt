@@ -2,7 +2,7 @@ package pl.patrykzygo.videospace
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import pl.patrykzygo.videospace.ui.DispatchersProvider
+import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
 
 class AndroidTestDispatcher : DispatchersProvider {
     override val main: CoroutineDispatcher

@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentFactory
 import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
 import pl.patrykzygo.videospace.ui.DefaultListsFragment
-import pl.patrykzygo.videospace.ui.MainViewModelFactory
+import pl.patrykzygo.videospace.ui.factories.MainViewModelFactory
 import pl.patrykzygo.videospace.ui.movie_details.MovieDetailsFragment
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
 import pl.patrykzygo.videospace.util.provideMovieWithIdUi

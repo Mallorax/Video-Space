@@ -10,7 +10,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestDispatcher
 import pl.patrykzygo.videospace.AndroidTestDispatcher
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.TestFragmentFactory
@@ -22,8 +21,8 @@ import pl.patrykzygo.videospace.fakes.FakeMoviesPagingSource
 import pl.patrykzygo.videospace.repository.genre_paging.GenrePagingSource
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
 import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
-import pl.patrykzygo.videospace.ui.DispatchersProvider
-import pl.patrykzygo.videospace.ui.MainViewModelFactory
+import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
+import pl.patrykzygo.videospace.ui.factories.MainViewModelFactory
 import pl.patrykzygo.videospace.util.provideMovieWithIdUi
 import javax.inject.Named
 
@@ -77,7 +76,7 @@ object TestAppModule {
         return FakeGenrePagingSourceAndroid()
     }
 
-    fun provideDispatchersProvider(): DispatchersProvider{
+    fun provideDispatchersProvider(): DispatchersProvider {
         return AndroidTestDispatcher()
     }
 
