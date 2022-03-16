@@ -29,7 +29,9 @@ class StoredListFragment(
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentStoredListBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
         viewModel = viewModelFactory.create(StoredListViewModel::class.java)
+        binding.viewModel = viewModel
         viewModel.getMoviesWithStatus(status)
         return binding.root
     }
@@ -41,16 +43,22 @@ class StoredListFragment(
 
         subscribeObservers()
     }
-    private fun createRecyclerViewAdapter(): StoredListAdapter{
-        return StoredListAdapter(StoredListAdapter.OnMovieClickListener{ movie, view ->
+
+    private fun createRecyclerViewAdapter(): StoredListAdapter {
+        return StoredListAdapter(StoredListAdapter.OnMovieClickListener { movie, view ->
             val bundle = Bundle()
             bundle.putParcelable("movie", movie)
             parentFragmentManager.setFragmentResult("storedListResult", bundle)
         })
     }
 
-    private fun subscribeObservers(){
+    private fun subscribeObservers() {
         viewModel.movies.observe(viewLifecycleOwner, Observer {
+            if (it.isEmpty()) {
+                binding.root.visibility = View.GONE
+            } else {
+                binding.root.visibility = View.VISIBLE
+            }
             adapter.submitList(it)
         })
         viewModel.errorMessage.observe(viewLifecycleOwner, Observer {

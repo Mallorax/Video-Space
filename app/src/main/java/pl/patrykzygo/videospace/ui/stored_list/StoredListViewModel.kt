@@ -14,6 +14,7 @@ import pl.patrykzygo.videospace.others.MovieStatus
 import pl.patrykzygo.videospace.repository.RepositoryResponse
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
 import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
+import javax.net.ssl.SSLEngineResult
 
 class StoredListViewModel(
     private val repo: LocalStoreRepository,

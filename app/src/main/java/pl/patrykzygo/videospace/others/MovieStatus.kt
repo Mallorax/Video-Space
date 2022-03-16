@@ -1,10 +1,10 @@
 package pl.patrykzygo.videospace.others
 
 object MovieStatus {
-    const val WATCHING = "watching"
-    const val COMPLETED = "completed"
-    const val PLAN_TO_WATCH = "plan to watch"
-    const val ON_HOLD = "on hold"
-    const val DROPPED = "dropped"
-    const val UNASSIGNED = "unassigned"
+    const val WATCHING = "Watching"
+    const val COMPLETED = "Completed"
+    const val PLAN_TO_WATCH = "Plan to Watch"
+    const val ON_HOLD = "On Hold"
+    const val DROPPED = "Dropped"
+    const val UNASSIGNED = "Unassigned"
 }

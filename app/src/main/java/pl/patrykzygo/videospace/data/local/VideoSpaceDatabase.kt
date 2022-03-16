@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [GenreEntity::class, MovieEntity::class],
-    version = 4
+    version = 5
 )
 abstract class VideoSpaceDatabase: RoomDatabase() {
 

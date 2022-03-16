@@ -65,8 +65,10 @@ class MainViewModelFactory @Inject constructor(
             ).newInstance(localRepo, dispatchersProvider)
         }
         if (modelClass.isAssignableFrom(StoredListViewModel::class.java)) {
-            return modelClass.getConstructor(LocalStoreRepository::class.java)
-                .newInstance(localRepo)
+            return modelClass.getConstructor(
+                LocalStoreRepository::class.java,
+                DispatchersProvider::class.java
+            ).newInstance(localRepo, dispatchersProvider)
         }
         throw  IllegalArgumentException("Unknown ViewModel class")
     }
