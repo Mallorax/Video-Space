@@ -15,7 +15,7 @@ class MoviesGalleryRecyclerAdapter(private val onMovieClickListener: OnMovieClic
     override fun onBindViewHolder(holder: GalleryItemViewHolder, position: Int) {
         val movie = getItem(position)
         val binding = holder.binding
-        binding.imageViewMore.setOnClickListener {
+        binding.root.setOnClickListener {
             onMovieClickListener.onMovieClick(movie, it)
         }
         if (movie != null) {

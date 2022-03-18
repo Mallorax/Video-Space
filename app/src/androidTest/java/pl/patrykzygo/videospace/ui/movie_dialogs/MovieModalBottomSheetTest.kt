@@ -63,7 +63,7 @@ class MovieModalBottomSheetTest {
         onView(withId(R.id.movies_list_recycler)).perform(
             RecyclerViewActions.actionOnItemAtPosition<GalleryItemViewHolder>(
                 0,
-                clickChildWithId(R.id.image_view_more)
+                click()
             )
         )
         onView(withId(R.id.like_text_view)).inRoot(RootMatchers.isFocusable())
@@ -87,7 +87,7 @@ class MovieModalBottomSheetTest {
         onView(withId(R.id.movies_list_recycler)).perform(
             RecyclerViewActions.actionOnItemAtPosition<GalleryItemViewHolder>(
                 0,
-                clickChildWithId(R.id.image_view_more)
+                click()
             )
         )
         onView(withId(R.id.watch_later_list_text_view)).inRoot(RootMatchers.isFocusable())
@@ -128,7 +128,7 @@ class MovieModalBottomSheetTest {
         onView(withId(R.id.movies_list_recycler)).perform(
             RecyclerViewActions.actionOnItemAtPosition<GalleryItemViewHolder>(
                 0,
-                clickChildWithId(R.id.image_view_more)
+                click()
             )
         )
         onView(withId(R.id.more_info_text_view)).inRoot(RootMatchers.isFocusable())

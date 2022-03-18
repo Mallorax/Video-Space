@@ -3,6 +3,7 @@ package pl.patrykzygo.videospace.ui.movies_gallery
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingData
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.RootMatchers
@@ -65,7 +66,7 @@ class MoviesGalleryFragmentTest {
         onView(withId(R.id.movies_list_recycler)).perform(
             RecyclerViewActions.actionOnItemAtPosition<GalleryItemViewHolder>(
                 0,
-                clickChildWithId(R.id.image_view_more)
+                click()
             )
         )
         onView(withId(R.id.modal_bottom_sheet_root_layout)).inRoot(RootMatchers.isFocusable())
