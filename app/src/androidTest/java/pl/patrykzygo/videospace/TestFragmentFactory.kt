@@ -12,7 +12,6 @@ import javax.inject.Inject
 
 class TestFragmentFactory @Inject constructor(
     val navController: TestNavHostController,
-    val viewModelFactory: MainViewModelFactory
 ) : FragmentFactory() {
 
     override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
@@ -24,7 +23,7 @@ class TestFragmentFactory @Inject constructor(
                     }
                 }
             }
-            MovieDetailsFragment::class.java.name -> MovieDetailsFragment(viewModelFactory).also { fragment ->
+            MovieDetailsFragment::class.java.name -> MovieDetailsFragment().also { fragment ->
                 fragment.movie = provideMovieWithIdUi(1)
                 fragment.viewLifecycleOwnerLiveData.observeForever {
                     if (it != null) {
@@ -32,9 +31,7 @@ class TestFragmentFactory @Inject constructor(
                     }
                 }
             }
-            MoviesGalleryFragment::class.java.name -> MoviesGalleryFragment().also { fragment ->
-                fragment.viewModelFactory = viewModelFactory
-            }
+            MoviesGalleryFragment::class.java.name -> MoviesGalleryFragment()
             else -> super.instantiate(classLoader, className)
         }
     }

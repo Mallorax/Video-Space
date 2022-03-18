@@ -1,14 +1,11 @@
 package pl.patrykzygo.videospace.data.local
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -17,7 +14,6 @@ import org.junit.Test
 import pl.patrykzygo.videospace.AndroidMainDispatcherRule
 import pl.patrykzygo.videospace.util.createMovieEntity
 import javax.inject.Inject
-import javax.inject.Named
 
 @ExperimentalCoroutinesApi
 @SmallTest
@@ -31,7 +27,6 @@ class MoviesDaoTest {
     var mainDispatcherRule = AndroidMainDispatcherRule()
 
     @Inject
-    @Named("test_db")
     lateinit var db: VideoSpaceDatabase
     lateinit var dao: MoviesDao
 
@@ -50,7 +45,7 @@ class MoviesDaoTest {
     fun insertAndReadMovieTest() = runTest {
         val movie = createMovieEntity(1)
         var requestedMovie: List<MovieEntity> = listOf()
-        val job = launch(mainDispatcherRule.dispatcher){
+        val job = launch(mainDispatcherRule.dispatcher) {
             dao.insertFavourite(movie)
             requestedMovie = dao.getAllMovies()
         }
@@ -80,7 +75,7 @@ class MoviesDaoTest {
         val movie4 = createMovieEntity(4, isFavourite = true)
         val movies = mutableListOf(movie, movie2, movie3)
         var requestedMovies: List<MovieEntity> = listOf()
-        val job = launch(mainDispatcherRule.dispatcher){
+        val job = launch(mainDispatcherRule.dispatcher) {
             dao.insertFavourites(*movies.toTypedArray(), movie4)
             requestedMovies = dao.getAllMovies()
         }
@@ -92,7 +87,7 @@ class MoviesDaoTest {
     @Test
     fun readMoviesWhenTableIsEmptyTest() = runTest {
         var requestedMovies: List<MovieEntity> = listOf()
-        val job = launch(mainDispatcherRule.dispatcher){
+        val job = launch(mainDispatcherRule.dispatcher) {
             requestedMovies = dao.getAllFavourites()
         }
         job.join()

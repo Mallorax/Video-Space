@@ -19,7 +19,6 @@ import org.junit.Test
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.TestFragmentFactory
 import pl.patrykzygo.videospace.data.app.Movie
-import pl.patrykzygo.videospace.di.TestFragmentFactoryQualifier
 import pl.patrykzygo.videospace.others.MoviesRequestType
 import pl.patrykzygo.videospace.ui.movies_gallery.getAverageVoteString
 import pl.patrykzygo.videospace.ui.movies_gallery.getVoteCountString
@@ -39,10 +38,8 @@ class MovieDetailsFragmentTest() {
     var taskExecutorRule = InstantTaskExecutorRule()
 
 
-    @TestFragmentFactoryQualifier
     @Inject
     lateinit var testFragmentFactory: TestFragmentFactory
-
     lateinit var expectedMovie: Movie
 
 

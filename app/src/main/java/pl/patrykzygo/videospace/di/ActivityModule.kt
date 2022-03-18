@@ -1,5 +1,6 @@
 package pl.patrykzygo.videospace.di
 
+import androidx.fragment.app.FragmentFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,9 +12,9 @@ import pl.patrykzygo.videospace.ui.factories.DefaultFragmentFactory
 @InstallIn(ActivityRetainedComponent::class)
 object ActivityModule {
 
-    @Provides
     @ActivityRetainedScoped
-    fun provideDefaultFragmentFactory(): DefaultFragmentFactory {
+    @Provides
+    fun provideDefaultFragmentFactory(): FragmentFactory {
         return DefaultFragmentFactory()
     }
 }

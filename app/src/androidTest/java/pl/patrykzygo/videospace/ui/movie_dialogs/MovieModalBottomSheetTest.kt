@@ -21,9 +21,8 @@ import pl.patrykzygo.videospace.CustomMatchers.withDrawable
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.TestFragmentFactory
 import pl.patrykzygo.videospace.data.app.Movie
-import pl.patrykzygo.videospace.di.TestFragmentFactoryQualifier
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
-import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryRecyclerAdapter
+import pl.patrykzygo.videospace.ui.view_holders.GalleryItemViewHolder
 import pl.patrykzygo.videospace.util.clickChildWithId
 import pl.patrykzygo.videospace.util.getOrAwaitValueTestAndroid
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
@@ -46,7 +45,6 @@ class MovieModalBottomSheetTest {
 
 
     @Inject
-    @TestFragmentFactoryQualifier
     lateinit var fragmentFactory: TestFragmentFactory
 
     @Before
@@ -63,7 +61,7 @@ class MovieModalBottomSheetTest {
             this.binding.moviesListRecycler.adapter = adapter
         }
         onView(withId(R.id.movies_list_recycler)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<MoviesGalleryRecyclerAdapter.GalleryItemViewHolder>(
+            RecyclerViewActions.actionOnItemAtPosition<GalleryItemViewHolder>(
                 0,
                 clickChildWithId(R.id.image_view_more)
             )
@@ -87,7 +85,7 @@ class MovieModalBottomSheetTest {
             this.binding.moviesListRecycler.adapter = adapter
         }
         onView(withId(R.id.movies_list_recycler)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<MoviesGalleryRecyclerAdapter.GalleryItemViewHolder>(
+            RecyclerViewActions.actionOnItemAtPosition<GalleryItemViewHolder>(
                 0,
                 clickChildWithId(R.id.image_view_more)
             )
@@ -128,7 +126,7 @@ class MovieModalBottomSheetTest {
             }
         }
         onView(withId(R.id.movies_list_recycler)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<MoviesGalleryRecyclerAdapter.GalleryItemViewHolder>(
+            RecyclerViewActions.actionOnItemAtPosition<GalleryItemViewHolder>(
                 0,
                 clickChildWithId(R.id.image_view_more)
             )

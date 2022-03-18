@@ -18,6 +18,7 @@ import org.junit.Rule
 import org.junit.Test
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.TestFragmentFactory
+import pl.patrykzygo.videospace.ui.view_holders.GalleryItemViewHolder
 import pl.patrykzygo.videospace.util.clickChildWithId
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
 import pl.patrykzygo.videospace.util.provideMovieWithIdUi
@@ -62,7 +63,7 @@ class MoviesGalleryFragmentTest {
             this.binding.moviesListRecycler.adapter = adapter
         }
         onView(withId(R.id.movies_list_recycler)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<MoviesGalleryRecyclerAdapter.GalleryItemViewHolder>(
+            RecyclerViewActions.actionOnItemAtPosition<GalleryItemViewHolder>(
                 0,
                 clickChildWithId(R.id.image_view_more)
             )

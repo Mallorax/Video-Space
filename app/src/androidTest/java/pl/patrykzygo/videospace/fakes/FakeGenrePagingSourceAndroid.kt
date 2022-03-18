@@ -1,14 +1,18 @@
 package pl.patrykzygo.videospace.fakes
 
 import androidx.paging.PagingState
+import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
 import pl.patrykzygo.videospace.data.network.MovieResponse
 import pl.patrykzygo.videospace.repository.genre_paging.GenrePagingSource
 import pl.patrykzygo.videospace.util.fakeCorrectMoviesResponseUi
 
 class FakeGenrePagingSourceAndroid : GenrePagingSource() {
 
-    override fun setParameters(genreId: Int, sortingOption: String) {
-        TODO("Not yet implemented")
+
+    override fun setRequest(request: DiscoverMovieRequest) {
+    }
+
+    override fun setSortingOption(sortingOption: String) {
     }
 
     override fun getRefreshKey(state: PagingState<Int, MovieResponse>): Int? {

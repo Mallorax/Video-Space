@@ -26,7 +26,6 @@ class GenreDaoTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Inject
-    @Named("test_db")
     lateinit var db: VideoSpaceDatabase
     lateinit var dao: GenreDao
 
