@@ -99,19 +99,12 @@ class MovieDetailsFragment :
     }
 
     private fun setOnClickListeners() {
-        binding.addToFavouritesButton.setOnClickListener {
-            viewModel.toggleFavourite()
-        }
-
         binding.detailsFab.setOnClickListener {
             viewModel.saveMovieEvent()
         }
     }
 
     private fun observeViewModel() {
-        viewModel.movie.observe(viewLifecycleOwner, Observer {
-            updateFavouritesButton(it?.isFavourite)
-        })
         viewModel.genres.observe(viewLifecycleOwner, Observer {
             showMovieGenres(it)
         })
@@ -147,35 +140,4 @@ class MovieDetailsFragment :
         }
     }
 
-    private fun updateFavouritesButton(isFavourite: Boolean?) {
-        if (isFavourite == true) {
-            binding.addToFavouritesButton.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                R.drawable.ic_baseline_favorite,
-                0,
-                0,
-                0
-            )
-            binding.addToFavouritesButton.setBackgroundColor(
-                ResourcesCompat.getColor(
-                    resources,
-                    R.color.purple_200,
-                    null
-                )
-            )
-        } else {
-            binding.addToFavouritesButton.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                R.drawable.ic_baseline_favorite_border,
-                0,
-                0,
-                0
-            )
-            binding.addToFavouritesButton.setBackgroundColor(
-                ResourcesCompat.getColor(
-                    resources,
-                    R.color.white,
-                    null
-                )
-            )
-        }
-    }
 }

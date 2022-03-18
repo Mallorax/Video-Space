@@ -1,5 +1,6 @@
-package pl.patrykzygo.videospace.ui.movies_gallery
+package pl.patrykzygo.videospace.ui.binding_adapters
 
+import android.graphics.drawable.Drawable
 import android.graphics.text.LineBreaker.JUSTIFICATION_MODE_INTER_WORD
 import android.os.Build
 import android.widget.ImageView
@@ -21,8 +22,11 @@ fun bindMoviePoster(imageView: ImageView, posterPath: String?) {
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(imageView)
     }
-
 }
+
+
+
+
 
 @BindingAdapter("averageVote")
 fun bindAverageVote(textView: TextView, voteAverage: Double?) {

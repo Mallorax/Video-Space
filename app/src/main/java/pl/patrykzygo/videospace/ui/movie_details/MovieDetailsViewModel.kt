@@ -75,16 +75,5 @@ class MovieDetailsViewModel @Inject constructor(
         _saveMovieEvent.value = _movie.value
     }
 
-    fun toggleFavourite() {
-        val movie = _movie.value
-        if (movie != null) {
-            movie.isFavourite = !movie.isFavourite
-            _movie.value = movie
-            viewModelScope.launch(dispatchersProvider.io) {
-                repo.insertFavourite(mapMovieToMovieEntity(movie))
-            }
-        }
-
-    }
 
 }

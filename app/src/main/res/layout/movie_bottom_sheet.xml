@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="movie"
+            type="pl.patrykzygo.videospace.data.app.Movie" />
+    </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/modal_bottom_sheet_root_layout"
@@ -15,24 +23,66 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageView
+                android:id="@+id/bottom_sheet_poster"
+                android:layout_width="100dp"
+                android:layout_height="150dp"
+                android:layout_margin="16dp"
+                android:contentDescription="@string/film_thumbnail_string"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="2:3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:moviePoster="@{movie.posterPath}"
+                app:srcCompat="@drawable/ic_launcher_background" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/bottom_sheet_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin"
+                android:fontFamily="@font/averia_serif_libre"
+                android:lines="2"
+                android:text="@{movie.title}"
+                android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/bottom_sheet_poster"
+                app:layout_constraintTop_toTopOf="@id/bottom_sheet_poster"
+                tools:text="Title" />
+
+            <ImageView
+                android:id="@+id/bottom_sheet_movie_rating_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/small_margin"
-                android:lines="2"
-                android:textSize="@dimen/bottom_sheet_title_texst_size"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginStart="@dimen/small_margin"
+                android:src="@drawable/ic_baseline_star"
+                app:layout_constraintBottom_toTopOf="@id/info_image_view"
+                app:layout_constraintStart_toEndOf="@id/bottom_sheet_poster"
+                app:layout_constraintTop_toBottomOf="@id/bottom_sheet_title" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/averia_serif_libre"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:averageVote="@{movie.voteAverage}"
+                app:layout_constraintBottom_toBottomOf="@id/bottom_sheet_movie_rating_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/bottom_sheet_movie_rating_icon"
+                app:layout_constraintTop_toTopOf="@id/bottom_sheet_movie_rating_icon"
+                tools:text="Rating" />
 
             <ImageView
                 android:id="@+id/info_image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin"
                 android:layout_marginTop="@dimen/small_margin"
                 android:src="@drawable/ic_baseline_info"
-                app:layout_constraintStart_toStartOf="@id/bottom_sheet_title"
-                app:layout_constraintTop_toBottomOf="@id/bottom_sheet_title"
+                app:layout_constraintBottom_toBottomOf="@id/bottom_sheet_poster"
+                app:layout_constraintStart_toEndOf="@id/bottom_sheet_poster"
                 app:tint="@color/icon_tint" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -43,66 +93,17 @@
                 android:layout_marginEnd="@dimen/small_margin"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/averia_serif_libre"
+                android:gravity="center_vertical"
+                android:minHeight="48dp"
                 android:text="@string/more_information_bottom_sheet"
-                android:textSize="@dimen/bottom_sheet_option_text_size"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 app:layout_constraintBottom_toBottomOf="@id/info_image_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/info_image_view"
                 app:layout_constraintTop_toTopOf="@id/info_image_view" />
 
-            <ImageView
-                android:id="@+id/favourite_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/small_margin"
-                android:layout_marginBottom="16dp"
-                android:src="@drawable/ic_baseline_favorite_border"
-                app:layout_constraintEnd_toEndOf="@id/info_image_view"
-                app:layout_constraintStart_toStartOf="@id/info_image_view"
-                app:layout_constraintTop_toBottomOf="@id/info_image_view"
-                app:tint="@color/icon_tint" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/like_text_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin"
-                android:layout_marginEnd="@dimen/small_margin"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:text="@string/like_bottom_sheet"
-                android:textSize="@dimen/bottom_sheet_option_text_size"
-                app:layout_constraintBottom_toBottomOf="@id/favourite_image_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/favourite_image_view"
-                app:layout_constraintTop_toTopOf="@id/favourite_image_view" />
-
-            <ImageView
-                android:id="@+id/archive_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/small_margin"
-                android:src="@drawable/ic_baseline_archive"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/favourite_image_view"
-                app:layout_constraintStart_toStartOf="@id/favourite_image_view"
-                app:layout_constraintTop_toBottomOf="@id/favourite_image_view"
-                app:tint="@color/icon_tint" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/watch_later_list_text_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin"
-                android:layout_marginEnd="@dimen/small_margin"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:text="@string/add_to_watch_later_text"
-                android:textSize="@dimen/bottom_sheet_option_text_size"
-                app:layout_constraintBottom_toBottomOf="@id/archive_image_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/archive_image_view"
-                app:layout_constraintTop_toTopOf="@id/archive_image_view" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

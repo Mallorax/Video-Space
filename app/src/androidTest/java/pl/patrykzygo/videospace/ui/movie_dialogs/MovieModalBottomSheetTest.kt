@@ -4,10 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.RootMatchers
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.MediumTest
 import com.google.common.truth.Truth.assertThat
@@ -17,13 +15,11 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import pl.patrykzygo.videospace.CustomMatchers.withDrawable
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.TestFragmentFactory
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
 import pl.patrykzygo.videospace.ui.view_holders.GalleryItemViewHolder
-import pl.patrykzygo.videospace.util.getOrAwaitValueTestAndroid
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
 import pl.patrykzygo.videospace.util.provideMovieWithIdUi
 import javax.inject.Inject
@@ -51,66 +47,6 @@ class MovieModalBottomSheetTest {
         hiltRule.inject()
     }
 
-    //Test is sensitive to tint changes in layout's ImageView
-    @Test
-    fun testIfFavouriteImageWasChangedOnClick() {
-        launchFragmentInHiltContainer<MoviesGalleryFragment>(fragmentFactory = fragmentFactory) {
-            val movies = PagingData.from(listOf(provideMovieWithIdUi(1), provideMovieWithIdUi(2)))
-            adapter.submitData(lifecycle, movies)
-            this.binding.moviesListRecycler.adapter = adapter
-        }
-        onView(withId(R.id.movies_list_recycler)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<GalleryItemViewHolder>(
-                0,
-                click()
-            )
-        )
-        onView(withId(R.id.like_text_view)).inRoot(RootMatchers.isFocusable())
-            .perform(click())
-        onView(withId(R.id.favourite_image_view)).inRoot(RootMatchers.isFocusable())
-            .check(matches(isDisplayed()))
-            .check(
-                matches(withDrawable(R.drawable.ic_baseline_favorite, tint = R.color.icon_tint))
-            )
-
-    }
-
-    //Test is sensitive to tint changes in layout's ImageView
-    @Test
-    fun testIfIsOnWatchLaterImageWasChangedOnClick() {
-        launchFragmentInHiltContainer<MoviesGalleryFragment>(fragmentFactory = fragmentFactory) {
-            val movies = PagingData.from(listOf(provideMovieWithIdUi(1), provideMovieWithIdUi(2)))
-            adapter.submitData(lifecycle, movies)
-            this.binding.moviesListRecycler.adapter = adapter
-        }
-        onView(withId(R.id.movies_list_recycler)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<GalleryItemViewHolder>(
-                0,
-                click()
-            )
-        )
-        onView(withId(R.id.watch_later_list_text_view)).inRoot(RootMatchers.isFocusable())
-            .perform(click())
-        onView(withId(R.id.archive_image_view)).inRoot(RootMatchers.isFocusable())
-            .check(matches(isDisplayed()))
-            .check(
-                matches(withDrawable(R.drawable.ic_baseline_archive, tint = R.color.icon_tint))
-            )
-
-    }
-
-    @Test
-    fun testSetMovieToViewModel() {
-        val movie = provideMovieWithIdUi(1)
-        var testViewModel: MovieBottomSheetViewModel? = null
-        launchFragmentInHiltContainer<MovieModalBottomSheet>(fragmentFactory = fragmentFactory) {
-            testViewModel = viewModel
-            viewModel.setMovie(movie)
-        }
-
-        val value = testViewModel?.movie?.getOrAwaitValueTestAndroid()
-        assertThat(value).isEqualTo(movie)
-    }
 
     @Test
     fun testIfFragmentResultIsSet() {

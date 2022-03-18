@@ -20,8 +20,8 @@ import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.TestFragmentFactory
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.others.MoviesRequestType
-import pl.patrykzygo.videospace.ui.movies_gallery.getAverageVoteString
-import pl.patrykzygo.videospace.ui.movies_gallery.getVoteCountString
+import pl.patrykzygo.videospace.ui.binding_adapters.getAverageVoteString
+import pl.patrykzygo.videospace.ui.binding_adapters.getVoteCountString
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
 import pl.patrykzygo.videospace.util.provideMovieWithIdUi
 import javax.inject.Inject

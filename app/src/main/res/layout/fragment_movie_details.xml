@@ -137,26 +137,11 @@
                     android:fontFamily="@font/averia_serif_libre"
                     android:textAlignment="textEnd"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    app:layout_constraintBottom_toTopOf="@id/add_to_favourites_button"
+                    app:layout_constraintBottom_toBottomOf="@id/poster_image_view"
                     app:layout_constraintEnd_toStartOf="@+id/vertical_right"
                     app:layout_constraintTop_toBottomOf="@+id/movie_vote_count_label"
                     app:movieVoteCount="@{viewModel.movie.voteCount}"
                     tools:text="vote count number" />
-
-
-                <Button
-                    android:id="@+id/add_to_favourites_button"
-                    style="@style/Widget.App.Button.OutlinedButton.IconOnly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
-                    app:icon="@drawable/ic_baseline_favorite_border"
-                    app:iconTint="@color/icon_tint"
-                    app:layout_constraintBottom_toBottomOf="@+id/poster_image_view"
-                    app:layout_constraintEnd_toEndOf="@id/vertical_right"
-                    app:layout_constraintStart_toEndOf="@id/stats_barrier_left"
-                    app:layout_constraintTop_toBottomOf="@id/movie_vote_count" />
 
 
                 <androidx.constraintlayout.widget.Barrier
@@ -173,7 +158,7 @@
                     android:orientation="vertical"
                     app:barrierDirection="left"
                     app:constraint_referenced_ids="movie_rating, movie_vote_count,
-                    add_to_favourites_button, movie_rating_icon, score_label, movie_vote_count_label"
+                    movie_rating_icon, score_label, movie_vote_count_label"
                     app:layout_constraintBottom_toTopOf="@id/stats_and_poster_barrier_bottom"
                     tools:layout_editor_absoluteX="323dp" />
 
