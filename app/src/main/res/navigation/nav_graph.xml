@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--Navigation in this app runs in a loop, so I'm not entirely sure,
+<?xml version="1.0" encoding="utf-8"?><!--Navigation in this app runs in a loop, so I'm not entirely sure,
 If it's possible for user to navigate so much to overflow navigation stack,
 or if it's handled internally. Couldn't really find much info about it either -->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,8 +22,8 @@ or if it's handled internally. Couldn't really find much info about it either --
 
     <fragment
         android:id="@+id/search_movie_fragment"
-        android:label="@string/search"
         android:name="pl.patrykzygo.videospace.ui.movie_search.SearchMovieFragment"
+        android:label="@string/search"
         tools:layout="@layout/fragment_movie_search">
 
         <action
@@ -34,8 +33,8 @@ or if it's handled internally. Couldn't really find much info about it either --
 
     <fragment
         android:id="@+id/users_list_fragment"
-        android:label="@string/my_lists"
         android:name="pl.patrykzygo.videospace.ui.user_lists.UserListsFragment"
+        android:label="@string/my_lists"
         tools:layout="@layout/fragment_user_lists">
 
         <action

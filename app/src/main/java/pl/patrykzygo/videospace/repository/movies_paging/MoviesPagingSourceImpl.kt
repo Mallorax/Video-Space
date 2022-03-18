@@ -16,7 +16,7 @@ import javax.inject.Inject
 class MoviesPagingSourceImpl @Inject constructor(private val moviesEntryPoint: MoviesEntryPoint) :
     MoviesPagingSource(),
     MovieCalcKeyPositionDelegate by MovieCalcNextKeyDelegateImpl(),
-    DelegateMovieRefreshKey by DelegateMovieRefreshKeyImpl(){
+    DelegateMovieRefreshKey by DelegateMovieRefreshKeyImpl() {
 
     private var moviesRequestType = MoviesRequestType.POPULAR
     var movieId = -1

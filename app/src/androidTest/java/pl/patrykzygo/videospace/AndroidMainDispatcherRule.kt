@@ -10,7 +10,8 @@ import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
 @ExperimentalCoroutinesApi
-class AndroidMainDispatcherRule(val dispatcher: TestDispatcher = UnconfinedTestDispatcher()): TestWatcher() {
+class AndroidMainDispatcherRule(val dispatcher: TestDispatcher = UnconfinedTestDispatcher()) :
+    TestWatcher() {
 
     override fun starting(description: Description?) = Dispatchers.setMain(dispatcher)
 

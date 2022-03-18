@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="pl.patrykzygo.videospace.ui.save_movie.SaveMovieViewModel" />
@@ -53,10 +54,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:singleSelection="true"
             app:layout_constraintEnd_toStartOf="@id/save_movie_guideline_right"
             app:layout_constraintStart_toEndOf="@id/save_movie_guideline_left"
-            app:layout_constraintTop_toBottomOf="@id/save_movie_status_textview">
+            app:layout_constraintTop_toBottomOf="@id/save_movie_status_textview"
+            app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/save_movie_watching_chip"
@@ -132,9 +133,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/notes"
-            app:endIconMode="clear_text"
             app:counterEnabled="true"
             app:counterMaxLength="200"
+            app:endIconMode="clear_text"
             app:layout_constraintEnd_toStartOf="@id/save_movie_guideline_right"
             app:layout_constraintStart_toEndOf="@id/save_movie_guideline_left"
             app:layout_constraintTop_toBottomOf="@id/save_movie_score_picker"
@@ -144,7 +145,7 @@
                 android:id="@+id/save_movie_notes_text_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textMultiLine"/>
+                android:inputType="textMultiLine" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

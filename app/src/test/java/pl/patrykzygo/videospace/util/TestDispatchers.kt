@@ -6,7 +6,7 @@ import kotlinx.coroutines.test.TestDispatcher
 import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
 
 @ExperimentalCoroutinesApi
-class TestDispatchers(private val dispatcher: TestDispatcher): DispatchersProvider {
+class TestDispatchers(private val dispatcher: TestDispatcher) : DispatchersProvider {
 
     override val main: CoroutineDispatcher
         get() = dispatcher

@@ -1,8 +1,7 @@
 package pl.patrykzygo.videospace.networking
 
-import pl.patrykzygo.videospace.data.network.EntryPointMoviesResponse
 import pl.patrykzygo.videospace.BuildConfig
-import pl.patrykzygo.videospace.data.network.MovieResponse
+import pl.patrykzygo.videospace.data.network.EntryPointMoviesResponse
 import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
 import retrofit2.Response
 import retrofit2.http.GET

@@ -4,16 +4,11 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coVerify
 import io.mockk.spyk
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito.spy
-import org.mockito.Mockito.verify
 import org.mockito.Spy
 import pl.patrykzygo.MainDispatcherRule
 import pl.patrykzygo.videospace.data.mapMovieToMovieEntity
@@ -40,7 +35,8 @@ class MovieBottomSheetViewModelTest {
     @Before
     fun setup() {
         repository = spyk(FakeLocalStoreRepository())
-        viewModel = MovieBottomSheetViewModel(repository, TestDispatchers(mainDispatchersRule.dispatcher))
+        viewModel =
+            MovieBottomSheetViewModel(repository, TestDispatchers(mainDispatchersRule.dispatcher))
 
     }
 
@@ -72,7 +68,7 @@ class MovieBottomSheetViewModelTest {
     }
 
     @Test
-    fun `test if isLiked toggle was saved to repo`(){
+    fun `test if isLiked toggle was saved to repo`() {
         val movie = provideMovieWithId(1)
         viewModel.setMovie(movie)
         viewModel.changeIsMovieLiked()

@@ -23,7 +23,6 @@ import pl.patrykzygo.videospace.TestFragmentFactory
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
 import pl.patrykzygo.videospace.ui.view_holders.GalleryItemViewHolder
-import pl.patrykzygo.videospace.util.clickChildWithId
 import pl.patrykzygo.videospace.util.getOrAwaitValueTestAndroid
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
 import pl.patrykzygo.videospace.util.provideMovieWithIdUi

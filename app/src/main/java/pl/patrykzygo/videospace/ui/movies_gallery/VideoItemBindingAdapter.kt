@@ -35,8 +35,8 @@ fun bindVoteCount(textView: TextView, voteCount: Int?) {
 }
 
 @BindingAdapter("movieDescription")
-fun bindMovieDescription(textView: TextView, description: String?){
-    if (description != null){
+fun bindMovieDescription(textView: TextView, description: String?) {
+    if (description != null) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             textView.justificationMode = JUSTIFICATION_MODE_INTER_WORD
         }
@@ -50,8 +50,7 @@ fun getAverageVoteString(voteAverage: Double?): String {
 }
 
 
-
-fun getVoteCountString(voteCount: Int?): String{
+fun getVoteCountString(voteCount: Int?): String {
     return voteCount.toString()
 }
 

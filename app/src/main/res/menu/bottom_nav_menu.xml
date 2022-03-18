@@ -5,19 +5,19 @@
         android:id="@+id/main_fragment"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_home"
-        android:title="@string/home"/>
+        android:title="@string/home" />
 
     <item
         android:id="@+id/users_list_fragment"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_list"
-        android:title="@string/my_lists"/>
+        android:title="@string/my_lists" />
 
     <item
         android:id="@+id/search_movie_fragment"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_search"
-        android:title="@string/search"/>
+        android:title="@string/search" />
 
 
 </menu>

@@ -67,10 +67,9 @@ fun provideMovieWithIdUi(id: Int): Movie {
     )
 }
 
-fun createMovieEntity(id: Int,  isFavourite: Boolean = false): MovieEntity{
-    return MovieEntity(id, isFavourite,  isOnWatchLater = false, title = "title $id")
+fun createMovieEntity(id: Int, isFavourite: Boolean = false): MovieEntity {
+    return MovieEntity(id, isFavourite, isOnWatchLater = false, title = "title $id")
 }
-
 
 
 fun clickChildWithId(id: Int): ViewAction {

@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
     entities = [GenreEntity::class, MovieEntity::class],
     version = 5
 )
-abstract class VideoSpaceDatabase: RoomDatabase() {
+abstract class VideoSpaceDatabase : RoomDatabase() {
 
     abstract fun genreDao(): GenreDao
     abstract fun moviesDao(): MoviesDao

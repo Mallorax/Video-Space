@@ -3,9 +3,8 @@ package pl.patrykzygo.videospace
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
-import javax.inject.Inject
 
-class AndroidTestDispatcher: DispatchersProvider {
+class AndroidTestDispatcher : DispatchersProvider {
     override val main: CoroutineDispatcher
         get() = Dispatchers.Main
     override val io: CoroutineDispatcher

@@ -1,6 +1,6 @@
 package pl.patrykzygo.videospace.repository.delegate
 
-class MovieCalcNextKeyDelegateImpl: MovieCalcKeyPositionDelegate {
+class MovieCalcNextKeyDelegateImpl : MovieCalcKeyPositionDelegate {
 
     override fun nextKey(currKey: Int, lastKey: Int): Int? {
         return if (currKey == lastKey) {

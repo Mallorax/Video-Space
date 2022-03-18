@@ -31,16 +31,16 @@
                 android:layout_height="150dp"
                 android:contentDescription="@string/film_thumbnail_string"
                 android:scaleType="centerCrop"
-                app:moviePoster="@{movie.posterPath}"
                 app:layout_constraintDimensionRatio="2:3"
+                app:moviePoster="@{movie.posterPath}"
                 app:srcCompat="@drawable/ic_launcher_background" />
 
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/small_margin"
                 android:lines="3"
+                android:padding="@dimen/small_margin"
                 android:text="@{movie.title}"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:textSize="14sp"

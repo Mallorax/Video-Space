@@ -17,7 +17,7 @@ import pl.patrykzygo.videospace.ui.delegate.AppBarDelegateImpl
 import pl.patrykzygo.videospace.ui.stored_list.StoredListFragment
 
 @AndroidEntryPoint
-class UserListsFragment: Fragment(),
+class UserListsFragment : Fragment(),
     AppBarDelegate by AppBarDelegateImpl() {
 
     private var _binding: FragmentUserListsBinding? = null

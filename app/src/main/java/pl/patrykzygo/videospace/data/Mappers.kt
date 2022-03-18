@@ -66,9 +66,9 @@ fun mapGenreEntityToGenre(genreEntity: GenreEntity): Genre {
 }
 
 fun mapGenreItemToGenreNullable(genreItem: GenresItem?): Genre? {
-    return if (genreItem?.id != null && genreItem.name != null){
+    return if (genreItem?.id != null && genreItem.name != null) {
         Genre(genreItem.id, genreItem.name)
-    }else{
+    } else {
         null
     }
 }
