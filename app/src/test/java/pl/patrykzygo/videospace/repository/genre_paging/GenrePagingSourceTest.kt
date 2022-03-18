@@ -11,6 +11,7 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
+import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
 import pl.patrykzygo.videospace.data.network.MovieResponse
 import pl.patrykzygo.videospace.networking.DiscoverEntryPoint
 import pl.patrykzygo.videospace.util.fakeCorrectMoviesResponse
@@ -32,7 +33,9 @@ class GenrePagingSourceTest {
     fun setup() {
         MockitoAnnotations.openMocks(this)
         genrePagingSourceImpl = GenrePagingSourceImpl(mockDiscoverEntryPoint)
-        genrePagingSourceImpl.setRequest(genre)
+        genrePagingSourceImpl.setRequest(
+            DiscoverMovieRequest(includedGenres = genre.toString())
+        )
     }
 
     @Test

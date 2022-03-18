@@ -1,5 +1,6 @@
 package pl.patrykzygo.videospace.repository
 
+import pl.patrykzygo.videospace.data.app.Genre
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
@@ -7,6 +8,26 @@ import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
 open class FakeLocalStoreRepository : LocalStoreRepository {
 
     private val movieList = mutableListOf<MovieEntity>()
+
+    override suspend fun getAllGenres(): RepositoryResponse<List<Genre>> {
+        return RepositoryResponse.success(
+            listOf(
+                Genre(1, "1"),
+                Genre(2, "2"),
+                Genre(3, "3"),
+                Genre(4, "4"),
+                Genre(5, "5"),
+                Genre(6, "6"),
+                Genre(7, "7"),
+                Genre(8, "8"),
+            )
+        )
+    }
+
+    override suspend fun getAllMoviesWithStatus(status: String): RepositoryResponse<List<MovieEntity>> {
+        val moviesWithStatus = movieList.filter { t -> t.status == status }
+        return RepositoryResponse.success(moviesWithStatus)
+    }
 
     override suspend fun getGenreId(genreName: String): RepositoryResponse<Int> {
         return RepositoryResponse.success(1)
