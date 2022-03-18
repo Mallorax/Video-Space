@@ -1,9 +1,6 @@
 package pl.patrykzygo.videospace.ui.movie_details
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.launch
 import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
@@ -39,6 +36,7 @@ class MovieDetailsViewModel constructor(
     val searchInGenreErrorMessage get() = _searchInGenreErrorMessage
 
 
+    
     fun setMovie(movie: Movie?) {
         if (movie != null) {
             viewModelScope.launch(dispatchersProvider.io) {
