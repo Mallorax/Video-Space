@@ -5,23 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.databinding.FragmentStoredListBinding
-import pl.patrykzygo.videospace.ui.factories.MainViewModelFactory
 
 @AndroidEntryPoint
 class StoredListFragment(
-    private val viewModelFactory: MainViewModelFactory,
     private val status: String
 ) : Fragment() {
 
+    //TODO status shouldn't be in constructor
     private var _binding: FragmentStoredListBinding? = null
     val binding get() = _binding!!
     private val adapter = createRecyclerViewAdapter()
 
-    lateinit var viewModel: StoredListViewModel
+    val viewModel: StoredListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,7 +30,6 @@ class StoredListFragment(
     ): View {
         _binding = FragmentStoredListBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
-        viewModel = viewModelFactory.create(StoredListViewModel::class.java)
         binding.viewModel = viewModel
         viewModel.getMoviesWithStatus(status)
         return binding.root

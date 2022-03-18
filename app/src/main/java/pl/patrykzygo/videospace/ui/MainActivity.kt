@@ -10,7 +10,6 @@ import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.databinding.ActivityMainBinding
-import pl.patrykzygo.videospace.di.DefaultFragmentFactoryQualifier
 import pl.patrykzygo.videospace.ui.factories.DefaultFragmentFactory
 import javax.inject.Inject
 
@@ -19,7 +18,6 @@ class MainActivity : AppCompatActivity() {
 
 
     @Inject
-    @DefaultFragmentFactoryQualifier
     lateinit var fragmentFactory: DefaultFragmentFactory
 
     private lateinit var binding: ActivityMainBinding

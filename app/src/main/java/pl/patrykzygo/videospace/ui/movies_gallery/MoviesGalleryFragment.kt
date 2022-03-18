@@ -5,25 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.databinding.FragmentMoviesGalleryBinding
-import pl.patrykzygo.videospace.ui.factories.MainViewModelFactory
 import pl.patrykzygo.videospace.ui.movie_dialogs.MovieModalBottomSheet
-import javax.inject.Inject
-import javax.inject.Named
 
 @AndroidEntryPoint
 class MoviesGalleryFragment : Fragment() {
 
     private var _binding: FragmentMoviesGalleryBinding? = null
     val binding get() = _binding!!
-    lateinit var viewModel: MoviesGalleryViewModel
+    val viewModel: MoviesGalleryViewModel by viewModels()
     val adapter = createRecyclerViewAdapter()
-
-    @Inject
-    @Named("main_vm_factory")
-    lateinit var viewModelFactory: MainViewModelFactory
 
 
     override fun onCreateView(
@@ -32,7 +26,6 @@ class MoviesGalleryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMoviesGalleryBinding.inflate(inflater, container, false)
-        viewModel = viewModelFactory.create(MoviesGalleryViewModel::class.java)
         val requestType = arguments?.getString("request_type")
         val movieId = arguments?.getInt("movieId")
         requestType?.let { viewModel.setRequestType(it, movieId ?: -1) }

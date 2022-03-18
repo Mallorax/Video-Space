@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
@@ -13,18 +14,17 @@ import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.data.app.Genre
 import pl.patrykzygo.videospace.databinding.FragmentMovieSearchBinding
-import pl.patrykzygo.videospace.ui.factories.MainViewModelFactory
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegate
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegateImpl
 
 @AndroidEntryPoint
-class SearchMovieFragment(val viewModelFactory: MainViewModelFactory) : Fragment(),
+class SearchMovieFragment : Fragment(),
     AppBarDelegate by AppBarDelegateImpl() {
 
     private var _binding: FragmentMovieSearchBinding? = null
     val binding get() = _binding!!
 
-    lateinit var viewModel: SearchMovieViewModel
+    val viewModel: SearchMovieViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +32,6 @@ class SearchMovieFragment(val viewModelFactory: MainViewModelFactory) : Fragment
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMovieSearchBinding.inflate(inflater, container, false)
-        viewModel = viewModelFactory.create(SearchMovieViewModel::class.java)
         viewModel.getAllGenres()
 
         return binding.root
@@ -43,7 +42,10 @@ class SearchMovieFragment(val viewModelFactory: MainViewModelFactory) : Fragment
         setUpAppBar(findNavController(), binding.appBar.toolbar)
         subscribeObservers()
         binding.searchFragmentFab.setOnClickListener {
-            viewModel.submitRequest(binding.searchScorePicker.value, binding.voteCountTextInput.text.toString())
+            viewModel.submitRequest(
+                binding.searchScorePicker.value,
+                binding.voteCountTextInput.text.toString()
+            )
         }
     }
 
@@ -55,7 +57,7 @@ class SearchMovieFragment(val viewModelFactory: MainViewModelFactory) : Fragment
     }
 
 
-    private fun onIncludeChipClickAction(isChecked: Boolean, chipText: String){
+    private fun onIncludeChipClickAction(isChecked: Boolean, chipText: String) {
         if (isChecked) {
             viewModel.addIncludedGenres(chipText)
 
@@ -64,7 +66,7 @@ class SearchMovieFragment(val viewModelFactory: MainViewModelFactory) : Fragment
         }
     }
 
-    private fun onExcludeChipClickAction(isChecked: Boolean, chipText: String){
+    private fun onExcludeChipClickAction(isChecked: Boolean, chipText: String) {
         if (isChecked) {
             viewModel.addExcludedGenres(chipText)
 
@@ -73,24 +75,31 @@ class SearchMovieFragment(val viewModelFactory: MainViewModelFactory) : Fragment
         }
     }
 
-    private fun showIncludeChipInGroup(chipText: String){
-        val chip = layoutInflater.inflate(R.layout.layout_include_chip_choice, binding.includeGenresChipGroup, false) as Chip
+    private fun showIncludeChipInGroup(chipText: String) {
+        val chip = layoutInflater.inflate(
+            R.layout.layout_include_chip_choice,
+            binding.includeGenresChipGroup,
+            false
+        ) as Chip
         chip.text = chipText
-        chip.setOnCheckedChangeListener{_, isChecked ->
+        chip.setOnCheckedChangeListener { _, isChecked ->
             onIncludeChipClickAction(isChecked, chip.text.toString())
         }
         binding.includeGenresChipGroup.addView(chip)
     }
 
-    private fun showExcludeChipInGroup(chipText: String){
-        val chip = layoutInflater.inflate(R.layout.layout_exclude_chip_choice, binding.excludeGenresChipGroup, false) as Chip
+    private fun showExcludeChipInGroup(chipText: String) {
+        val chip = layoutInflater.inflate(
+            R.layout.layout_exclude_chip_choice,
+            binding.excludeGenresChipGroup,
+            false
+        ) as Chip
         chip.text = chipText
-        chip.setOnCheckedChangeListener{_, isChecked ->
+        chip.setOnCheckedChangeListener { _, isChecked ->
             onExcludeChipClickAction(isChecked, chip.text.toString())
         }
         binding.excludeGenresChipGroup.addView(chip)
     }
-
 
 
     private fun subscribeObservers() {
@@ -104,7 +113,8 @@ class SearchMovieFragment(val viewModelFactory: MainViewModelFactory) : Fragment
             binding.voteCountTextInput.error = it
         })
         viewModel.requestMoviesLiveEvent.observe(viewLifecycleOwner, Observer {
-            val action = SearchMovieFragmentDirections.actionSearchMovieFragmentToMoviesListFragment(it)
+            val action =
+                SearchMovieFragmentDirections.actionSearchMovieFragmentToMoviesListFragment(it)
             findNavController().navigate(action)
         })
     }

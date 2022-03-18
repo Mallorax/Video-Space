@@ -2,11 +2,14 @@ package pl.patrykzygo.videospace.ui.movies_gallery
 
 import androidx.lifecycle.*
 import androidx.paging.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.mapMoviesResponseToMovie
 import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
+import javax.inject.Inject
 
-class MoviesGalleryViewModel constructor(private val repo: MoviesPagingSource) :
+@HiltViewModel
+class MoviesGalleryViewModel @Inject constructor(private val repo: MoviesPagingSource) :
     ViewModel() {
 
     private var _requestType = MutableLiveData<String>()

@@ -1,18 +1,23 @@
 package pl.patrykzygo.videospace.ui.movie_details
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.mapMovieDetailsResponseToMovie
 import pl.patrykzygo.videospace.data.mapMovieToMovieEntity
-import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
 import pl.patrykzygo.videospace.repository.RepositoryResponse
+import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
 import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
+import javax.inject.Inject
 
-
-class MovieDetailsViewModel constructor(
+@HiltViewModel
+class MovieDetailsViewModel @Inject constructor(
     private val repo: LocalStoreRepository,
     private val dispatchersProvider: DispatchersProvider
 ) : ViewModel() {
@@ -36,7 +41,6 @@ class MovieDetailsViewModel constructor(
     val searchInGenreErrorMessage get() = _searchInGenreErrorMessage
 
 
-    
     fun setMovie(movie: Movie?) {
         if (movie != null) {
             viewModelScope.launch(dispatchersProvider.io) {
@@ -54,29 +58,29 @@ class MovieDetailsViewModel constructor(
         }
     }
 
-    fun moveToGenreList(searchedGenre: String){
+    fun moveToGenreList(searchedGenre: String) {
         viewModelScope.launch(dispatchersProvider.io) {
             val response = repo.getAllGenres()
-            if (response.status == RepositoryResponse.Status.SUCCESS){
-                val genre = response.data!!.first { t-> t.genreName == searchedGenre }
+            if (response.status == RepositoryResponse.Status.SUCCESS) {
+                val genre = response.data!!.first { t -> t.genreName == searchedGenre }
                 val request = DiscoverMovieRequest(includedGenres = genre.genreId.toString())
                 _searchInGenreLiveEvent.postValue(request)
-            }else{
+            } else {
                 _searchInGenreErrorMessage.postValue("Check your internet connection")
             }
         }
     }
 
-    fun saveMovieEvent(){
+    fun saveMovieEvent() {
         _saveMovieEvent.value = _movie.value
     }
 
-    fun toggleFavourite(){
+    fun toggleFavourite() {
         val movie = _movie.value
-        if (movie != null){
+        if (movie != null) {
             movie.isFavourite = !movie.isFavourite
             _movie.value = movie
-            viewModelScope.launch(dispatchersProvider.io){
+            viewModelScope.launch(dispatchersProvider.io) {
                 repo.insertFavourite(mapMovieToMovieEntity(movie))
             }
         }

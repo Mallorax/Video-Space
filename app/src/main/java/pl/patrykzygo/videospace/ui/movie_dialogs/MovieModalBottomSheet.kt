@@ -5,26 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.MovieBottomSheetBinding
-import pl.patrykzygo.videospace.ui.factories.MainViewModelFactory
-import javax.inject.Inject
-import javax.inject.Named
 
 @AndroidEntryPoint
 open class MovieModalBottomSheet : BottomSheetDialogFragment() {
 
     private var _binding: MovieBottomSheetBinding? = null
     private val binding get() = _binding!!
-    lateinit var viewModel: MovieBottomSheetViewModel
+    val viewModel: MovieBottomSheetViewModel by viewModels()
 
-    @Inject
-    @Named("main_vm_factory")
-    lateinit var viewModelFactory: MainViewModelFactory
 
     companion object {
         const val TAG = "MovieModalBottomSheet"
@@ -37,7 +32,6 @@ open class MovieModalBottomSheet : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = MovieBottomSheetBinding.inflate(inflater, container, false)
-        viewModel = viewModelFactory.create(MovieBottomSheetViewModel::class.java)
         binding.lifecycleOwner = viewLifecycleOwner
         val movie = arguments?.getParcelable<Movie>("movie")
         viewModel.setMovie(movie)

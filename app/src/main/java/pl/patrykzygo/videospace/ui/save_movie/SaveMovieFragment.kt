@@ -5,24 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.databinding.FragmentSaveMovieBinding
-import pl.patrykzygo.videospace.ui.factories.MainViewModelFactory
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegate
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegateImpl
 
 @AndroidEntryPoint
-class SaveMovieFragment constructor(private val viewModelFactory: MainViewModelFactory) :
+class SaveMovieFragment :
     Fragment(),
     AppBarDelegate by AppBarDelegateImpl() {
 
     private var _binding: FragmentSaveMovieBinding? = null
     val binding get() = _binding!!
-    lateinit var viewModel: SaveMovieViewModel
+    val viewModel: SaveMovieViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,7 +30,6 @@ class SaveMovieFragment constructor(private val viewModelFactory: MainViewModelF
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSaveMovieBinding.inflate(inflater, container, false)
-        viewModel = viewModelFactory.create(SaveMovieViewModel::class.java)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
@@ -62,7 +61,7 @@ class SaveMovieFragment constructor(private val viewModelFactory: MainViewModelF
         }
     }
 
-    private fun getCheckedChipText(): String?{
+    private fun getCheckedChipText(): String? {
         val checkedChipId = binding.saveMovieChipGroup.checkedChipId
         val checkedChip = requireView().findViewById<Chip>(checkedChipId)
         return checkedChip?.text?.toString()

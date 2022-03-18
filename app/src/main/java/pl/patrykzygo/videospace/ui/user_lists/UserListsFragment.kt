@@ -14,11 +14,10 @@ import pl.patrykzygo.videospace.databinding.FragmentUserListsBinding
 import pl.patrykzygo.videospace.others.MovieStatus
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegate
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegateImpl
-import pl.patrykzygo.videospace.ui.factories.MainViewModelFactory
 import pl.patrykzygo.videospace.ui.stored_list.StoredListFragment
 
 @AndroidEntryPoint
-class UserListsFragment(val viewModelFactory: MainViewModelFactory) : Fragment(),
+class UserListsFragment: Fragment(),
     AppBarDelegate by AppBarDelegateImpl() {
 
     private var _binding: FragmentUserListsBinding? = null
@@ -44,23 +43,23 @@ class UserListsFragment(val viewModelFactory: MainViewModelFactory) : Fragment()
     private fun showStoredLists() {
         addStoredListToContainer(
             R.id.watching_list_fragment_container,
-            StoredListFragment(viewModelFactory, MovieStatus.WATCHING)
+            StoredListFragment(MovieStatus.WATCHING)
         )
         addStoredListToContainer(
             R.id.plan_to_watch_fragment_container,
-            StoredListFragment(viewModelFactory, MovieStatus.PLAN_TO_WATCH)
+            StoredListFragment(MovieStatus.PLAN_TO_WATCH)
         )
         addStoredListToContainer(
             R.id.completed_list_fragment_container,
-            StoredListFragment(viewModelFactory, MovieStatus.COMPLETED)
+            StoredListFragment(MovieStatus.COMPLETED)
         )
         addStoredListToContainer(
             R.id.on_hold_fragment_container,
-            StoredListFragment(viewModelFactory, MovieStatus.ON_HOLD)
+            StoredListFragment(MovieStatus.ON_HOLD)
         )
         addStoredListToContainer(
             R.id.dropped_fragment_container,
-            StoredListFragment(viewModelFactory, MovieStatus.DROPPED)
+            StoredListFragment(MovieStatus.DROPPED)
         )
     }
 

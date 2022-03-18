@@ -2,6 +2,7 @@ package pl.patrykzygo.videospace.ui.movies_list
 
 import androidx.lifecycle.*
 import androidx.paging.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -11,8 +12,10 @@ import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.mapMoviesResponseToMovie
 import pl.patrykzygo.videospace.others.SortOptions
 import pl.patrykzygo.videospace.repository.genre_paging.GenrePagingSource
+import javax.inject.Inject
 
-class MoviesListViewModel constructor(
+@HiltViewModel
+class MoviesListViewModel @Inject constructor(
     private val repo: GenrePagingSource
 ) : ViewModel() {
 

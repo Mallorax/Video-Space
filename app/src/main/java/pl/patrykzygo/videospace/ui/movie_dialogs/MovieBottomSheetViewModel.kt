@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -12,9 +13,11 @@ import pl.patrykzygo.videospace.data.mapMovieToMovieEntity
 import pl.patrykzygo.videospace.repository.RepositoryResponse
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
 import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
+import javax.inject.Inject
 
+@HiltViewModel
 class MovieBottomSheetViewModel
-constructor(
+@Inject constructor(
     private val repository: LocalStoreRepository,
     private val dispatchers: DispatchersProvider
 ) : ViewModel() {

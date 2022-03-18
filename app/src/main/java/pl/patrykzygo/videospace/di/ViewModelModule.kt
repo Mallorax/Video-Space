@@ -3,7 +3,8 @@ package pl.patrykzygo.videospace.di
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 import pl.patrykzygo.videospace.data.local.GenreDao
 import pl.patrykzygo.videospace.data.local.MoviesDao
 import pl.patrykzygo.videospace.networking.DiscoverEntryPoint
@@ -17,18 +18,15 @@ import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
 import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSourceImpl
 import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
 import pl.patrykzygo.videospace.ui.dispatchers.StandardDispatchers
-import pl.patrykzygo.videospace.ui.factories.DefaultFragmentFactory
-import pl.patrykzygo.videospace.ui.factories.MainViewModelFactory
-import javax.inject.Named
-import javax.inject.Singleton
+
+//Provides all dependencies needed for view models
 
 @Module
-@InstallIn(SingletonComponent::class)
-object AppModule {
+@InstallIn(ViewModelComponent::class)
+object ViewModelModule {
 
-
-    @Singleton
     @Provides
+    @ViewModelScoped
     fun provideDispatchersProvider(): DispatchersProvider {
         return StandardDispatchers()
     }
@@ -52,25 +50,5 @@ object AppModule {
     @Provides
     fun provideGenrePagingSource(discoverEntryPoint: DiscoverEntryPoint): GenrePagingSource {
         return GenrePagingSourceImpl(discoverEntryPoint)
-    }
-
-    @Provides
-    fun provideViewModelFactory(
-        localStoreRepository: LocalStoreRepository,
-        moviesPagingSource: MoviesPagingSource,
-        genresPagingSource: GenrePagingSource,
-        dispatcher: DispatchersProvider
-    ): MainViewModelFactory {
-        return MainViewModelFactory(
-            localStoreRepository,
-            moviesPagingSource,
-            genresPagingSource,
-            dispatcher
-        )
-    }
-
-    @Provides
-    fun provideDefaultFragmentFactory(@Named("main_vm_factory") vmFactory: MainViewModelFactory): DefaultFragmentFactory {
-        return DefaultFragmentFactory(vmFactory)
     }
 }
