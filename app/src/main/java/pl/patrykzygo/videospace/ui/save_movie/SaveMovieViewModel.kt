@@ -9,11 +9,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.others.MovieStatus
-import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
+import pl.patrykzygo.videospace.repository.local_store.LocalStoreMoviesRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class SaveMovieViewModel @Inject constructor(private val repo: LocalStoreRepository) : ViewModel() {
+class SaveMovieViewModel @Inject constructor(private val moviesRepo: LocalStoreMoviesRepository) : ViewModel() {
 
     private val _inputFeedbackMessage = MutableLiveData<String>()
     val inputErrorMessage: LiveData<String> get() = _inputFeedbackMessage
@@ -30,7 +30,7 @@ class SaveMovieViewModel @Inject constructor(private val repo: LocalStoreReposit
             return
         }
         viewModelScope.launch(Dispatchers.IO) {
-            repo.saveMovieToDb(
+            moviesRepo.saveMovieToDb(
                 MovieEntity(
                     id!!,
                     title = title!!,

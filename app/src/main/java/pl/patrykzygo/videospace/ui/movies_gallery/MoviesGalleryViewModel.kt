@@ -9,14 +9,14 @@ import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
 import javax.inject.Inject
 
 @HiltViewModel
-class MoviesGalleryViewModel @Inject constructor(private val repo: MoviesPagingSource) :
+class MoviesGalleryViewModel @Inject constructor(private val moviesRepo: MoviesPagingSource) :
     ViewModel() {
 
     private var _requestType = MutableLiveData<String>()
     val requestType: LiveData<String> get() = _requestType
 
     fun setRequestType(requestType: String, id: Int = -1) {
-        repo.setMoviesRequestType(requestType, id)
+        moviesRepo.setMoviesRequestType(requestType, id)
         _requestType.value = requestType
     }
 
@@ -28,7 +28,7 @@ class MoviesGalleryViewModel @Inject constructor(private val repo: MoviesPagingS
                 prefetchDistance = 5,
                 initialLoadSize = 10
             ),
-            pagingSourceFactory = { repo }
+            pagingSourceFactory = { moviesRepo }
         )
             .liveData
             .cachedIn(viewModelScope)

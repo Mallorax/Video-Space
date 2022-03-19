@@ -10,13 +10,14 @@ import kotlinx.coroutines.launch
 import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
 import pl.patrykzygo.videospace.data.app.Genre
 import pl.patrykzygo.videospace.repository.RepositoryResponse
-import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
+import pl.patrykzygo.videospace.repository.local_store.LocalStoreGenresRepository
+import pl.patrykzygo.videospace.repository.local_store.LocalStoreMoviesRepository
 import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchMovieViewModel @Inject constructor(
-    private val repo: LocalStoreRepository,
+    private val genresRepo: LocalStoreGenresRepository,
     private val dispatchersProvider: DispatchersProvider
 ) : ViewModel() {
 
@@ -38,7 +39,7 @@ class SearchMovieViewModel @Inject constructor(
 
     fun getAllGenres() {
         viewModelScope.launch(dispatchersProvider.io) {
-            val repoResponse = repo.getAllGenres()
+            val repoResponse = genresRepo.getAllGenres()
             if (repoResponse.status == RepositoryResponse.Status.SUCCESS) {
                 _genres.postValue(repoResponse.data!!)
             } else {

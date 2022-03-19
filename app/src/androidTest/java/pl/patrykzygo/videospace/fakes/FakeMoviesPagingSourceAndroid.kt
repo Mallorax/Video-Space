@@ -6,7 +6,7 @@ import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
 import pl.patrykzygo.videospace.util.fakeCorrectMoviesResponseUi
 import javax.inject.Inject
 
-open class FakeMoviesPagingSource @Inject constructor() : MoviesPagingSource() {
+open class FakeMoviesPagingSourceAndroid @Inject constructor() : MoviesPagingSource() {
 
     override fun setMoviesRequestType(moviesRequestType: String, movieId: Int) {}
 

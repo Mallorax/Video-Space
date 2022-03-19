@@ -12,8 +12,10 @@ import pl.patrykzygo.videospace.networking.GenresEntryPoint
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
 import pl.patrykzygo.videospace.repository.genre_paging.GenrePagingSource
 import pl.patrykzygo.videospace.repository.genre_paging.GenrePagingSourceImpl
-import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
-import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepositoryImpl
+import pl.patrykzygo.videospace.repository.local_store.LocalStoreGenresRepository
+import pl.patrykzygo.videospace.repository.local_store.LocalStoreGenresRepositoryImpl
+import pl.patrykzygo.videospace.repository.local_store.LocalStoreMoviesRepository
+import pl.patrykzygo.videospace.repository.local_store.LocalStoreMoviesRepositoryImpl
 import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
 import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSourceImpl
 import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
@@ -32,15 +34,20 @@ object ViewModelModule {
     }
 
     @Provides
-    fun provideLocalStoreRepository(
+    fun provideLocalStoreMoviesRepository(
         moviesDao: MoviesDao,
-        genreDao: GenreDao,
-        moviesEntryPoint: MoviesEntryPoint,
-        genresEntryPoint: GenresEntryPoint
-    ): LocalStoreRepository {
-        return LocalStoreRepositoryImpl(moviesDao, genreDao, moviesEntryPoint, genresEntryPoint)
+        moviesEntryPoint: MoviesEntryPoint
+    ): LocalStoreMoviesRepository {
+        return LocalStoreMoviesRepositoryImpl(moviesDao, moviesEntryPoint)
     }
 
+    @Provides
+    fun provideLocalStoreGenresRepository(
+        genreDao: GenreDao,
+        genresEntryPoint: GenresEntryPoint
+    ): LocalStoreGenresRepository {
+        return LocalStoreGenresRepositoryImpl(genreDao, genresEntryPoint)
+    }
 
     @Provides
     fun provideMoviesPagingSource(moviesEntryPoint: MoviesEntryPoint): MoviesPagingSource {

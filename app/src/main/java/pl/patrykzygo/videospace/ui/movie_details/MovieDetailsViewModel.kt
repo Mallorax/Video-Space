@@ -10,15 +10,16 @@ import kotlinx.coroutines.launch
 import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.mapMovieDetailsResponseToMovie
-import pl.patrykzygo.videospace.data.mapMovieToMovieEntity
 import pl.patrykzygo.videospace.repository.RepositoryResponse
-import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
+import pl.patrykzygo.videospace.repository.local_store.LocalStoreGenresRepository
+import pl.patrykzygo.videospace.repository.local_store.LocalStoreMoviesRepository
 import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieDetailsViewModel @Inject constructor(
-    private val repo: LocalStoreRepository,
+    private val moviesRepo: LocalStoreMoviesRepository,
+    private val genresRepo: LocalStoreGenresRepository,
     private val dispatchersProvider: DispatchersProvider
 ) : ViewModel() {
 
@@ -44,7 +45,7 @@ class MovieDetailsViewModel @Inject constructor(
     fun setMovie(movie: Movie?) {
         if (movie != null) {
             viewModelScope.launch(dispatchersProvider.io) {
-                val response = repo.getSpecificMovie(movie.id)
+                val response = moviesRepo.getSpecificMovie(movie.id)
                 if (response.status == RepositoryResponse.Status.SUCCESS) {
                     val mappedMovie = mapMovieDetailsResponseToMovie(response.data!!)
                     _movie.postValue(mappedMovie)
@@ -58,7 +59,7 @@ class MovieDetailsViewModel @Inject constructor(
 
     fun moveToGenreList(searchedGenre: String) {
         viewModelScope.launch(dispatchersProvider.io) {
-            val response = repo.getAllGenres()
+            val response = genresRepo.getAllGenres()
             if (response.status == RepositoryResponse.Status.SUCCESS) {
                 val genre = response.data!!.first { t -> t.genreName == searchedGenre }
                 val request = DiscoverMovieRequest(includedGenres = genre.genreId.toString())

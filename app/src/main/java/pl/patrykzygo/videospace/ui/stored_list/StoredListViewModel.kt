@@ -13,13 +13,13 @@ import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.mapMovieDetailsResponseToMovie
 import pl.patrykzygo.videospace.others.MovieStatus
 import pl.patrykzygo.videospace.repository.RepositoryResponse
-import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
+import pl.patrykzygo.videospace.repository.local_store.LocalStoreMoviesRepository
 import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
 import javax.inject.Inject
 
 @HiltViewModel
 class StoredListViewModel @Inject constructor(
-    private val repo: LocalStoreRepository,
+    private val moviesRepo: LocalStoreMoviesRepository,
     private val dispatchersProvider: DispatchersProvider
 ) : ViewModel() {
 
@@ -40,7 +40,7 @@ class StoredListViewModel @Inject constructor(
     private fun getMovies() {
         val status = _moviesStatus.value ?: return
         viewModelScope.launch(dispatchersProvider.io) {
-            val repoResponse = repo.getAllMoviesWithStatus(status)
+            val repoResponse = moviesRepo.getAllMoviesWithStatus(status)
             if (repoResponse.status == RepositoryResponse.Status.SUCCESS) {
                 val dbMovies = repoResponse.data!!
                 val movies = mutableListOf<Deferred<Movie?>>()
@@ -58,7 +58,7 @@ class StoredListViewModel @Inject constructor(
     }
 
     private suspend fun getMovie(id: Int): Movie? {
-        val movie = repo.getSpecificMovie(id)
+        val movie = moviesRepo.getSpecificMovie(id)
         return if (movie.status == RepositoryResponse.Status.SUCCESS) {
             mapMovieDetailsResponseToMovie(movie.data!!)
         } else {
