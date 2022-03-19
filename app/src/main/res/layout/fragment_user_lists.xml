@@ -3,57 +3,71 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <include
+            android:id="@+id/app_bar_layout"
+            layout="@layout/app_bar" />
+
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <include
-                android:id="@+id/app_bar"
-                layout="@layout/app_bar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/watching_list_fragment_container"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:layout="@layout/fragment_stored_list" />
+                android:orientation="vertical">
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/completed_list_fragment_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:layout="@layout/fragment_stored_list" />
+                <include
+                    android:id="@+id/app_bar"
+                    layout="@layout/app_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/watching_list_fragment_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout="@layout/fragment_stored_list" />
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/plan_to_watch_fragment_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:layout="@layout/fragment_stored_list" />
-
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/on_hold_fragment_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:layout="@layout/fragment_stored_list" />
-
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/dropped_fragment_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:layout="@layout/fragment_stored_list" />
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/completed_list_fragment_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout="@layout/fragment_stored_list" />
 
 
-        </LinearLayout>
-    </ScrollView>
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/plan_to_watch_fragment_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout="@layout/fragment_stored_list" />
+
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/on_hold_fragment_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout="@layout/fragment_stored_list" />
+
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/dropped_fragment_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout="@layout/fragment_stored_list" />
+
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <include
+            android:id="@+id/bottom_nav_view_layout"
+            layout="@layout/bottom_nav_view" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

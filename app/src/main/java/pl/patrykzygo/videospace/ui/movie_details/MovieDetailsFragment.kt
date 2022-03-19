@@ -10,6 +10,7 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,9 +51,10 @@ class MovieDetailsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpAppBar(findNavController(), binding.appBar.toolbar)
+        binding.bottomNavViewLayout.bottomNavView.setupWithNavController(findNavController())
         setUpFragmentContainers()
         setOnClickListeners()
-        observeViewModel()
+        subscribeObservers()
         viewModel.setMovie(movie)
     }
 
@@ -71,17 +73,6 @@ class MovieDetailsFragment :
         )
     }
 
-    private fun setFragmentResultListener() {
-        parentFragmentManager.setFragmentResultListener("movieResult", this) { _, bundle ->
-            val movie = bundle.getParcelable<Movie>("movie")
-            if (movie != null) {
-                val action = MovieDetailsFragmentDirections.actionMovieDetailsSelf(movie)
-                findNavController().navigate(action)
-            }
-        }
-    }
-
-
     fun addMoviesListFragmentToContainer(
         containerId: Int,
         contentType: String,
@@ -98,13 +89,24 @@ class MovieDetailsFragment :
         }
     }
 
+
+    private fun setFragmentResultListener() {
+        parentFragmentManager.setFragmentResultListener("movieResult", this) { _, bundle ->
+            val movie = bundle.getParcelable<Movie>("movie")
+            if (movie != null) {
+                val action = MovieDetailsFragmentDirections.actionMovieDetailsSelf(movie)
+                findNavController().navigate(action)
+            }
+        }
+    }
+
     private fun setOnClickListeners() {
         binding.detailsFab.setOnClickListener {
             viewModel.saveMovieEvent()
         }
     }
 
-    private fun observeViewModel() {
+    private fun subscribeObservers() {
         viewModel.genres.observe(viewLifecycleOwner, Observer {
             showMovieGenres(it)
         })

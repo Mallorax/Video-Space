@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -51,7 +52,8 @@ class MoviesListFragment() : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpAppBar(findNavController(), binding.toolbar)
+        setUpAppBar(findNavController(), binding.appBarLayout.toolbar)
+        binding.bottomNavViewLayout.bottomNavView.setupWithNavController(findNavController())
         binding.lifecycleOwner = viewLifecycleOwner
         val recyclerView = binding.moviesListVerticalRecycler
         recyclerView.adapter = adapter
@@ -60,9 +62,9 @@ class MoviesListFragment() : Fragment(),
     }
 
     private fun createMenu() {
-        binding.toolbar.inflateMenu(R.menu.sort_list_menu)
+        binding.appBarLayout.toolbar.inflateMenu(R.menu.sort_list_menu)
         resetMenuItems()
-        binding.toolbar.setOnMenuItemClickListener {
+        binding.appBarLayout.toolbar.setOnMenuItemClickListener {
             onOptionsItemSelected(it)
         }
     }
@@ -126,7 +128,7 @@ class MoviesListFragment() : Fragment(),
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_arrow_downward)
         val iconAsc =
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_arrow_upward)
-        val menu = binding.toolbar.menu
+        val menu = binding.appBarLayout.toolbar.menu
         when (sortOption) {
             SortOptions.POPULARITY_DESC -> {
                 selectMenuItem(menu.findItem(R.id.most_popular_sort_option), iconDesc)
@@ -173,7 +175,7 @@ class MoviesListFragment() : Fragment(),
         val textColor = ContextCompat.getColor(requireContext(), R.color.black)
         val defaultImage =
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_arrow_upward)
-        val subMenu = binding.toolbar.menu.findItem(R.id.main_menu_item).subMenu
+        val subMenu = binding.appBarLayout.toolbar.menu.findItem(R.id.main_menu_item).subMenu
         for (i in 0 until subMenu.size()) {
             val item = subMenu.getItem(i)
 

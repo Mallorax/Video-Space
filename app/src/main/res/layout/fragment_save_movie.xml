@@ -25,6 +25,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <include
+            android:id="@+id/bottom_nav_view_layout"
+            layout="@layout/bottom_nav_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/save_movie_title_textview"
             android:layout_width="0dp"
@@ -156,7 +165,7 @@
             android:layout_margin="@dimen/small_margin"
             android:backgroundTint="@color/purple_200"
             android:src="@drawable/ic_baseline_playlist_add"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/bottom_nav_view_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:tint="@color/white" />
 

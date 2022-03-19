@@ -3,80 +3,93 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/default_fragment_coordinator_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include
+            android:id="@+id/app_bar"
+            layout="@layout/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="?attr/actionBarSize" />
 
-            <include
-                android:id="@+id/app_bar"
-                layout="@layout/app_bar"
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/most_popular_movies_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin"
-                android:layout_marginTop="@dimen/small_margin"
-                android:layout_marginEnd="@dimen/small_margin"
-                app:layout_constraintBottom_toTopOf="@+id/top_rated_movies_container"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/app_bar"
-                tools:layout="@layout/fragment_movies_gallery" />
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/top_rated_movies_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="@dimen/small_margin"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/now_playing_movies_container"
-                app:layout_constraintEnd_toEndOf="@+id/most_popular_movies_container"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/most_popular_movies_container"
-                app:layout_constraintTop_toBottomOf="@+id/most_popular_movies_container"
-                tools:layout="@layout/fragment_movies_gallery" />
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/now_playing_movies_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="@dimen/small_margin"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/upcoming_movies_container"
-                app:layout_constraintEnd_toEndOf="@+id/most_popular_movies_container"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/most_popular_movies_container"
-                app:layout_constraintTop_toBottomOf="@+id/top_rated_movies_container"
-                tools:layout="@layout/fragment_movies_gallery" />
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/upcoming_movies_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="@dimen/small_margin"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/most_popular_movies_container"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/most_popular_movies_container"
-                app:layout_constraintTop_toBottomOf="@+id/now_playing_movies_container"
-                tools:layout="@layout/fragment_movies_gallery" />
+                android:layout_height="wrap_content">
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/most_popular_movies_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginEnd="@dimen/small_margin"
+                    app:layout_constraintBottom_toTopOf="@+id/top_rated_movies_container"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout="@layout/fragment_movies_gallery" />
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/top_rated_movies_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/now_playing_movies_container"
+                    app:layout_constraintEnd_toEndOf="@+id/most_popular_movies_container"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="@+id/most_popular_movies_container"
+                    app:layout_constraintTop_toBottomOf="@+id/most_popular_movies_container"
+                    tools:layout="@layout/fragment_movies_gallery" />
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/now_playing_movies_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/upcoming_movies_container"
+                    app:layout_constraintEnd_toEndOf="@+id/most_popular_movies_container"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="@+id/most_popular_movies_container"
+                    app:layout_constraintTop_toBottomOf="@+id/top_rated_movies_container"
+                    tools:layout="@layout/fragment_movies_gallery" />
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/upcoming_movies_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/most_popular_movies_container"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="@+id/most_popular_movies_container"
+                    app:layout_constraintTop_toBottomOf="@+id/now_playing_movies_container"
+                    tools:layout="@layout/fragment_movies_gallery" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <include
+            android:id="@+id/bottom_nav_view_layout"
+            layout="@layout/bottom_nav_view" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
