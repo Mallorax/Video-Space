@@ -1,6 +1,5 @@
 package pl.patrykzygo.videospace.repository.local_store
 
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -15,6 +14,8 @@ import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
 import pl.patrykzygo.videospace.networking.GenresEntryPoint
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
 import pl.patrykzygo.videospace.repository.RepositoryResponse
+import pl.patrykzygo.videospace.repository.delegate.CancellationExceptionCheck
+import pl.patrykzygo.videospace.repository.delegate.CancellationExceptionCheckImpl
 import javax.inject.Inject
 
 class LocalStoreRepositoryImpl @Inject constructor(
@@ -22,7 +23,8 @@ class LocalStoreRepositoryImpl @Inject constructor(
     private val genreDao: GenreDao,
     private val moviesEntryPoint: MoviesEntryPoint,
     private val genreEntryPoint: GenresEntryPoint
-) : LocalStoreRepository {
+) : LocalStoreRepository,
+    CancellationExceptionCheck by CancellationExceptionCheckImpl() {
 
     // It seems to me like this class does too much,
     // some split of responsibilities could be in order
@@ -124,9 +126,4 @@ class LocalStoreRepositoryImpl @Inject constructor(
 
     }
 
-    private fun checkForCancellationException(e: Exception) {
-        if (e is CancellationException) {
-            throw e
-        }
-    }
 }

@@ -5,10 +5,7 @@ import pl.patrykzygo.videospace.data.network.EntryPointMoviesResponse
 import pl.patrykzygo.videospace.data.network.MovieResponse
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
 import pl.patrykzygo.videospace.others.MoviesRequestType
-import pl.patrykzygo.videospace.repository.delegate.DelegateMovieRefreshKey
-import pl.patrykzygo.videospace.repository.delegate.DelegateMovieRefreshKeyImpl
-import pl.patrykzygo.videospace.repository.delegate.MovieCalcKeyPositionDelegate
-import pl.patrykzygo.videospace.repository.delegate.MovieCalcNextKeyDelegateImpl
+import pl.patrykzygo.videospace.repository.delegate.*
 import retrofit2.HttpException
 import retrofit2.Response
 import javax.inject.Inject
@@ -16,7 +13,8 @@ import javax.inject.Inject
 class MoviesPagingSourceImpl @Inject constructor(private val moviesEntryPoint: MoviesEntryPoint) :
     MoviesPagingSource(),
     MovieCalcKeyPositionDelegate by MovieCalcNextKeyDelegateImpl(),
-    DelegateMovieRefreshKey by DelegateMovieRefreshKeyImpl() {
+    DelegateMovieRefreshKey by DelegateMovieRefreshKeyImpl(),
+    CancellationExceptionCheck by CancellationExceptionCheckImpl() {
 
     private var moviesRequestType = MoviesRequestType.POPULAR
     var movieId = -1
@@ -43,17 +41,11 @@ class MoviesPagingSourceImpl @Inject constructor(private val moviesEntryPoint: M
             } else {
                 throw HttpException(response)
             }
-        } catch (e: HttpException) {
-            e.printStackTrace()
-            return LoadResult.Error(e)
-        } catch (e: NullPointerException) {
-            e.printStackTrace()
-            return LoadResult.Error(e)
         } catch (e: Exception) {
+            checkForCancellationException(e)
             e.printStackTrace()
             return LoadResult.Error(e)
         }
-
     }
 
 

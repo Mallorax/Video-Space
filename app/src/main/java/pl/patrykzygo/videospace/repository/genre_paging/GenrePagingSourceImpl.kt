@@ -5,22 +5,19 @@ import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
 import pl.patrykzygo.videospace.data.network.MovieResponse
 import pl.patrykzygo.videospace.networking.DiscoverEntryPoint
 import pl.patrykzygo.videospace.others.SortOptions
-import pl.patrykzygo.videospace.repository.delegate.DelegateMovieRefreshKey
-import pl.patrykzygo.videospace.repository.delegate.DelegateMovieRefreshKeyImpl
-import pl.patrykzygo.videospace.repository.delegate.MovieCalcKeyPositionDelegate
-import pl.patrykzygo.videospace.repository.delegate.MovieCalcNextKeyDelegateImpl
+import pl.patrykzygo.videospace.repository.delegate.*
 import retrofit2.HttpException
 import javax.inject.Inject
 
 class GenrePagingSourceImpl @Inject constructor(private val entryPoint: DiscoverEntryPoint) :
     GenrePagingSource(),
     MovieCalcKeyPositionDelegate by MovieCalcNextKeyDelegateImpl(),
-    DelegateMovieRefreshKey by DelegateMovieRefreshKeyImpl() {
+    DelegateMovieRefreshKey by DelegateMovieRefreshKeyImpl(),
+    CancellationExceptionCheck by CancellationExceptionCheckImpl() {
 
     private var request: DiscoverMovieRequest? = null
     private var sortOption: String = SortOptions.POPULARITY_DESC
 
-    //Id of a genre is needed to fetch movies from entry point
     override fun setRequest(request: DiscoverMovieRequest) {
         this.request = request
     }
@@ -53,13 +50,8 @@ class GenrePagingSourceImpl @Inject constructor(private val entryPoint: Discover
             } else {
                 throw HttpException(response)
             }
-        } catch (e: HttpException) {
-            e.printStackTrace()
-            return LoadResult.Error(e)
-        } catch (e: NullPointerException) {
-            e.printStackTrace()
-            return LoadResult.Error(e)
         } catch (e: Exception) {
+            checkForCancellationException(e)
             e.printStackTrace()
             return LoadResult.Error(e)
         }
