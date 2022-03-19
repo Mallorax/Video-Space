@@ -50,8 +50,6 @@ fun mapMovieDetailsResponseToMovie(movieDetailsResponse: MovieDetailsResponse): 
 fun mapMovieToMovieEntity(movie: Movie): MovieEntity {
     return MovieEntity(
         movie.id,
-        isFavourite = movie.isFavourite,
-        isOnWatchLater = movie.isOnWatchLater,
         score = movie.score,
         status = movie.status,
         title = movie.title

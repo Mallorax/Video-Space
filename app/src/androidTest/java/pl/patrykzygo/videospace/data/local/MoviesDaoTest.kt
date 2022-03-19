@@ -12,6 +12,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import pl.patrykzygo.videospace.AndroidMainDispatcherRule
+import pl.patrykzygo.videospace.others.MovieStatus
 import pl.patrykzygo.videospace.util.createMovieEntity
 import javax.inject.Inject
 
@@ -46,7 +47,7 @@ class MoviesDaoTest {
         val movie = createMovieEntity(1)
         var requestedMovie: List<MovieEntity> = listOf()
         val job = launch(mainDispatcherRule.dispatcher) {
-            dao.insertFavourite(movie)
+            dao.insertMovie(movie)
             requestedMovie = dao.getAllMovies()
         }
         job.join()
@@ -54,14 +55,14 @@ class MoviesDaoTest {
     }
 
     @Test
-    fun updateAndReadMovieTest() = runTest {
-        val movie = createMovieEntity(1)
-        val movie2 = createMovieEntity(2, isFavourite = true)
+    fun updateAndReadMoviesWithStatusTest() = runTest {
+        val movie = createMovieEntity(1, MovieStatus.PLAN_TO_WATCH)
+        val movie2 = createMovieEntity(2, MovieStatus.ON_HOLD)
         var requestedMovies: List<MovieEntity> = listOf()
         val job = launch(mainDispatcherRule.dispatcher) {
-            dao.insertFavourite(movie)
-            dao.insertFavourite(movie2)
-            requestedMovies = dao.getAllFavourites()
+            dao.insertMovie(movie)
+            dao.insertMovie(movie2)
+            requestedMovies = dao.getAllMoviesWithStatus(MovieStatus.ON_HOLD)
         }
         job.join()
         assertThat(requestedMovies).doesNotContain(movie)
@@ -69,14 +70,14 @@ class MoviesDaoTest {
 
     @Test
     fun insertMultipleMoviesTest() = runTest {
-        val movie = createMovieEntity(1, isFavourite = true)
-        val movie2 = createMovieEntity(2, isFavourite = true)
-        val movie3 = createMovieEntity(3, isFavourite = true)
-        val movie4 = createMovieEntity(4, isFavourite = true)
+        val movie = createMovieEntity(1)
+        val movie2 = createMovieEntity(2)
+        val movie3 = createMovieEntity(3)
+        val movie4 = createMovieEntity(4)
         val movies = mutableListOf(movie, movie2, movie3)
         var requestedMovies: List<MovieEntity> = listOf()
         val job = launch(mainDispatcherRule.dispatcher) {
-            dao.insertFavourites(*movies.toTypedArray(), movie4)
+            dao.insertMovies(*movies.toTypedArray(), movie4)
             requestedMovies = dao.getAllMovies()
         }
         movies.add(movie4)
@@ -88,7 +89,7 @@ class MoviesDaoTest {
     fun readMoviesWhenTableIsEmptyTest() = runTest {
         var requestedMovies: List<MovieEntity> = listOf()
         val job = launch(mainDispatcherRule.dispatcher) {
-            requestedMovies = dao.getAllFavourites()
+            requestedMovies = dao.getAllMovies()
         }
         job.join()
         assertThat(requestedMovies).isEmpty()

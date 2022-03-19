@@ -15,7 +15,6 @@ import pl.patrykzygo.videospace.data.mapMovieToMovieEntity
 import pl.patrykzygo.videospace.repository.FakeLocalStoreRepository
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreRepository
 import pl.patrykzygo.videospace.util.TestDispatchers
-import pl.patrykzygo.videospace.util.getOrAwaitValueTest
 import pl.patrykzygo.videospace.util.provideMovieWithId
 
 @ExperimentalCoroutinesApi
@@ -72,7 +71,7 @@ class MovieBottomSheetViewModelTest {
         val movie = provideMovieWithId(1)
         viewModel.setMovie(movie)
         viewModel.changeIsMovieLiked()
-        coVerify { repository.insertFavourite(any()) }
+        coVerify { repository.saveMovieToDb(any()) }
     }
 
     @Test
@@ -90,7 +89,7 @@ class MovieBottomSheetViewModelTest {
         val movie = provideMovieWithId(1)
         viewModel.setMovie(movie)
         viewModel.changeIsMovieSavedToWatchLater()
-        coVerify { repository.insertFavourite(any()) }
+        coVerify { repository.saveMovieToDb(any()) }
 
     }
 
@@ -98,7 +97,7 @@ class MovieBottomSheetViewModelTest {
     fun `test is favourite check when movie is favourite`() = runTest {
         val movie = provideMovieWithId(1)
         movie.isFavourite = true
-        repository.insertFavourite(mapMovieToMovieEntity(movie))
+        repository.saveMovieToDb(mapMovieToMovieEntity(movie))
         movie.isFavourite = false
         viewModel.setMovie(movie)
         val value = viewModel.movie.getOrAwaitValueTest()
@@ -109,7 +108,7 @@ class MovieBottomSheetViewModelTest {
     fun `test is on watch later when movie is on watch later`() = runTest {
         val movie = provideMovieWithId(1)
         movie.isOnWatchLater = true
-        repository.insertFavourite(mapMovieToMovieEntity(movie))
+        repository.saveMovieToDb(mapMovieToMovieEntity(movie))
         movie.isOnWatchLater = false
         viewModel.setMovie(movie)
         val value = viewModel.movie.getOrAwaitValueTest()

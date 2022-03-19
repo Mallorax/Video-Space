@@ -11,6 +11,7 @@ import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.network.EntryPointMoviesResponse
 import pl.patrykzygo.videospace.data.network.MovieResponse
+import pl.patrykzygo.videospace.others.MovieStatus
 import retrofit2.Response
 
 fun fakeCorrectMoviesResponseUi(page: Int, numberOfPages: Int): Response<EntryPointMoviesResponse> {
@@ -67,8 +68,8 @@ fun provideMovieWithIdUi(id: Int): Movie {
     )
 }
 
-fun createMovieEntity(id: Int, isFavourite: Boolean = false): MovieEntity {
-    return MovieEntity(id, isFavourite, isOnWatchLater = false, title = "title $id")
+fun createMovieEntity(id: Int, status: String = MovieStatus.UNASSIGNED): MovieEntity {
+    return MovieEntity(id, title = "title $id", status = status)
 }
 
 

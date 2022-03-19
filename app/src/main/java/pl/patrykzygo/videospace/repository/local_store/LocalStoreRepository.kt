@@ -8,11 +8,11 @@ import pl.patrykzygo.videospace.repository.RepositoryResponse
 interface LocalStoreRepository {
 
     suspend fun getGenreId(genreName: String): RepositoryResponse<Int>
-    suspend fun insertFavourite(movie: MovieEntity)
-    suspend fun insertFavourites(vararg movie: MovieEntity)
-    suspend fun getAllFavourites(): RepositoryResponse<List<MovieEntity>>
+    suspend fun saveMovieToDb(movie: MovieEntity)
+    suspend fun saveMoviesToDb(vararg movies: MovieEntity)
+    suspend fun getAllMoviesFromDb(): RepositoryResponse<List<MovieEntity>>
     suspend fun getSpecificMovie(id: Int): RepositoryResponse<MovieDetailsResponse>
-    suspend fun getSpecificFavourite(id: Int): RepositoryResponse<MovieEntity>
+    suspend fun getSpecificMovieFromDb(id: Int): RepositoryResponse<MovieEntity>
     suspend fun getAllGenres(): RepositoryResponse<List<Genre>>
     suspend fun getAllMoviesWithStatus(status: String): RepositoryResponse<List<MovieEntity>>
 

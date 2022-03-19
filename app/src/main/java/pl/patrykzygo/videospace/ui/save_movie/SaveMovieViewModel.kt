@@ -30,7 +30,7 @@ class SaveMovieViewModel @Inject constructor(private val repo: LocalStoreReposit
             return
         }
         viewModelScope.launch(Dispatchers.IO) {
-            repo.insertFavourite(
+            repo.saveMovieToDb(
                 MovieEntity(
                     id!!,
                     title = title!!,

@@ -33,15 +33,15 @@ open class FakeLocalStoreRepository : LocalStoreRepository {
         return RepositoryResponse.success(1)
     }
 
-    override suspend fun insertFavourite(movie: MovieEntity) {
+    override suspend fun saveMovieToDb(movie: MovieEntity) {
         movieList.add(movie)
     }
 
-    override suspend fun insertFavourites(vararg movie: MovieEntity) {
-        movieList.addAll(movie)
+    override suspend fun saveMoviesToDb(vararg movies: MovieEntity) {
+        movieList.addAll(movies)
     }
 
-    override suspend fun getAllFavourites(): RepositoryResponse<List<MovieEntity>> {
+    override suspend fun getAllMoviesFromDb(): RepositoryResponse<List<MovieEntity>> {
         return RepositoryResponse.success(movieList)
     }
 
@@ -49,7 +49,7 @@ open class FakeLocalStoreRepository : LocalStoreRepository {
         return RepositoryResponse.success(getMovieDetailsResponseWithId(id))
     }
 
-    override suspend fun getSpecificFavourite(id: Int): RepositoryResponse<MovieEntity> {
+    override suspend fun getSpecificMovieFromDb(id: Int): RepositoryResponse<MovieEntity> {
         val favourite = movieList.find { t -> t.movieId == id }
         if (favourite != null) {
             return RepositoryResponse.success(favourite)

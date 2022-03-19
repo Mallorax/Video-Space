@@ -27,7 +27,7 @@ object TestViewModelModule {
     fun provideFakeRepoWithMovies(): LocalStoreRepository {
         val repo = FakeLocalStoreRepositoryAndroid()
         runBlocking {
-            repo.insertFavourites(
+            repo.saveMoviesToDb(
                 mapMovieToMovieEntity(provideMovieWithIdUi(1)),
                 mapMovieToMovieEntity(provideMovieWithIdUi(2)),
                 mapMovieToMovieEntity(provideMovieWithIdUi(3))
