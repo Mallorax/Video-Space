@@ -21,9 +21,6 @@ import retrofit2.HttpException
 @ExperimentalCoroutinesApi
 class GenrePagingSourceTest {
 
-    @get:Rule
-    var rule = InstantTaskExecutorRule()
-
     @Mock
     private lateinit var mockDiscoverEntryPoint: DiscoverEntryPoint
     private lateinit var genrePagingSourceImpl: GenrePagingSourceImpl

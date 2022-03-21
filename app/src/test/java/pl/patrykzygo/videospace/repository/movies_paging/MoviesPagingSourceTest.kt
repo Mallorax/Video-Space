@@ -20,10 +20,6 @@ import retrofit2.HttpException
 @ExperimentalCoroutinesApi
 class MoviesPagingSourceTest {
 
-    @get:Rule
-    var rule = InstantTaskExecutorRule()
-
-
     @Mock
     private lateinit var mockMoviesEntryPoint: MoviesEntryPoint
 

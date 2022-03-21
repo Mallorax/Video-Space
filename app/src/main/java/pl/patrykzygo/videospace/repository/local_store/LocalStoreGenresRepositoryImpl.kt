@@ -23,33 +23,31 @@ class LocalStoreGenresRepositoryImpl @Inject constructor(
     //returns genres from room db, if there aren't any inside room db
     // fetches genres from API and uses room db as local cache
     override suspend fun getAllGenres(): RepositoryResponse<List<Genre>> {
-        val daoResponse = genreDao.getGenres()
-        if (daoResponse.isNotEmpty()) {
-            return RepositoryResponse.success(daoResponse.map { mapGenreEntityToGenre(it) })
+        try {
+            val daoResponse = genreDao.getGenres()
+            if (daoResponse.isNotEmpty()) {
+                return RepositoryResponse.success(daoResponse.map { mapGenreEntityToGenre(it) })
+            }
+            val networkResponse = genreEntryPoint.getGenresForMovies()
+            return handleAllGenresNetworkResponse(networkResponse)
+        } catch (e: Exception) {
+            checkForCancellationException(e)
+            return RepositoryResponse.error("Unknown error occurred")
         }
-        val networkResponse = genreEntryPoint.getGenresForMovies()
-        if (networkResponse.isSuccessful) {
-            cacheRemoteGenres(networkResponse.body()?.genres)
-            val data = networkResponse.body()?.genres
-                ?: return RepositoryResponse.error("Couldn't retrieve genres")
-            return RepositoryResponse.success(data.mapNotNull { mapGenreItemToGenreNullable(it) })
-        }
-        return RepositoryResponse.error("Couldn't retrieve genres")
     }
 
     override suspend fun getGenreId(genreName: String): RepositoryResponse<Int> {
-        val daoResponse = genreDao.getGenres()
-        val daoGenre = daoResponse.firstOrNull { t -> t.name == genreName }
-        if (daoGenre != null) {
-            return RepositoryResponse.success(daoGenre.id)
-        }
-        return try {
+        try {
+            val daoResponse = genreDao.getGenres()
+            val daoGenre = daoResponse.firstOrNull { t -> t.name == genreName }
+            if (daoGenre != null) {
+                return RepositoryResponse.success(daoGenre.id)
+            }
             val genresResponse = genreEntryPoint.getGenresForMovies()
-            cacheRemoteGenres(genresResponse.body()?.genres)
-            handleGenresNetworkResponse(genresResponse, genreName)
+            return handleGenreIdNetworkResponse(genresResponse, genreName)
         } catch (e: Exception) {
             checkForCancellationException(e)
-            RepositoryResponse.error(e.message.orEmpty())
+            return RepositoryResponse.error(e.message.orEmpty())
         }
     }
 
@@ -65,12 +63,26 @@ class LocalStoreGenresRepositoryImpl @Inject constructor(
         genreEntities?.let { genreDao.insertGenres(*it.toTypedArray()) }
     }
 
-    private fun handleGenresNetworkResponse(
+    private suspend fun handleAllGenresNetworkResponse(
+        networkResponse: Response<GenresResponse>
+    ): RepositoryResponse<List<Genre>> {
+        if (networkResponse.isSuccessful) {
+            cacheRemoteGenres(networkResponse.body()?.genres)
+            val data = networkResponse.body()?.genres
+                ?: return RepositoryResponse.error("Couldn't retrieve genres")
+            return RepositoryResponse.success(data.mapNotNull { mapGenreItemToGenreNullable(it) })
+        } else {
+            return RepositoryResponse.error("Couldn't retrieve genres")
+        }
+    }
+
+    private suspend fun handleGenreIdNetworkResponse(
         genresResponse: Response<GenresResponse>,
         genreName: String
     ): RepositoryResponse<Int> {
         return if (genresResponse.isSuccessful) {
             val genreResponseBody = genresResponse.body()?.genres
+            cacheRemoteGenres(genreResponseBody)
             val responseGenre = genreResponseBody?.firstOrNull { t -> t?.name == genreName }
             if (responseGenre != null) {
                 RepositoryResponse.success(responseGenre.id!!)

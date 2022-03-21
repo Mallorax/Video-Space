@@ -42,6 +42,8 @@ class UserListsFragment : Fragment(),
         showStoredLists()
     }
 
+
+
     private fun showStoredLists() {
         addStoredListToContainer(
             R.id.watching_list_fragment_container,

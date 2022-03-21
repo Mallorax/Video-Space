@@ -5,9 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.databinding.ActivityMainBinding
@@ -44,6 +42,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp()
+        return when (navController.currentDestination?.id) {
+            R.id.search_movie_fragment -> {
+                navController.popBackStack(R.id.main_fragment, true)
+            }
+            R.id.users_list_fragment -> {
+                navController.popBackStack(R.id.main_fragment, true)
+            }
+            else -> navController.navigateUp()
+        }
     }
 }

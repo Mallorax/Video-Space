@@ -35,5 +35,4 @@
     <string name="minimum_vote_count_string">Minimum vote count:</string>
     <string name="minimum_score_string">Minimum score:</string>
     <string name="list_of_movies_label">List of movies</string>
-
 </resources>
