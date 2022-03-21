@@ -10,9 +10,9 @@ data class MovieEntity(
     @PrimaryKey
     @ColumnInfo(name = "movie_id")
     val movieId: Int,
+    val title: String,
     val score: Int = 0,
     val status: String = MovieStatus.UNASSIGNED,
-    val date: Long = System.currentTimeMillis(),
-    val title: String
+    val date: Long = System.currentTimeMillis()
 ) {
 }

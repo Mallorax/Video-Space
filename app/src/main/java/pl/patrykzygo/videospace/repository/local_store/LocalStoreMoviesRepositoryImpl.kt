@@ -1,10 +1,8 @@
 package pl.patrykzygo.videospace.repository.local_store
 
-import pl.patrykzygo.videospace.data.local.GenreDao
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.local.MoviesDao
 import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
-import pl.patrykzygo.videospace.networking.GenresEntryPoint
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
 import pl.patrykzygo.videospace.repository.RepositoryResponse
 import pl.patrykzygo.videospace.repository.delegate.CancellationExceptionCheck
@@ -50,22 +48,26 @@ class LocalStoreMoviesRepositoryImpl @Inject constructor(
 
 
     override suspend fun getSpecificMovie(id: Int): RepositoryResponse<MovieDetailsResponse> {
-        val response = moviesEntryPoint.requestMovie(id = id)
-        return if (response.isSuccessful) RepositoryResponse.success(response.body()!!)
-        else RepositoryResponse.error(response.message())
+        return try {
+            val response = moviesEntryPoint.requestMovie(id = id)
+            if (response.isSuccessful) RepositoryResponse.success(response.body()!!)
+            else RepositoryResponse.error(response.message())
+        } catch (e: Exception) {
+            checkForCancellationException(e)
+            RepositoryResponse.error(e.message.orEmpty())
+        }
     }
 
     override suspend fun getSpecificMovieFromDb(id: Int): RepositoryResponse<MovieEntity> {
         return try {
             val movie = moviesDao.getMovieWithId(id)
-            if (movie == null) RepositoryResponse.error("Mo such element")
+            if (movie == null) RepositoryResponse.error("No such movie")
             else RepositoryResponse.success(movie)
         } catch (e: Exception) {
             checkForCancellationException(e)
             RepositoryResponse.error(e.message ?: "")
         }
     }
-
 
 
 }

@@ -1,9 +1,13 @@
 package pl.patrykzygo.videospace.repository.local_store
 
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -35,11 +39,18 @@ class LocalStoreGenresRepositoryImplTest {
     fun setup() {
         MockitoAnnotations.openMocks(this)
         repo = LocalStoreGenresRepositoryImpl(mockGenreDao, mockGenresEntryPoint)
+        Dispatchers.setMain(UnconfinedTestDispatcher())
     }
+
+    @After
+    fun teardown() {
+        Dispatchers.resetMain()
+    }
+
 
     @Test
     fun `getAllGenres returns success with local db populated`() =
-        runTest(UnconfinedTestDispatcher()) {
+        runTest {
             val fakeEntities = fakeGenreEntitiesList()
             Mockito.`when`(mockGenreDao.getGenres()).thenAnswer {
                 fakeEntities
@@ -50,7 +61,7 @@ class LocalStoreGenresRepositoryImplTest {
         }
 
     @Test
-    fun `getAllGenres returns success with empty local db`() = runTest(UnconfinedTestDispatcher()) {
+    fun `getAllGenres returns success with empty local db`() = runTest {
         Mockito.`when`(mockGenreDao.getGenres()).thenAnswer {
             listOf<GenreEntity>()
         }
@@ -65,7 +76,7 @@ class LocalStoreGenresRepositoryImplTest {
     }
 
     @Test
-    fun `getAllGenres returns error with empty local db`() = runTest(UnconfinedTestDispatcher()) {
+    fun `getAllGenres returns error with empty local db`() = runTest {
         Mockito.`when`(mockGenreDao.getGenres()).thenAnswer {
             listOf<GenreEntity>()
         }
@@ -79,24 +90,23 @@ class LocalStoreGenresRepositoryImplTest {
     }
 
     @Test
-    fun `getAllGenres returns error`() = runTest(UnconfinedTestDispatcher()) {
+    fun `getAllGenres returns error`() = runTest {
         val result = repo.getAllGenres()
         val expected = RepositoryResponse.Status.ERROR
         assertThat(result.status).isEqualTo(expected)
     }
 
     @Test
-    fun `getGenreId returns success with local db populated`() =
-        runTest(UnconfinedTestDispatcher()) {
-            Mockito.`when`(mockGenreDao.getGenres()).thenAnswer {
-                fakeGenreEntitiesList()
-            }
-            val result = repo.getGenreId("1")
-            assertThat(result.data).isEqualTo(1)
+    fun `getGenreId returns success with local db populated`() = runTest {
+        Mockito.`when`(mockGenreDao.getGenres()).thenAnswer {
+            fakeGenreEntitiesList()
         }
+        val result = repo.getGenreId("1")
+        assertThat(result.data).isEqualTo(1)
+    }
 
     @Test
-    fun `getGenreId returns success with empty local db`() = runTest(UnconfinedTestDispatcher()) {
+    fun `getGenreId returns success with empty local db`() = runTest {
         Mockito.`when`(mockGenreDao.getGenres()).thenAnswer {
             listOf<GenreEntity>()
         }
@@ -108,7 +118,7 @@ class LocalStoreGenresRepositoryImplTest {
     }
 
     @Test
-    fun `getGenreId returns no such genre error`() = runTest(UnconfinedTestDispatcher()) {
+    fun `getGenreId returns no such genre error`() = runTest {
         Mockito.`when`(mockGenreDao.getGenres()).thenAnswer {
             listOf<GenreEntity>()
         }
@@ -120,20 +130,19 @@ class LocalStoreGenresRepositoryImplTest {
     }
 
     @Test
-    fun `getGenreId returns error with empty local db returns error`() =
-        runTest(UnconfinedTestDispatcher()) {
-            Mockito.`when`(mockGenreDao.getGenres()).thenAnswer {
-                listOf<GenreEntity>()
-            }
-            Mockito.`when`(mockGenresEntryPoint.getGenresForMovies()).thenAnswer {
-                fakeHttpErrorResponse()
-            }
-            val result = repo.getGenreId("1")
-            assertThat(result.status).isEqualTo(RepositoryResponse.Status.ERROR)
+    fun `getGenreId returns error with empty local db returns error`() = runTest {
+        Mockito.`when`(mockGenreDao.getGenres()).thenAnswer {
+            listOf<GenreEntity>()
         }
+        Mockito.`when`(mockGenresEntryPoint.getGenresForMovies()).thenAnswer {
+            fakeHttpErrorResponse()
+        }
+        val result = repo.getGenreId("1")
+        assertThat(result.status).isEqualTo(RepositoryResponse.Status.ERROR)
+    }
 
     @Test
-    fun `getGenreId returns error`() = runTest(UnconfinedTestDispatcher()){
+    fun `getGenreId returns error`() = runTest {
         val result = repo.getGenreId("1")
         assertThat(result.status).isEqualTo(RepositoryResponse.Status.ERROR)
     }

@@ -4,10 +4,12 @@ import okhttp3.MediaType
 import okhttp3.ResponseBody
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.local.GenreEntity
+import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.network.EntryPointMoviesResponse
 import pl.patrykzygo.videospace.data.network.MovieResponse
 import pl.patrykzygo.videospace.data.network.movie_details.GenresItem
 import pl.patrykzygo.videospace.data.network.movie_details.GenresResponse
+import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
 import retrofit2.Response
 
 fun fakeCorrectMoviesResponse(page: Int, numberOfPages: Int): Response<EntryPointMoviesResponse> {
@@ -39,7 +41,7 @@ fun fakeCorrectGenresResponse(): Response<GenresResponse> {
             GenresItem("4", 4),
             GenresItem("5", 5),
             GenresItem("6", 6),
-            GenresItem("7", 7),
+            GenresItem("7", 7)
         )
     )
     return Response.success(genresResponse)
@@ -53,8 +55,28 @@ fun fakeGenreEntitiesList(): List<GenreEntity> {
         GenreEntity(4, "4"),
         GenreEntity(5, "5"),
         GenreEntity(6, "6"),
-        GenreEntity(7, "7"),
+        GenreEntity(7, "7")
     )
+}
+
+fun fakeMoviesEntitiesList(): List<MovieEntity> {
+    return listOf(
+        MovieEntity(1, "1"),
+        MovieEntity(2, "2"),
+        MovieEntity(3, "3"),
+        MovieEntity(4, "4"),
+        MovieEntity(5, "5"),
+        MovieEntity(6, "6"),
+        MovieEntity(7, "7")
+    )
+}
+
+fun fakeMovieDetailsResponse(id: Int): Response<MovieDetailsResponse> {
+    val fakeMovieDetails = MovieDetailsResponse(
+        id = id,
+        title = id.toString()
+    )
+    return Response.success(fakeMovieDetails)
 }
 
 

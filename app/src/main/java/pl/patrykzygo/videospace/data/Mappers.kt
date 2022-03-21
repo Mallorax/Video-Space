@@ -50,9 +50,9 @@ fun mapMovieDetailsResponseToMovie(movieDetailsResponse: MovieDetailsResponse): 
 fun mapMovieToMovieEntity(movie: Movie): MovieEntity {
     return MovieEntity(
         movie.id,
+        title = movie.title,
         score = movie.score,
-        status = movie.status,
-        title = movie.title
+        status = movie.status
     )
 }
 

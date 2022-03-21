@@ -4,9 +4,13 @@ import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -35,11 +39,13 @@ class MoviesDaoTest {
     fun setup() {
         hiltRule.inject()
         dao = db.moviesDao()
+        Dispatchers.setMain(UnconfinedTestDispatcher())
     }
 
     @After
     fun teardown() {
         db.close()
+        Dispatchers.resetMain()
     }
 
     @Test
@@ -83,6 +89,24 @@ class MoviesDaoTest {
         movies.add(movie4)
         job.join()
         assertThat(requestedMovies).containsExactlyElementsIn(movies)
+    }
+
+    @Test
+    fun returnsMoviesWithStatus() = runTest {
+        val expected = listOf(
+            MovieEntity(1, "1", status = MovieStatus.PLAN_TO_WATCH),
+            MovieEntity(2, "2", status = MovieStatus.PLAN_TO_WATCH),
+            MovieEntity(3, "3", status = MovieStatus.PLAN_TO_WATCH)
+        )
+        val trash = listOf(
+            MovieEntity(4, "1", status = MovieStatus.ON_HOLD),
+            MovieEntity(5, "1", status = MovieStatus.DROPPED),
+            MovieEntity(6, "1", status = MovieStatus.UNASSIGNED)
+        )
+        dao.insertMovies(*expected.toTypedArray())
+        dao.insertMovies(*trash.toTypedArray())
+        val actual = dao.getAllMoviesWithStatus(MovieStatus.PLAN_TO_WATCH)
+        assertThat(actual).containsExactlyElementsIn(expected)
     }
 
     @Test
