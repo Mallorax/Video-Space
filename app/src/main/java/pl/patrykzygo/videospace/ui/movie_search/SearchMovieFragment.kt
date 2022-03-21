@@ -33,7 +33,7 @@ class SearchMovieFragment : Fragment(),
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMovieSearchBinding.inflate(inflater, container, false)
-        viewModel.getAllGenres()
+        viewModel.getAllGenre()
 
         return binding.root
     }
@@ -61,19 +61,19 @@ class SearchMovieFragment : Fragment(),
 
     private fun onIncludeChipClickAction(isChecked: Boolean, chipText: String) {
         if (isChecked) {
-            viewModel.addIncludedGenres(chipText)
+            viewModel.addIncludedGenre(chipText)
 
         } else {
-            viewModel.removeIncludedGenres(chipText)
+            viewModel.removeIncludedGenre(chipText)
         }
     }
 
     private fun onExcludeChipClickAction(isChecked: Boolean, chipText: String) {
         if (isChecked) {
-            viewModel.addExcludedGenres(chipText)
+            viewModel.addExcludedGenre(chipText)
 
         } else {
-            viewModel.removeExcludedGenres(chipText)
+            viewModel.removeExcludedGenre(chipText)
         }
     }
 
@@ -111,7 +111,7 @@ class SearchMovieFragment : Fragment(),
         viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
             Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
         })
-        viewModel.voteCountErrorMessage.observe(viewLifecycleOwner, Observer {
+        viewModel.submitRequestInputErrorMessage.observe(viewLifecycleOwner, Observer {
             binding.voteCountTextInput.error = it
         })
         viewModel.requestMoviesLiveEvent.observe(viewLifecycleOwner, Observer {

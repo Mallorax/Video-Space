@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class DiscoverMovieRequest(
+data class DiscoverMovieRequest(
     val includedGenres: String? = null,
     val excludedGenres: String? = null,
     val minScore: Int? = null,
