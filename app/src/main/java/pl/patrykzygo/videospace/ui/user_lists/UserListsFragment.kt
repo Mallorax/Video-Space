@@ -75,7 +75,7 @@ class UserListsFragment : Fragment(),
             val movie = bundle.getParcelable<Movie>("movie")
             if (movie != null) {
                 val action =
-                    UserListsFragmentDirections.actionUsersListFragmentToMovieDetails(movie)
+                    UserListsFragmentDirections.actionUsersListFragmentToMovieDetails(movie.id)
                 findNavController().navigate(action)
             }
         }

@@ -115,7 +115,7 @@ class MoviesListFragment() : Fragment(),
             MoviesListPagingDataAdapter(MoviesListPagingDataAdapter.OnMovieClickListener { movie, _ ->
                 if (movie != null) {
                     val action =
-                        MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetails(movie)
+                        MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetails(movie.id)
                     findNavController().navigate(action)
                 }
 

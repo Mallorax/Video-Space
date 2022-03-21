@@ -30,7 +30,7 @@ class MovieDetailsFragment :
     private var _binding: FragmentMovieDetailsBinding? = null
     val binding get() = _binding!!
     val viewModel: MovieDetailsViewModel by viewModels()
-    var movie: Movie? = null
+    var movieId: Int? = null
 
 
     override fun onCreateView(
@@ -39,7 +39,7 @@ class MovieDetailsFragment :
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
-        movie = arguments?.let { MovieDetailsFragmentArgs.fromBundle(it).movie }
+        movieId = arguments?.let { MovieDetailsFragmentArgs.fromBundle(it).movieId}
         setFragmentResultListener()
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -55,7 +55,7 @@ class MovieDetailsFragment :
         setUpFragmentContainers()
         setOnClickListeners()
         subscribeObservers()
-        viewModel.setMovie(movie)
+        viewModel.setMovie(movieId)
     }
 
     private fun setUpFragmentContainers() {
@@ -82,7 +82,7 @@ class MovieDetailsFragment :
         fragmentManager.commit {
             val args = Bundle()
             args.putString("request_type", contentType)
-            args.putInt("movieId", movie?.id ?: -1)
+            args.putInt("movieId", movieId ?: -1)
             fragment.arguments = args
             replace(containerId, fragment)
             setReorderingAllowed(true)
@@ -94,7 +94,7 @@ class MovieDetailsFragment :
         parentFragmentManager.setFragmentResultListener("movieResult", this) { _, bundle ->
             val movie = bundle.getParcelable<Movie>("movie")
             if (movie != null) {
-                val action = MovieDetailsFragmentDirections.actionMovieDetailsSelf(movie)
+                val action = MovieDetailsFragmentDirections.actionMovieDetailsSelf(movieId ?: -1)
                 findNavController().navigate(action)
             }
         }

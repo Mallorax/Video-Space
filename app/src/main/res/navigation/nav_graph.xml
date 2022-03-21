@@ -95,8 +95,8 @@ or if it's handled internally. Couldn't really find much info about it either --
         tools:layout="@layout/fragment_movie_details">
 
         <argument
-            android:name="movie"
-            app:argType="pl.patrykzygo.videospace.data.app.Movie" />
+            android:name="movieId"
+            app:argType="integer" />
 
         <action
             android:id="@+id/action_movie_details_self"

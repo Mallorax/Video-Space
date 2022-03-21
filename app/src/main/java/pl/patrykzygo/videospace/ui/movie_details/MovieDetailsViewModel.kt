@@ -42,10 +42,12 @@ class MovieDetailsViewModel @Inject constructor(
     val searchInGenreErrorMessage get() = _searchInGenreErrorMessage
 
 
-    fun setMovie(movie: Movie?) {
-        if (movie != null) {
+    //Because of they way API movie passed into fragment of this viewmodel doesn't contain genres it belongs to
+    //thus additional call to api is needed to get missing data
+    fun setMovie(movieId: Int?) {
+        if (movieId != null) {
             viewModelScope.launch(dispatchersProvider.io) {
-                val response = moviesRepo.getSpecificMovie(movie.id)
+                val response = moviesRepo.getSpecificMovie(movieId)
                 if (response.status == RepositoryResponse.Status.SUCCESS) {
                     val mappedMovie = mapMovieDetailsResponseToMovie(response.data!!)
                     _movie.postValue(mappedMovie)
