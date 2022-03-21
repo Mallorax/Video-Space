@@ -1,12 +1,14 @@
 package pl.patrykzygo.videospace.repository
 
 import pl.patrykzygo.videospace.data.local.MovieEntity
+import pl.patrykzygo.videospace.data.network.movie_details.GenreResponse
 import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreMoviesRepository
+import pl.patrykzygo.videospace.util.fakeMoviesEntitiesList
 
 open class FakeLocalStoreMoviesRepository : LocalStoreMoviesRepository {
 
-    private val movieList = mutableListOf<MovieEntity>()
+    val movieList = fakeMoviesEntitiesList().toMutableList()
 
 
     override suspend fun getAllMoviesWithStatus(status: String): RepositoryResponse<List<MovieEntity>> {
@@ -27,7 +29,8 @@ open class FakeLocalStoreMoviesRepository : LocalStoreMoviesRepository {
     }
 
     override suspend fun getSpecificMovie(id: Int): RepositoryResponse<MovieDetailsResponse> {
-        return RepositoryResponse.success(getMovieDetailsResponseWithId(id))
+        return if (id > 0) RepositoryResponse.success(getMovieDetailsResponseWithId(id))
+        else RepositoryResponse.error("test error")
     }
 
     override suspend fun getSpecificMovieFromDb(id: Int): RepositoryResponse<MovieEntity> {
@@ -39,10 +42,16 @@ open class FakeLocalStoreMoviesRepository : LocalStoreMoviesRepository {
     private fun getMovieDetailsResponseWithId(id: Int): MovieDetailsResponse {
         return MovieDetailsResponse(
             "", "id", false, "title $id",
-            "", 123, listOf(), 2.43, id, 23,
-            45234543, "descritpion $id", "orginal title $id",
-            34324, "", "date $id", 2.03, "",
-            false, "", ""
+            "", 123, listOf(
+                GenreResponse(1, "1"),
+                GenreResponse(2, "2"),
+                GenreResponse(3, "3")
+            ), 2.43, id, 23,
+            45234543, "descritpion $id",
+            "orginal title $id",
+            34324, "",
+            "date $id", 2.03,
+            "", false, "", ""
         )
     }
 

@@ -72,7 +72,7 @@ class MovieDetailsViewModel @Inject constructor(
         }
     }
 
-    fun saveMovieEvent() {
+    fun launchSaveMovieEvent() {
         _saveMovieEvent.value = _movie.value
     }
 

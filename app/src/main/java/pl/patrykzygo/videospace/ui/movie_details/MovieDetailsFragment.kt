@@ -102,7 +102,7 @@ class MovieDetailsFragment :
 
     private fun setOnClickListeners() {
         binding.detailsFab.setOnClickListener {
-            viewModel.saveMovieEvent()
+            viewModel.launchSaveMovieEvent()
         }
     }
 

@@ -3,7 +3,7 @@ package pl.patrykzygo.videospace.repository
 import pl.patrykzygo.videospace.data.app.Genre
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreGenresRepository
 
-class FakeLocalStoreGenresRepository(private val genres: List<Genre>) : LocalStoreGenresRepository {
+class FakeLocalStoreGenresRepository(var genres: MutableList<Genre>) : LocalStoreGenresRepository {
 
 
     override suspend fun getGenreId(genreName: String): RepositoryResponse<Int> {
@@ -14,7 +14,8 @@ class FakeLocalStoreGenresRepository(private val genres: List<Genre>) : LocalSto
     }
 
     override suspend fun getAllGenres(): RepositoryResponse<List<Genre>> {
-        return RepositoryResponse.success(genres)
+        return if (genres.isNotEmpty()) RepositoryResponse.success(genres)
+        else RepositoryResponse.error("test error")
     }
 
 

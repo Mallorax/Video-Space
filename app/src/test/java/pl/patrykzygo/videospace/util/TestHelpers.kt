@@ -2,6 +2,7 @@ package pl.patrykzygo.videospace.util
 
 import okhttp3.MediaType
 import okhttp3.ResponseBody
+import pl.patrykzygo.videospace.data.app.Genre
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.local.GenreEntity
 import pl.patrykzygo.videospace.data.local.MovieEntity
@@ -35,16 +36,29 @@ fun fakeHttpErrorResponse(): Response<Any> {
 fun fakeCorrectGenresResponse(): Response<GenresResponse> {
     val genresResponse = GenresResponse(
         listOf(
-            GenresItem("1", 1),
-            GenresItem("2", 2),
-            GenresItem("3", 3),
-            GenresItem("4", 4),
-            GenresItem("5", 5),
-            GenresItem("6", 6),
-            GenresItem("7", 7)
+            GenresItem(1, "1"),
+            GenresItem(2, "2"),
+            GenresItem(3, "3"),
+            GenresItem(4, "4"),
+            GenresItem(5, "5"),
+            GenresItem(6, "6"),
+            GenresItem(7, "7")
         )
     )
     return Response.success(genresResponse)
+}
+
+fun fakeGenreList(): List<Genre> {
+    return listOf(
+        Genre(1, "1"),
+        Genre(2, "2"),
+        Genre(3, "3"),
+        Genre(4, "4"),
+        Genre(5, "5"),
+        Genre(6, "6"),
+        Genre(7, "7")
+    )
+
 }
 
 fun fakeGenreEntitiesList(): List<GenreEntity> {
@@ -104,9 +118,9 @@ fun fakeMoviesResponseList(page: Int): List<MovieResponse> {
     return moviesList
 }
 
-fun provideMovieWithId(id: Int): Movie {
+fun getMovieWithId(id: Int): Movie {
     return Movie(
-        false, "", listOf(), id,
+        false, "", listOf("1", "2", "3"), id,
         "lang", "title $id", "overview",
         0.0, "poster $id", "release date",
         "title", false, 1.00, 323
