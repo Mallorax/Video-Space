@@ -1,12 +1,10 @@
-package pl.patrykzygo.videospace.repository.genre_paging
+package pl.patrykzygo.videospace.repository.discover_paging
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingSource
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -23,14 +21,14 @@ class GenrePagingSourceTest {
 
     @Mock
     private lateinit var mockDiscoverEntryPoint: DiscoverEntryPoint
-    private lateinit var genrePagingSourceImpl: GenrePagingSourceImpl
+    private lateinit var discoverPagingSourceImpl: DiscoverPagingSourceImpl
     private val genre = 5
 
     @Before
     fun setup() {
         MockitoAnnotations.openMocks(this)
-        genrePagingSourceImpl = GenrePagingSourceImpl(mockDiscoverEntryPoint)
-        genrePagingSourceImpl.setRequest(
+        discoverPagingSourceImpl = DiscoverPagingSourceImpl(mockDiscoverEntryPoint)
+        discoverPagingSourceImpl.setRequest(
             DiscoverMovieRequest(includedGenres = genre.toString())
         )
     }
@@ -41,14 +39,14 @@ class GenrePagingSourceTest {
         val fakeResponse = fakeCorrectMoviesResponse(page, 2)
 
         Mockito.`when`(
-            mockDiscoverEntryPoint.getMoviesWithGenre(
+            mockDiscoverEntryPoint.requestMoviesWithParameters(
                 page = page,
                 includedGenres = genre.toString()
             )
         )
             .thenAnswer { fakeResponse }
 
-        val actual = genrePagingSourceImpl.load(
+        val actual = discoverPagingSourceImpl.load(
             PagingSource.LoadParams.Refresh(
                 key = null,
                 loadSize = 1,
@@ -69,13 +67,13 @@ class GenrePagingSourceTest {
     fun `genre videos source load is http error`() = runTest {
         val error = fakeHttpErrorResponse()
         Mockito.`when`(
-            mockDiscoverEntryPoint.getMoviesWithGenre(
+            mockDiscoverEntryPoint.requestMoviesWithParameters(
                 page = 1,
                 includedGenres = genre.toString()
             )
         ).thenAnswer { error }
         val expected = PagingSource.LoadResult.Error<Int, MovieResponse>(HttpException(error))
-        val actual = genrePagingSourceImpl.load(
+        val actual = discoverPagingSourceImpl.load(
             PagingSource.LoadParams.Refresh(
                 key = null,
                 loadSize = 1,
@@ -90,13 +88,13 @@ class GenrePagingSourceTest {
         val page = 2
         val fakeResponse = fakeCorrectMoviesResponse(page, 2)
         Mockito.`when`(
-            mockDiscoverEntryPoint.getMoviesWithGenre(
+            mockDiscoverEntryPoint.requestMoviesWithParameters(
                 includedGenres = genre.toString(),
                 page = page
             )
         ).thenAnswer { fakeResponse }
 
-        val actual = genrePagingSourceImpl.load(
+        val actual = discoverPagingSourceImpl.load(
             PagingSource.LoadParams.Append(
                 key = page,
                 loadSize = 1,
@@ -118,13 +116,13 @@ class GenrePagingSourceTest {
         val page = 1
         val fakeResponse = fakeCorrectMoviesResponse(page, 2)
         Mockito.`when`(
-            mockDiscoverEntryPoint.getMoviesWithGenre(
+            mockDiscoverEntryPoint.requestMoviesWithParameters(
                 includedGenres = genre.toString(),
                 page = page
             )
         ).thenAnswer { fakeResponse }
 
-        val actual = genrePagingSourceImpl.load(
+        val actual = discoverPagingSourceImpl.load(
             PagingSource.LoadParams.Prepend(
                 key = 1,
                 loadSize = 1,

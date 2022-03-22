@@ -11,12 +11,12 @@ import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.mapMoviesResponseToMovie
 import pl.patrykzygo.videospace.others.SortOptions
-import pl.patrykzygo.videospace.repository.genre_paging.GenrePagingSource
+import pl.patrykzygo.videospace.repository.discover_paging.DiscoverPagingSource
 import javax.inject.Inject
 
 @HiltViewModel
 class MoviesListViewModel @Inject constructor(
-    private val repo: GenrePagingSource
+    private val repo: DiscoverPagingSource
 ) : ViewModel() {
 
     private var _errorMessage = MutableLiveData<String?>()

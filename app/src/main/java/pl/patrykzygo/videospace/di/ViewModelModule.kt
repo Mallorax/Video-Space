@@ -10,8 +10,8 @@ import pl.patrykzygo.videospace.data.local.MoviesDao
 import pl.patrykzygo.videospace.networking.DiscoverEntryPoint
 import pl.patrykzygo.videospace.networking.GenresEntryPoint
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
-import pl.patrykzygo.videospace.repository.genre_paging.GenrePagingSource
-import pl.patrykzygo.videospace.repository.genre_paging.GenrePagingSourceImpl
+import pl.patrykzygo.videospace.repository.discover_paging.DiscoverPagingSource
+import pl.patrykzygo.videospace.repository.discover_paging.DiscoverPagingSourceImpl
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreGenresRepository
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreGenresRepositoryImpl
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreMoviesRepository
@@ -55,7 +55,7 @@ object ViewModelModule {
     }
 
     @Provides
-    fun provideGenrePagingSource(discoverEntryPoint: DiscoverEntryPoint): GenrePagingSource {
-        return GenrePagingSourceImpl(discoverEntryPoint)
+    fun provideGenrePagingSource(discoverEntryPoint: DiscoverEntryPoint): DiscoverPagingSource {
+        return DiscoverPagingSourceImpl(discoverEntryPoint)
     }
 }

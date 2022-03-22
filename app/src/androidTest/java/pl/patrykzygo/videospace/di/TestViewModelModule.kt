@@ -8,11 +8,11 @@ import kotlinx.coroutines.runBlocking
 import pl.patrykzygo.videospace.AndroidTestDispatcher
 import pl.patrykzygo.videospace.data.app.Genre
 import pl.patrykzygo.videospace.data.mapMovieToMovieEntity
-import pl.patrykzygo.videospace.fakes.FakeGenrePagingSourceAndroid
+import pl.patrykzygo.videospace.fakes.FakeDiscoverPagingSourceAndroid
 import pl.patrykzygo.videospace.fakes.FakeLocalStoreGenresRepositoryAndroid
 import pl.patrykzygo.videospace.fakes.FakeLocalStoreMoviesRepositoryAndroid
 import pl.patrykzygo.videospace.fakes.FakeMoviesPagingSourceAndroid
-import pl.patrykzygo.videospace.repository.genre_paging.GenrePagingSource
+import pl.patrykzygo.videospace.repository.discover_paging.DiscoverPagingSource
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreGenresRepository
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreMoviesRepository
 import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
@@ -60,8 +60,8 @@ object TestViewModelModule {
     }
 
     @Provides
-    fun provideFakeGenrePagingSource(): GenrePagingSource {
-        return FakeGenrePagingSourceAndroid()
+    fun provideFakeGenrePagingSource(): DiscoverPagingSource {
+        return FakeDiscoverPagingSourceAndroid()
     }
 
     @Provides

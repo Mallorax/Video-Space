@@ -1,4 +1,4 @@
-package pl.patrykzygo.videospace.repository.genre_paging
+package pl.patrykzygo.videospace.repository.discover_paging
 
 import androidx.paging.PagingState
 import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
@@ -9,8 +9,8 @@ import pl.patrykzygo.videospace.repository.delegate.*
 import retrofit2.HttpException
 import javax.inject.Inject
 
-class GenrePagingSourceImpl @Inject constructor(private val entryPoint: DiscoverEntryPoint) :
-    GenrePagingSource(),
+class DiscoverPagingSourceImpl @Inject constructor(private val entryPoint: DiscoverEntryPoint) :
+    DiscoverPagingSource(),
     MovieCalcKeyPositionDelegate by MovieCalcNextKeyDelegateImpl(),
     DelegateMovieRefreshKey by DelegateMovieRefreshKeyImpl(),
     CancellationExceptionCheck by CancellationExceptionCheckImpl() {
@@ -33,7 +33,7 @@ class GenrePagingSourceImpl @Inject constructor(private val entryPoint: Discover
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieResponse> {
         try {
             val currentPage = params.key ?: 1
-            val response = entryPoint.getMoviesWithGenre(
+            val response = entryPoint.requestMoviesWithParameters(
                 page = currentPage,
                 sortOptions = sortOption,
                 includedGenres = request?.includedGenres,
