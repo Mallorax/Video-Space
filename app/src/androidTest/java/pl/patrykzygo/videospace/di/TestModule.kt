@@ -14,7 +14,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object TestModule {
 
-    @Singleton
     @Provides
     fun provideTestNavController(@ApplicationContext context: Context): TestNavHostController {
         val navController = TestNavHostController(context)

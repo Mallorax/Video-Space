@@ -94,7 +94,7 @@ class MovieDetailsFragment :
         parentFragmentManager.setFragmentResultListener("movieResult", this) { _, bundle ->
             val movie = bundle.getParcelable<Movie>("movie")
             if (movie != null) {
-                val action = MovieDetailsFragmentDirections.actionMovieDetailsSelf(movieId ?: -1)
+                val action = MovieDetailsFragmentDirections.actionMovieDetailsSelf(movie.id ?: -1)
                 findNavController().navigate(action)
             }
         }

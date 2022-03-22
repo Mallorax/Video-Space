@@ -3,6 +3,9 @@ package pl.patrykzygo.videospace.ui.movie_details
 import android.os.Bundle
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDestination
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.testing.TestNavHostController
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -47,8 +50,6 @@ class MovieDetailsFragmentTest() {
     fun setup() {
         hiltRule.inject()
         expectedMovie = provideMovieWithIdUi(1)
-        testFragmentFactory.navController.setCurrentDestination(R.id.movie_details)
-
     }
 
     @Test
@@ -57,7 +58,7 @@ class MovieDetailsFragmentTest() {
         var bundle: Bundle? = null
         val testFragment = Fragment()
         launchFragmentInHiltContainer<MovieDetailsFragment>(fragmentFactory = testFragmentFactory) {
-            movie = expectedMovie
+            movieId = expectedMovie.id
             addMoviesListFragmentToContainer(
                 binding.similarMoviesContainer.id,
                 expectedRequestType, testFragment
@@ -73,25 +74,25 @@ class MovieDetailsFragmentTest() {
     @Test
     fun testNavigationToSelf() {
         val movie = provideMovieWithIdUi(1)
-        var resultedMovie: Movie? = null
+        var resultedMovieId: Int? = null
         testFragmentFactory.navController.addOnDestinationChangedListener { _, _, arguments ->
-            resultedMovie = arguments?.getParcelable("movie")
+            resultedMovieId = arguments?.let { MovieDetailsFragmentArgs.fromBundle(it).movieId}
         }
         launchFragmentInHiltContainer<MovieDetailsFragment>(fragmentFactory = testFragmentFactory) {
-            this.movie = movie
+            movieId = movie.id
             val bundle = Bundle()
             bundle.putParcelable("movie", movie)
             parentFragmentManager.setFragmentResult("movieResult", bundle)
         }
-        assertThat(resultedMovie).isEqualTo(movie)
+        assertThat(resultedMovieId).isEqualTo(movie.id)
     }
 
     //view binding tests
     @Test
     fun testMovieIsTitleSet() {
         launchFragmentInHiltContainer<MovieDetailsFragment>(fragmentFactory = testFragmentFactory) {
-            this.movie = expectedMovie
-            viewModel.setMovie(expectedMovie)
+            movieId = expectedMovie.id
+            viewModel.setMovie(expectedMovie.id)
         }
         onView(withId(R.id.movie_title)).check(matches(withText(expectedMovie.title)))
     }
@@ -99,8 +100,8 @@ class MovieDetailsFragmentTest() {
     @Test
     fun testIsMovieDescriptionSet() {
         launchFragmentInHiltContainer<MovieDetailsFragment>(fragmentFactory = testFragmentFactory) {
-            movie = expectedMovie
-            viewModel.setMovie(expectedMovie)
+            movieId = expectedMovie.id
+            viewModel.setMovie(expectedMovie.id)
         }
         onView(withId(R.id.movie_description)).check(matches(withText(containsString(expectedMovie.overview))))
     }
@@ -109,8 +110,8 @@ class MovieDetailsFragmentTest() {
     fun testIsMovieRatingSet() {
         val movie = provideMovieWithIdUi(1)
         launchFragmentInHiltContainer<MovieDetailsFragment>(fragmentFactory = testFragmentFactory) {
-            this.movie = movie
-            viewModel.setMovie(movie)
+            movieId = movie.id
+            viewModel.setMovie(movie.id)
         }
         val expectedAverageVote = getAverageVoteString(movie.voteAverage)
         onView(withId(R.id.movie_rating)).check(matches(withText(containsString(expectedAverageVote))))
@@ -120,8 +121,8 @@ class MovieDetailsFragmentTest() {
     fun testIsVoteCountSet() {
         val movie = provideMovieWithIdUi(1)
         launchFragmentInHiltContainer<MovieDetailsFragment>(fragmentFactory = testFragmentFactory) {
-            this.movie = movie
-            viewModel.setMovie(movie)
+            movieId = movie.id
+            viewModel.setMovie(movie.id)
         }
         val expectedVoteCount = getVoteCountString(movie.voteCount)
         onView(withId(R.id.movie_vote_count)).check(

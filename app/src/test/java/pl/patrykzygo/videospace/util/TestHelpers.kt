@@ -13,7 +13,7 @@ import pl.patrykzygo.videospace.data.network.movie_details.GenresResponse
 import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
 import retrofit2.Response
 
-fun fakeCorrectMoviesResponse(page: Int, numberOfPages: Int): Response<EntryPointMoviesResponse> {
+fun fakeCorrectMoviesResponse(page: Int, numberOfPages: Int = 1): Response<EntryPointMoviesResponse> {
     val moviesResponse = EntryPointMoviesResponse(
         page = page,
         fakeMoviesResponseList(page),
