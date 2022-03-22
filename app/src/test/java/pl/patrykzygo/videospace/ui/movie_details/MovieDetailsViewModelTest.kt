@@ -61,7 +61,7 @@ class MovieDetailsViewModelTest {
 
     @Test
     fun `setMovie on response failure error is message is set`() {
-        val expected = "test error"
+        val expected = FakeLocalStoreMoviesRepository.SPECIFIC_MOVIE_ERROR
         viewModel.setMovie(-1)
         val result = viewModel.errorMessage.getOrAwaitValueTest()
         assertThat(result).isEqualTo(expected)

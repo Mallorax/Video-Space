@@ -18,7 +18,7 @@ open class FakeLocalStoreMoviesRepository : LocalStoreMoviesRepository {
     }
 
     override suspend fun getAllMoviesWithStatus(status: String): RepositoryResponse<List<MovieEntity>> {
-        return if (status != MovieStatus.DROPPED)  { //1 variant returns error for testing purposes
+        return if (status != MovieStatus.DROPPED) { //1 variant returns error for testing purposes
             val moviesWithStatus = movieList.filter { t -> t.status == status }
             RepositoryResponse.success(moviesWithStatus)
         } else {
@@ -50,9 +50,15 @@ open class FakeLocalStoreMoviesRepository : LocalStoreMoviesRepository {
     }
 
     private fun getMovieDetailsResponseWithId(id: Int): MovieDetailsResponse {
-        if (movieList.any { t-> t.movieId == id }){
-            val movie = movieList.first { t-> t.movieId == id }
-            return MovieDetailsResponse(id = movie.movieId, title = movie.title)
+        if (movieList.any { t -> t.movieId == id }) {
+            val movie = movieList.first { t -> t.movieId == id }
+            return MovieDetailsResponse(
+                id = movie.movieId, title = movie.title, genres = listOf(
+                    GenreResponse(1, "1"),
+                    GenreResponse(2, "2"),
+                    GenreResponse(3, "3")
+                )
+            )
         }
         return MovieDetailsResponse(
             "", "id", false, "title $id",
