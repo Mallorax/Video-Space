@@ -3,6 +3,7 @@ package pl.patrykzygo.videospace.repository
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.network.movie_details.GenreResponse
 import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
+import pl.patrykzygo.videospace.others.MovieStatus
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreMoviesRepository
 import pl.patrykzygo.videospace.util.fakeMoviesEntitiesList
 
@@ -10,10 +11,19 @@ open class FakeLocalStoreMoviesRepository : LocalStoreMoviesRepository {
 
     val movieList = fakeMoviesEntitiesList().toMutableList()
 
+    companion object FakeRepoMessages {
+        const val MOVIES_WITH_STATUS_ERROR = "movies with status error"
+        const val DB_SPECIFIED_MOVIE_ERROR = "No such element"
+        const val SPECIFIC_MOVIE_ERROR = "Specific movie error"
+    }
 
     override suspend fun getAllMoviesWithStatus(status: String): RepositoryResponse<List<MovieEntity>> {
-        val moviesWithStatus = movieList.filter { t -> t.status == status }
-        return RepositoryResponse.success(moviesWithStatus)
+        return if (status != MovieStatus.DROPPED)  { //1 variant returns error for testing purposes
+            val moviesWithStatus = movieList.filter { t -> t.status == status }
+            RepositoryResponse.success(moviesWithStatus)
+        } else {
+            RepositoryResponse.error(MOVIES_WITH_STATUS_ERROR)
+        }
     }
 
     override suspend fun saveMovieToDb(movie: MovieEntity) {
@@ -30,16 +40,20 @@ open class FakeLocalStoreMoviesRepository : LocalStoreMoviesRepository {
 
     override suspend fun getSpecificMovie(id: Int): RepositoryResponse<MovieDetailsResponse> {
         return if (id > 0) RepositoryResponse.success(getMovieDetailsResponseWithId(id))
-        else RepositoryResponse.error("test error")
+        else RepositoryResponse.error(SPECIFIC_MOVIE_ERROR)
     }
 
     override suspend fun getSpecificMovieFromDb(id: Int): RepositoryResponse<MovieEntity> {
         val movie = movieList.find { t -> t.movieId == id }
         return if (movie != null) RepositoryResponse.success(movie)
-        else RepositoryResponse.error("No such element")
+        else RepositoryResponse.error(DB_SPECIFIED_MOVIE_ERROR)
     }
 
     private fun getMovieDetailsResponseWithId(id: Int): MovieDetailsResponse {
+        if (movieList.any { t-> t.movieId == id }){
+            val movie = movieList.first { t-> t.movieId == id }
+            return MovieDetailsResponse(id = movie.movieId, title = movie.title)
+        }
         return MovieDetailsResponse(
             "", "id", false, "title $id",
             "", 123, listOf(

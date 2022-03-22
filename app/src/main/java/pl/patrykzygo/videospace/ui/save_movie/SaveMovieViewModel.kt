@@ -7,8 +7,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import pl.patrykzygo.videospace.data.local.MovieEntity
-import pl.patrykzygo.videospace.others.MovieStatus
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreMoviesRepository
+import pl.patrykzygo.videospace.ui.delegate.HandleMovieStatusDelegate
+import pl.patrykzygo.videospace.ui.delegate.HandleMovieStatusDelegateImpl
 import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
 import javax.inject.Inject
 
@@ -16,7 +17,8 @@ import javax.inject.Inject
 class SaveMovieViewModel @Inject constructor(
     private val moviesRepo: LocalStoreMoviesRepository,
     private val dispatchersProvider: DispatchersProvider
-) : ViewModel() {
+) : ViewModel(),
+    HandleMovieStatusDelegate by HandleMovieStatusDelegateImpl() {
 
     private val _inputFeedbackMessage = MutableLiveData<String>()
     val inputFeedbackMessage: LiveData<String> get() = _inputFeedbackMessage
@@ -26,7 +28,6 @@ class SaveMovieViewModel @Inject constructor(
         const val SAVE_WRONG_STATUS = "You have to select 1 status"
         const val SAVE_WRONG_UNRECOGNISABLE_MOVIE = "Couldn't recognise the movie"
         const val SAVE_WRONG_INCORRECT_SCORE = "Incorrect score"
-
     }
 
 
@@ -38,6 +39,7 @@ class SaveMovieViewModel @Inject constructor(
         try {
             movieStatus = handleMovieStatus(status)
         } catch (e: IllegalArgumentException) {
+            _inputFeedbackMessage.value = SAVE_WRONG_STATUS
             return
         }
         viewModelScope.launch(dispatchersProvider.io) {
@@ -53,19 +55,6 @@ class SaveMovieViewModel @Inject constructor(
         }
     }
 
-    private fun handleMovieStatus(status: String?): String {
-        return when (status) {
-            "Watching" -> MovieStatus.WATCHING
-            "Completed" -> MovieStatus.COMPLETED
-            "Plan to Watch" -> MovieStatus.PLAN_TO_WATCH
-            "On Hold" -> MovieStatus.ON_HOLD
-            "Dropped" -> MovieStatus.DROPPED
-            else -> {
-                _inputFeedbackMessage.value = SAVE_WRONG_STATUS
-                throw IllegalArgumentException()
-            }
-        }
-    }
 
     private fun checkMovieInput(id: Int?, title: String?, status: String?, score: Int?): Boolean {
         if (id == null || title == null) {

@@ -43,7 +43,7 @@ fun mapMovieDetailsResponseToMovie(movieDetailsResponse: MovieDetailsResponse): 
         movieDetailsResponse.title.orEmpty(),
         movieDetailsResponse.video ?: false,
         movieDetailsResponse.voteAverage ?: -1.0,
-        movieDetailsResponse.voteCount ?: -1
+        movieDetailsResponse.voteCount ?: -1,
     )
 }
 

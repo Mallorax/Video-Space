@@ -14,6 +14,8 @@ import pl.patrykzygo.videospace.data.mapMovieDetailsResponseToMovie
 import pl.patrykzygo.videospace.others.MovieStatus
 import pl.patrykzygo.videospace.repository.RepositoryResponse
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreMoviesRepository
+import pl.patrykzygo.videospace.ui.delegate.HandleMovieStatusDelegate
+import pl.patrykzygo.videospace.ui.delegate.HandleMovieStatusDelegateImpl
 import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
 import javax.inject.Inject
 
@@ -21,7 +23,8 @@ import javax.inject.Inject
 class StoredListViewModel @Inject constructor(
     private val moviesRepo: LocalStoreMoviesRepository,
     private val dispatchersProvider: DispatchersProvider
-) : ViewModel() {
+) : ViewModel(),
+    HandleMovieStatusDelegate by HandleMovieStatusDelegateImpl() {
 
     private val _moviesStatus = MutableLiveData(MovieStatus.UNASSIGNED)
     val movieStatus: LiveData<String> get() = _moviesStatus
@@ -32,9 +35,19 @@ class StoredListViewModel @Inject constructor(
     private val _errorMessage = MutableLiveData("")
     val errorMessage: LiveData<String> get() = _errorMessage
 
+    companion object Messages {
+        const val WRONG_STATUS_ERROR = "Status is incorrect"
+    }
+
     fun getMoviesWithStatus(status: String) {
-        _moviesStatus.value = status
-        getMovies()
+        try {
+            val handledStatus = handleMovieStatus(status)
+            _moviesStatus.value = handledStatus
+            getMovies()
+        } catch (e: IllegalArgumentException) {
+            _errorMessage.value = WRONG_STATUS_ERROR
+            return
+        }
     }
 
     private fun getMovies() {
