@@ -48,7 +48,7 @@ class SaveMovieFragment :
     }
 
     private fun subscribeToObservers() {
-        viewModel.inputErrorMessage.observe(viewLifecycleOwner, Observer {
+        viewModel.inputFeedbackMessage.observe(viewLifecycleOwner, Observer {
             Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
         })
     }
