@@ -133,7 +133,6 @@ class MovieDetailsFragment :
         genres?.forEach { genre ->
             val chip = Chip(requireContext())
             chip.text = genre
-            chip.setTag(1, genre)
             chip.setChipBackgroundColorResource(R.color.purple_200)
             chip.setTextColor(ResourcesCompat.getColor(resources, R.color.white, null))
             binding.genresChipGroup.addView(chip)

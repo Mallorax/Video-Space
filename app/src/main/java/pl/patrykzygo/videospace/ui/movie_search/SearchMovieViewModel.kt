@@ -75,20 +75,27 @@ class SearchMovieViewModel @Inject constructor(
         _excludedGenres.remove(genre)
     }
 
-    fun submitRequest(minScore: Int?, minVotes: String) {
+
+
+    fun submitRequest(minScoreInput: Int?, minVotesInput: String) {
         val minimumScore: Int
-        if (minScore == null) {
+        if (minScoreInput == null) {
             _submitRequestInputErrorMessage.value = "Something wrong with minimum score"
             return
-        }else{
-            minimumScore = minScore
+        } else {
+            minimumScore = minScoreInput
         }
-        val minVotesInt: Int = try {
-            minVotes.toInt()
+        val minVotesInt: Int? = try {
+            minVotesInput.toInt()
         } catch (e: NumberFormatException) {
-            _submitRequestInputErrorMessage.value = "Vote count has to be a number"
-            return
+            if (minVotesInput.isNotEmpty()) {
+                _submitRequestInputErrorMessage.value = "Vote count has to be a number"
+                return
+            } else {
+                null
+            }
         }
+        if (checkIfGenresAreOverlapping()) return
         val request = DiscoverMovieRequest(
             _includedGenres.map { t -> t.genreId }.joinToString(separator = ","),
             _excludedGenres.map { t -> t.genreId }.joinToString(separator = ","),
@@ -96,6 +103,14 @@ class SearchMovieViewModel @Inject constructor(
         )
 
         _requestMoviesLiveEvent.value = request
+    }
+
+    private fun checkIfGenresAreOverlapping(): Boolean {
+        val areOverlapping = _includedGenres.any { it in excludedGenres }
+        if (areOverlapping) {
+            _submitRequestInputErrorMessage.value = "Genres can't overlap"
+        }
+        return areOverlapping
     }
 
 

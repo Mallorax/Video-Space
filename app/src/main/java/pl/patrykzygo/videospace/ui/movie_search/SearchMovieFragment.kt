@@ -62,7 +62,6 @@ class SearchMovieFragment : Fragment(),
     private fun onIncludeChipClickAction(isChecked: Boolean, chipText: String) {
         if (isChecked) {
             viewModel.addIncludedGenre(chipText)
-
         } else {
             viewModel.removeIncludedGenre(chipText)
         }
@@ -111,7 +110,10 @@ class SearchMovieFragment : Fragment(),
             Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
         })
         viewModel.submitRequestInputErrorMessage.observe(viewLifecycleOwner, Observer {
-            binding.voteCountTextInput.error = it
+            val snackbar = Snackbar.make(binding.searchMovieFragmentCoordinator, it, Snackbar.LENGTH_LONG)
+            snackbar.anchorView = binding.bottomNavViewLayout.bottomNavView
+            snackbar.show()
+
         })
         viewModel.requestMoviesLiveEvent.observe(viewLifecycleOwner, Observer {
             val action =

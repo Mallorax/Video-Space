@@ -31,7 +31,6 @@ import javax.inject.Inject
 
 @MediumTest
 @HiltAndroidTest
-@ExperimentalCoroutinesApi
 @UninstallModules(RetrofitModule::class)
 class MovieDetailsFragmentTest() {
 
@@ -40,10 +39,6 @@ class MovieDetailsFragmentTest() {
 
     @get:Rule
     var taskExecutorRule = InstantTaskExecutorRule()
-
-    @get:Rule
-    var mainDispatcherRule = AndroidMainDispatcherRule()
-
 
     @Inject
     lateinit var testFragmentFactory: TestFragmentFactory
