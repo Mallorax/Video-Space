@@ -39,6 +39,12 @@ class SearchMovieViewModel @Inject constructor(
     val includedGenres: List<Genre> get() = _includedGenres
     val excludedGenres: List<Genre> get() = _excludedGenres
 
+    companion object Messages {
+        const val MIN_SCORE_ERROR_MSG = "Something wrong with minimum score"
+        const val VOTE_COUNT_ERROR_MSG = "Vote count has to be a number"
+        const val GENRES_OVERLAP_ERROR_MSG = "Genres can't overlap"
+    }
+
 
     fun getAllGenre() {
         viewModelScope.launch(dispatchersProvider.io) {
@@ -76,11 +82,10 @@ class SearchMovieViewModel @Inject constructor(
     }
 
 
-
     fun submitRequest(minScoreInput: Int?, minVotesInput: String) {
         val minimumScore: Int
         if (minScoreInput == null) {
-            _submitRequestInputErrorMessage.value = "Something wrong with minimum score"
+            _submitRequestInputErrorMessage.value = MIN_SCORE_ERROR_MSG
             return
         } else {
             minimumScore = minScoreInput
@@ -89,8 +94,8 @@ class SearchMovieViewModel @Inject constructor(
             minVotesInput.toInt()
         } catch (e: NumberFormatException) {
             if (minVotesInput.isNotEmpty()) {
-                _submitRequestInputErrorMessage.value = "Vote count has to be a number"
-                return
+                _submitRequestInputErrorMessage.value = VOTE_COUNT_ERROR_MSG
+                    return
             } else {
                 null
             }
@@ -108,7 +113,7 @@ class SearchMovieViewModel @Inject constructor(
     private fun checkIfGenresAreOverlapping(): Boolean {
         val areOverlapping = _includedGenres.any { it in excludedGenres }
         if (areOverlapping) {
-            _submitRequestInputErrorMessage.value = "Genres can't overlap"
+            _submitRequestInputErrorMessage.value = GENRES_OVERLAP_ERROR_MSG
         }
         return areOverlapping
     }
