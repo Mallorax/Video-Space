@@ -113,7 +113,7 @@ class MoviesListFragment() : Fragment(),
     private fun createRecyclerViewAdapter(): MoviesListPagingDataAdapter {
         val adapter =
             MoviesListPagingDataAdapter(MoviesListPagingDataAdapter.OnMovieClickListener { movie, _ ->
-                if (movie != null) {
+                movie?.let {
                     val action =
                         MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetails(movie.id)
                     findNavController().navigate(action)

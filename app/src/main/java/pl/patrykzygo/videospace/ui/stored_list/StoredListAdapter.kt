@@ -18,7 +18,7 @@ class StoredListAdapter(private val onMovieClickListener: OnMovieClickListener) 
         binding.root.setOnClickListener {
             onMovieClickListener.onMovieClick(movie, it)
         }
-        if (movie != null) {
+        movie?.let {
             holderListItem.bind(movie)
         }
     }

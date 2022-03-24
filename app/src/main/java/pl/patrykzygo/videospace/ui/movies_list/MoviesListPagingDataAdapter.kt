@@ -18,7 +18,7 @@ class MoviesListPagingDataAdapter(private val onMovieClickListener: OnMovieClick
         binding.root.setOnClickListener {
             onMovieClickListener.onMovieClick(movie, it)
         }
-        if (movie != null) {
+        movie?.let {
             holderListItem.bind(movie)
         }
     }

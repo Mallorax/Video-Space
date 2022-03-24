@@ -71,7 +71,6 @@ class SearchMovieFragment : Fragment(),
     private fun onExcludeChipClickAction(isChecked: Boolean, chipText: String) {
         if (isChecked) {
             viewModel.addExcludedGenre(chipText)
-
         } else {
             viewModel.removeExcludedGenre(chipText)
         }

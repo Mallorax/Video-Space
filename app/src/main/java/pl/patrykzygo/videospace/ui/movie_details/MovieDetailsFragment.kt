@@ -39,7 +39,7 @@ class MovieDetailsFragment :
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
-        movieId = arguments?.let { MovieDetailsFragmentArgs.fromBundle(it).movieId}
+        movieId = arguments?.let { MovieDetailsFragmentArgs.fromBundle(it).movieId }
         setFragmentResultListener()
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -93,7 +93,7 @@ class MovieDetailsFragment :
     private fun setFragmentResultListener() {
         parentFragmentManager.setFragmentResultListener("movieResult", this) { _, bundle ->
             val movie = bundle.getParcelable<Movie>("movie")
-            if (movie != null) {
+            movie?.let {
                 val action = MovieDetailsFragmentDirections.actionMovieDetailsSelf(movie.id ?: -1)
                 findNavController().navigate(action)
             }

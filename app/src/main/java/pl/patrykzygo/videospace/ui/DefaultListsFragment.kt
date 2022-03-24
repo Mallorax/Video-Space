@@ -34,7 +34,7 @@ class DefaultListsFragment() : Fragment(),
             viewLifecycleOwner
         ) { _, bundle ->
             val movie = bundle.getParcelable<Movie>("movie")
-            if (movie != null) {
+            movie?.let {
                 val action = DefaultListsFragmentDirections.actionMainFragmentToMovieDetails(movie.id)
                 findNavController().navigate(action)
             }

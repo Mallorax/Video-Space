@@ -53,7 +53,7 @@ class SearchMovieViewModel @Inject constructor(
 
     fun addIncludedGenre(genreName: String) {
         val genre = _genres.value?.first { t -> t.genreName == genreName }
-        if (genre != null) {
+        genre?.let {
             _includedGenres.add(genre)
         }
     }
@@ -65,7 +65,7 @@ class SearchMovieViewModel @Inject constructor(
 
     fun addExcludedGenre(genreName: String) {
         val genre = _genres.value?.first { t -> t.genreName == genreName }
-        if (genre != null) {
+        genre?.let {
             _excludedGenres.add(genre)
         }
     }
