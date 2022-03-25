@@ -16,7 +16,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import pl.patrykzygo.videospace.AndroidMainDispatcherRule
-import pl.patrykzygo.videospace.others.MovieStatus
+import pl.patrykzygo.videospace.constants.MovieStatus
 import pl.patrykzygo.videospace.util.createMovieEntity
 import javax.inject.Inject
 

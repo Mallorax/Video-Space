@@ -9,7 +9,6 @@ import pl.patrykzygo.videospace.ui.DefaultListsFragment
 import pl.patrykzygo.videospace.ui.movie_details.MovieDetailsFragment
 import pl.patrykzygo.videospace.ui.movie_search.SearchMovieFragment
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
-import pl.patrykzygo.videospace.ui.save_movie.SaveMovieFragment
 import javax.inject.Inject
 
 class TestFragmentFactory @Inject constructor(

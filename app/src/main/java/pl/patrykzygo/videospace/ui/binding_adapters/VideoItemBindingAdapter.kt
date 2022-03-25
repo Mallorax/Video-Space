@@ -1,6 +1,5 @@
 package pl.patrykzygo.videospace.ui.binding_adapters
 
-import android.graphics.drawable.Drawable
 import android.graphics.text.LineBreaker.JUSTIFICATION_MODE_INTER_WORD
 import android.os.Build
 import android.widget.ImageView
@@ -9,7 +8,7 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import pl.patrykzygo.videospace.R
-import pl.patrykzygo.videospace.others.Paths
+import pl.patrykzygo.videospace.constants.Paths
 
 
 @BindingAdapter("moviePoster")

@@ -10,7 +10,7 @@ import pl.patrykzygo.MainDispatcherRule
 import pl.patrykzygo.videospace.TestDispatcherProvider
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.local.MovieEntity
-import pl.patrykzygo.videospace.others.MovieStatus
+import pl.patrykzygo.videospace.constants.MovieStatus
 import pl.patrykzygo.videospace.repository.FakeLocalStoreMoviesRepository
 import pl.patrykzygo.videospace.util.getOrAwaitValueTest
 

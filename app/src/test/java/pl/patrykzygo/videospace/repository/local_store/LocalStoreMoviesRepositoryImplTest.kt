@@ -16,7 +16,7 @@ import org.mockito.MockitoAnnotations
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.local.MoviesDao
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
-import pl.patrykzygo.videospace.others.MovieStatus
+import pl.patrykzygo.videospace.constants.MovieStatus
 import pl.patrykzygo.videospace.repository.RepositoryResponse
 import pl.patrykzygo.videospace.util.fakeHttpErrorResponse
 import pl.patrykzygo.videospace.util.fakeMovieDetailsResponse

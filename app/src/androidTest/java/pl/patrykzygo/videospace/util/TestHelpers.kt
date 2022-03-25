@@ -7,11 +7,11 @@ import androidx.test.espresso.matcher.ViewMatchers
 import okhttp3.MediaType
 import okhttp3.ResponseBody
 import org.hamcrest.Matcher
+import pl.patrykzygo.videospace.constants.MovieStatus
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.network.EntryPointMoviesResponse
 import pl.patrykzygo.videospace.data.network.MovieResponse
-import pl.patrykzygo.videospace.others.MovieStatus
 import retrofit2.Response
 
 fun fakeCorrectMoviesResponseUi(page: Int, numberOfPages: Int): Response<EntryPointMoviesResponse> {

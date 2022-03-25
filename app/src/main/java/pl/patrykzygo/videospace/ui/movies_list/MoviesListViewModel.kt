@@ -3,6 +3,7 @@ package pl.patrykzygo.videospace.ui.movies_list
 import androidx.lifecycle.*
 import androidx.paging.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -10,10 +11,11 @@ import kotlinx.coroutines.flow.map
 import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.mapMoviesResponseToMovie
-import pl.patrykzygo.videospace.others.SortOptions
+import pl.patrykzygo.videospace.constants.SortOptions
 import pl.patrykzygo.videospace.repository.discover_paging.DiscoverPagingSource
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @HiltViewModel
 class MoviesListViewModel @Inject constructor(
     private val repo: DiscoverPagingSource

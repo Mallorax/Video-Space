@@ -8,7 +8,7 @@ import pl.patrykzygo.videospace.data.local.GenreEntity
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.network.EntryPointMoviesResponse
 import pl.patrykzygo.videospace.data.network.MovieResponse
-import pl.patrykzygo.videospace.data.network.movie_details.GenresItem
+import pl.patrykzygo.videospace.data.network.movie_details.GenreItem
 import pl.patrykzygo.videospace.data.network.movie_details.GenresResponse
 import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
 import retrofit2.Response
@@ -36,13 +36,13 @@ fun fakeHttpErrorResponse(): Response<Any> {
 fun fakeCorrectGenresResponse(): Response<GenresResponse> {
     val genresResponse = GenresResponse(
         listOf(
-            GenresItem(1, "1"),
-            GenresItem(2, "2"),
-            GenresItem(3, "3"),
-            GenresItem(4, "4"),
-            GenresItem(5, "5"),
-            GenresItem(6, "6"),
-            GenresItem(7, "7")
+            GenreItem(1, "1"),
+            GenreItem(2, "2"),
+            GenreItem(3, "3"),
+            GenreItem(4, "4"),
+            GenreItem(5, "5"),
+            GenreItem(6, "6"),
+            GenreItem(7, "7")
         )
     )
     return Response.success(genresResponse)

@@ -2,7 +2,7 @@ package pl.patrykzygo.videospace.data.app
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import pl.patrykzygo.videospace.others.MovieStatus
+import pl.patrykzygo.videospace.constants.MovieStatus
 
 @Parcelize
 data class Movie(

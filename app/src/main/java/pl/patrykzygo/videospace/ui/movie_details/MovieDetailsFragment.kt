@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.FragmentMovieDetailsBinding
-import pl.patrykzygo.videospace.others.MoviesRequestType
+import pl.patrykzygo.videospace.constants.MoviesRequestType
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegate
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegateImpl
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
@@ -94,7 +94,7 @@ class MovieDetailsFragment :
         parentFragmentManager.setFragmentResultListener("movieResult", this) { _, bundle ->
             val movie = bundle.getParcelable<Movie>("movie")
             movie?.let {
-                val action = MovieDetailsFragmentDirections.actionMovieDetailsSelf(movie.id ?: -1)
+                val action = MovieDetailsFragmentDirections.actionMovieDetailsSelf(movie.id)
                 findNavController().navigate(action)
             }
         }

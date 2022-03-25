@@ -7,7 +7,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import pl.patrykzygo.MainDispatcherRule
-import pl.patrykzygo.videospace.others.SortOptions
+import pl.patrykzygo.videospace.constants.SortOptions
 import pl.patrykzygo.videospace.repository.FakeDiscoverPagingSource
 import pl.patrykzygo.videospace.util.getOrAwaitValueTest
 

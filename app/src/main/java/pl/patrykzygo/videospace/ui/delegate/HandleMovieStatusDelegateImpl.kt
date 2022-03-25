@@ -1,6 +1,6 @@
 package pl.patrykzygo.videospace.ui.delegate
 
-import pl.patrykzygo.videospace.others.MovieStatus
+import pl.patrykzygo.videospace.constants.MovieStatus
 
 class HandleMovieStatusDelegateImpl : HandleMovieStatusDelegate {
     override fun handleMovieStatus(status: String?): String {

@@ -1,7 +1,6 @@
 package pl.patrykzygo.videospace
 
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider

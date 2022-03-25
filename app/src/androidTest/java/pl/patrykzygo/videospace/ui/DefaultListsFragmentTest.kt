@@ -13,7 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.TestFragmentFactory
-import pl.patrykzygo.videospace.others.MoviesRequestType
+import pl.patrykzygo.videospace.constants.MoviesRequestType
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
 import pl.patrykzygo.videospace.util.provideMovieWithIdUi
 import javax.inject.Inject

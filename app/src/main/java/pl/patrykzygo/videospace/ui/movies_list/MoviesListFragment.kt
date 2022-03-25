@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
 import pl.patrykzygo.videospace.databinding.FragmentMoviesListBinding
-import pl.patrykzygo.videospace.others.SortOptions
+import pl.patrykzygo.videospace.constants.SortOptions
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegate
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegateImpl
 

@@ -5,7 +5,7 @@ import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.local.GenreEntity
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.network.MovieResponse
-import pl.patrykzygo.videospace.data.network.movie_details.GenresItem
+import pl.patrykzygo.videospace.data.network.movie_details.GenreItem
 import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
 
 fun mapMoviesResponseToMovie(movieResponse: MovieResponse): Movie {
@@ -63,7 +63,7 @@ fun mapGenreEntityToGenre(genreEntity: GenreEntity): Genre {
     )
 }
 
-fun mapGenreItemToGenreNullable(genreItem: GenresItem?): Genre? {
+fun mapGenreItemToGenreNullable(genreItem: GenreItem?): Genre? {
     return if (genreItem?.id != null && genreItem.name != null) {
         Genre(genreItem.id, genreItem.name)
     } else {

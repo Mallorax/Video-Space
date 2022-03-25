@@ -4,7 +4,8 @@ import pl.patrykzygo.videospace.data.app.Genre
 import pl.patrykzygo.videospace.repository.RepositoryResponse
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreGenresRepository
 
-class FakeLocalStoreGenresRepositoryAndroid(private val genres: List<Genre>) : LocalStoreGenresRepository {
+class FakeLocalStoreGenresRepositoryAndroid(private val genres: List<Genre>) :
+    LocalStoreGenresRepository {
 
 
     override suspend fun getGenreId(genreName: String): RepositoryResponse<Int> {

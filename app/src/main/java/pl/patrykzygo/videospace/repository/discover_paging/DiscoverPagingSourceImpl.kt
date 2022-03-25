@@ -4,7 +4,7 @@ import androidx.paging.PagingState
 import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
 import pl.patrykzygo.videospace.data.network.MovieResponse
 import pl.patrykzygo.videospace.networking.DiscoverEntryPoint
-import pl.patrykzygo.videospace.others.SortOptions
+import pl.patrykzygo.videospace.constants.SortOptions
 import pl.patrykzygo.videospace.repository.delegate.*
 import retrofit2.HttpException
 import javax.inject.Inject

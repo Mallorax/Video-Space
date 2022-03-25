@@ -1,9 +1,9 @@
 package pl.patrykzygo.videospace.repository
 
 import pl.patrykzygo.videospace.data.local.MovieEntity
-import pl.patrykzygo.videospace.data.network.movie_details.GenreResponse
 import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
-import pl.patrykzygo.videospace.others.MovieStatus
+import pl.patrykzygo.videospace.constants.MovieStatus
+import pl.patrykzygo.videospace.data.network.movie_details.GenreItem
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreMoviesRepository
 import pl.patrykzygo.videospace.util.fakeMoviesEntitiesList
 
@@ -54,18 +54,18 @@ open class FakeLocalStoreMoviesRepository : LocalStoreMoviesRepository {
             val movie = movieList.first { t -> t.movieId == id }
             return MovieDetailsResponse(
                 id = movie.movieId, title = movie.title, genres = listOf(
-                    GenreResponse(1, "1"),
-                    GenreResponse(2, "2"),
-                    GenreResponse(3, "3")
+                    GenreItem(1, "1"),
+                    GenreItem(2, "2"),
+                    GenreItem(3, "3")
                 )
             )
         }
         return MovieDetailsResponse(
             "", "id", false, "title $id",
             "", 123, listOf(
-                GenreResponse(1, "1"),
-                GenreResponse(2, "2"),
-                GenreResponse(3, "3")
+                GenreItem(1, "1"),
+                GenreItem(2, "2"),
+                GenreItem(3, "3")
             ), 2.43, id, 23,
             45234543, "descritpion $id",
             "orginal title $id",

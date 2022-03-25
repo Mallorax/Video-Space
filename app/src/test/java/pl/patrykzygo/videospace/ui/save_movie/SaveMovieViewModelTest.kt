@@ -8,7 +8,7 @@ import org.junit.Rule
 import org.junit.Test
 import pl.patrykzygo.MainDispatcherRule
 import pl.patrykzygo.videospace.TestDispatcherProvider
-import pl.patrykzygo.videospace.others.MovieStatus
+import pl.patrykzygo.videospace.constants.MovieStatus
 import pl.patrykzygo.videospace.repository.FakeLocalStoreMoviesRepository
 import pl.patrykzygo.videospace.util.getOrAwaitValueTest
 

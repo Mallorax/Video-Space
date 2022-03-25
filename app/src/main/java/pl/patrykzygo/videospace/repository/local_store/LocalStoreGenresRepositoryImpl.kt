@@ -5,7 +5,7 @@ import pl.patrykzygo.videospace.data.local.GenreDao
 import pl.patrykzygo.videospace.data.local.GenreEntity
 import pl.patrykzygo.videospace.data.mapGenreEntityToGenre
 import pl.patrykzygo.videospace.data.mapGenreItemToGenreNullable
-import pl.patrykzygo.videospace.data.network.movie_details.GenresItem
+import pl.patrykzygo.videospace.data.network.movie_details.GenreItem
 import pl.patrykzygo.videospace.data.network.movie_details.GenresResponse
 import pl.patrykzygo.videospace.networking.GenresEntryPoint
 import pl.patrykzygo.videospace.repository.RepositoryResponse
@@ -52,7 +52,7 @@ class LocalStoreGenresRepositoryImpl @Inject constructor(
     }
 
     //saves genres from api into room db
-    private suspend fun cacheRemoteGenres(genres: List<GenresItem?>?) {
+    private suspend fun cacheRemoteGenres(genres: List<GenreItem?>?) {
         val genreEntities = genres?.mapNotNull {
             if (it?.id != null && it.name != null) {
                 GenreEntity(it.id, it.name)

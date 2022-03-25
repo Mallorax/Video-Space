@@ -1,4 +1,4 @@
-package pl.patrykzygo.videospace.others
+package pl.patrykzygo.videospace.constants
 
 object SortOptions {
 

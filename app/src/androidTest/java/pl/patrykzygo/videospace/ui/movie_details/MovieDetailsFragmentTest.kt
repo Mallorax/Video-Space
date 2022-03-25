@@ -6,23 +6,22 @@ import androidx.fragment.app.Fragment
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.filters.MediumTest
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.containsString
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import pl.patrykzygo.videospace.AndroidMainDispatcherRule
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.TestFragmentFactory
+import pl.patrykzygo.videospace.constants.MoviesRequestType
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.di.RetrofitModule
-import pl.patrykzygo.videospace.others.MoviesRequestType
 import pl.patrykzygo.videospace.ui.binding_adapters.getAverageVoteString
 import pl.patrykzygo.videospace.ui.binding_adapters.getVoteCountString
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
@@ -32,7 +31,7 @@ import javax.inject.Inject
 @MediumTest
 @HiltAndroidTest
 @UninstallModules(RetrofitModule::class)
-class MovieDetailsFragmentTest() {
+class MovieDetailsFragmentTest {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -96,7 +95,7 @@ class MovieDetailsFragmentTest() {
     }
 
     @Test
-    fun testNavigationToListFragment(){
+    fun testNavigationToListFragment() {
         launchFragmentInHiltContainer<MovieDetailsFragment>(fragmentFactory = testFragmentFactory) {
             viewModel.moveToGenreList("1")
         }
