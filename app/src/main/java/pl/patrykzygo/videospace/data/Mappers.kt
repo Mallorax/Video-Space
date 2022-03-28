@@ -10,19 +10,19 @@ import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
 
 fun mapMoviesResponseToMovie(movieResponse: MovieResponse): Movie {
     return Movie(
-        movieResponse.adult,
+        movieResponse.adult ?: false,
         movieResponse.backdropPath.orEmpty(),
         listOf(),
         movieResponse.id,
-        movieResponse.originalLanguage,
-        movieResponse.originalTitle,
-        movieResponse.overview,
-        movieResponse.popularity,
+        movieResponse.originalLanguage.orEmpty(),
+        movieResponse.originalTitle.orEmpty(),
+        movieResponse.overview.orEmpty(),
+        movieResponse.popularity ?: 0.0,
         movieResponse.posterPath.orEmpty(),
-        movieResponse.releaseDate,
-        movieResponse.title,
-        movieResponse.video,
-        movieResponse.voteAverage,
+        movieResponse.releaseDate.orEmpty(),
+        movieResponse.title.orEmpty(),
+        movieResponse.video ?: false,
+        movieResponse.voteAverage ?: 0.0,
         movieResponse.voteCount
     )
 }

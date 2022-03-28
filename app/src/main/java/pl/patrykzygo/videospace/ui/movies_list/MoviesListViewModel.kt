@@ -3,60 +3,67 @@ package pl.patrykzygo.videospace.ui.movies_list
 import androidx.lifecycle.*
 import androidx.paging.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
-import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
-import pl.patrykzygo.videospace.data.app.Movie
-import pl.patrykzygo.videospace.data.mapMoviesResponseToMovie
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.plus
 import pl.patrykzygo.videospace.constants.SortOptions
+import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
+import pl.patrykzygo.videospace.data.mapMoviesResponseToMovie
 import pl.patrykzygo.videospace.repository.discover_paging.DiscoverPagingSource
+import pl.patrykzygo.videospace.ui.SaveableMutableSaveStateFlow
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class MoviesListViewModel @Inject constructor(
-    private val repo: DiscoverPagingSource
+    private val repo: DiscoverPagingSource,
+    private val state: SavedStateHandle
 ) : ViewModel() {
 
     private var _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> get() = _errorMessage
 
-    private val _sortOption = MutableStateFlow(SortOptions.POPULARITY_DESC)
-    val sortOption: LiveData<String> get() = _sortOption.asLiveData()
+    private val _sortOption =
+        SaveableMutableSaveStateFlow(state, "sortOption", SortOptions.POPULARITY_DESC)
+    val sortOption: LiveData<String> get() = _sortOption.asStateFlow().asLiveData()
 
-    fun getMovies(request: DiscoverMovieRequest): Flow<PagingData<Movie>> {
-        repo.setRequest(request)
-        return getMoviesPaging()
+    var movies = _sortOption.asStateFlow().flatMapLatest {
+        createMoviesPagingData()
+    }.stateIn(
+        scope = viewModelScope + Dispatchers.IO,
+        started = SharingStarted.WhileSubscribed(5000L),
+        initialValue = state.get("sortOption")
+    )
+
+
+    private fun createMoviesPagingData() =
+        Pager(
+            PagingConfig(
+                pageSize = 10,
+                enablePlaceholders = true,
+                prefetchDistance = 5,
+                initialLoadSize = 10
+            ),
+            pagingSourceFactory = { repo }
+        )
+            .flow
+            .map { pagingData ->
+                pagingData.map { mapMoviesResponseToMovie(it) }
+            }
+            .cachedIn(viewModelScope)
+
+
+    fun setRequest(movieRequest: DiscoverMovieRequest) {
+        repo.setRequest(movieRequest)
     }
 
     private fun setSortingOption(sortOption: String) {
+        state.set("sortOption", sortOption)
+        repo.setSortingOption(sortOption)
         _sortOption.value = sortOption
     }
 
-
-    private fun getMoviesPaging(): Flow<PagingData<Movie>> {
-        return _sortOption.flatMapLatest {
-            repo.setSortingOption(it)
-            val pager = Pager(
-                PagingConfig(
-                    pageSize = 10,
-                    enablePlaceholders = true,
-                    prefetchDistance = 5,
-                    initialLoadSize = 10
-                ),
-                pagingSourceFactory = { repo }
-            )
-                .flow
-                .cachedIn(viewModelScope)
-                .map { pagingData ->
-                    pagingData.map { mapMoviesResponseToMovie(it) }
-                }
-            return@flatMapLatest pager
-        }
-    }
 
     fun triggerSortByMostPopular() {
         val currentSortOption = _sortOption.value
@@ -70,6 +77,7 @@ class MoviesListViewModel @Inject constructor(
         }
         setSortingOption(SortOptions.POPULARITY_DESC)
     }
+
 
     fun triggerSortByReleaseDate() {
         val currentSortOption = _sortOption.value
@@ -109,5 +117,6 @@ class MoviesListViewModel @Inject constructor(
         }
         setSortingOption(SortOptions.VOTE_COUNT_DESC)
     }
+
 
 }

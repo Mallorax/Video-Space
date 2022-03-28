@@ -46,6 +46,7 @@ class MoviesListFragment() : Fragment(),
     ): View {
         _binding = FragmentMoviesListBinding.inflate(inflater, container, false)
         movieGenre = MoviesListFragmentArgs.fromBundle(requireArguments()).request
+        viewModel.setRequest(movieGenre)
         createMenu()
         return binding.root
     }
@@ -96,9 +97,9 @@ class MoviesListFragment() : Fragment(),
     }
 
     private fun subscribeObservers() {
-        lifecycleScope.launch {
-            viewModel.getMovies(movieGenre).collectLatest {
-                adapter.submitData(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.movies.collectLatest {
+                it?.let { it1 -> adapter.submitData(viewLifecycleOwner.lifecycle, it1) }
             }
         }
         viewModel.sortOption.observe(viewLifecycleOwner, Observer {
