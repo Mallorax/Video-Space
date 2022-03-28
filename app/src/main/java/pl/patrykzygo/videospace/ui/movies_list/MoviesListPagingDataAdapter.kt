@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.DiffUtil
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.MovieListItemBindingImpl

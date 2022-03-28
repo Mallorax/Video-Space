@@ -88,9 +88,9 @@ class MovieDetailsViewModelTest {
     }
 
     @Test
-    fun `check if saveMovieEvent was fired`(){
+    fun `check if saveMovieEvent was fired`() {
         var wasFired = false
-        viewModel.saveMovieEvent.observeForever{wasFired = true}
+        viewModel.saveMovieEvent.observeForever { wasFired = true }
         viewModel.launchSaveMovieEvent()
         assertThat(wasFired).isTrue()
     }

@@ -116,13 +116,13 @@ class SearchMovieViewModelTest {
         viewModel.addIncludedGenre("2")
         viewModel.addExcludedGenre("3")
         viewModel.addExcludedGenre("4")
-        viewModel.requestMoviesLiveEvent.observeForever{ actualRequest = it}
+        viewModel.requestMoviesLiveEvent.observeForever { actualRequest = it }
         viewModel.submitRequest(minScore, minVotes)
         assertThat(actualRequest).isEqualTo(expectedRequest)
     }
 
     @Test
-    fun `submitRequest, shows error with overlapping genres`(){
+    fun `submitRequest, shows error with overlapping genres`() {
         val expectedMessage = SearchMovieViewModel.GENRES_OVERLAP_ERROR_MSG
         viewModel.getAllGenre()
         viewModel.addIncludedGenre("1")
@@ -135,7 +135,7 @@ class SearchMovieViewModelTest {
     }
 
     @Test
-    fun `submitRequest has throws error with incorrect vote count`(){
+    fun `submitRequest has throws error with incorrect vote count`() {
         viewModel.submitRequest(1, "sadasd")
         val expectedMessage = SearchMovieViewModel.VOTE_COUNT_ERROR_MSG
         val actualMessage = viewModel.submitRequestInputErrorMessage.getOrAwaitValueTest()
@@ -143,7 +143,7 @@ class SearchMovieViewModelTest {
     }
 
     @Test
-    fun `submitRequest minScore is null`(){
+    fun `submitRequest minScore is null`() {
         val expectedMessage = SearchMovieViewModel.MIN_SCORE_ERROR_MSG
         viewModel.submitRequest(null, "1")
         val actualMessage = viewModel.submitRequestInputErrorMessage.getOrAwaitValueTest()

@@ -62,7 +62,7 @@ class SaveMovieViewModelTest {
     }
 
     @Test
-    fun `saveMovie score is incorrect shows error message`(){
+    fun `saveMovie score is incorrect shows error message`() {
         val expected = SaveMovieViewModel.SAVE_WRONG_INCORRECT_SCORE
         viewModel.saveMovie(1, "test", MovieStatus.PLAN_TO_WATCH, -1)
         val actual = viewModel.inputFeedbackMessage.getOrAwaitValueTest()
@@ -70,7 +70,7 @@ class SaveMovieViewModelTest {
     }
 
     @Test
-    fun `saveMovie movie is saved correctly`(){
+    fun `saveMovie movie is saved correctly`() {
         val expected = SaveMovieViewModel.SAVE_SUCCESSFUL_MSG
         viewModel.saveMovie(1, "test", MovieStatus.PLAN_TO_WATCH, 2)
         val actual = viewModel.inputFeedbackMessage.getOrAwaitValueTest()

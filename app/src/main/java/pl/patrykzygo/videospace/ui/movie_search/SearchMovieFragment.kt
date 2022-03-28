@@ -110,7 +110,8 @@ class SearchMovieFragment : Fragment(),
             Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
         })
         viewModel.submitRequestInputErrorMessage.observe(viewLifecycleOwner, Observer {
-            val snackbar = Snackbar.make(binding.searchMovieFragmentCoordinator, it, Snackbar.LENGTH_LONG)
+            val snackbar =
+                Snackbar.make(binding.searchMovieFragmentCoordinator, it, Snackbar.LENGTH_LONG)
             snackbar.anchorView = binding.bottomNavViewLayout.bottomNavView
             snackbar.show()
 

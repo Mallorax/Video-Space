@@ -1,9 +1,9 @@
 package pl.patrykzygo.videospace.repository
 
 import androidx.paging.PagingState
+import pl.patrykzygo.videospace.constants.SortOptions
 import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
 import pl.patrykzygo.videospace.data.network.MovieResponse
-import pl.patrykzygo.videospace.constants.SortOptions
 import pl.patrykzygo.videospace.repository.delegate.DelegateMovieRefreshKey
 import pl.patrykzygo.videospace.repository.delegate.DelegateMovieRefreshKeyImpl
 import pl.patrykzygo.videospace.repository.delegate.MovieCalcKeyPositionDelegate

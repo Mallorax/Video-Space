@@ -1,6 +1,5 @@
 package pl.patrykzygo.videospace.ui.movie_dialogs
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

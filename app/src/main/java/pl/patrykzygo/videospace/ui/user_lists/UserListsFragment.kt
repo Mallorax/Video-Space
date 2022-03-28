@@ -10,9 +10,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
+import pl.patrykzygo.videospace.constants.MovieStatus
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.FragmentUserListsBinding
-import pl.patrykzygo.videospace.constants.MovieStatus
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegate
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegateImpl
 import pl.patrykzygo.videospace.ui.stored_list.StoredListFragment
@@ -41,7 +41,6 @@ class UserListsFragment : Fragment(),
         binding.bottomNavViewLayout.bottomNavView.setupWithNavController(findNavController())
         showStoredLists()
     }
-
 
 
     private fun showStoredLists() {

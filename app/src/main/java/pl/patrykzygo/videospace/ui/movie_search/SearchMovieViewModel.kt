@@ -95,7 +95,7 @@ class SearchMovieViewModel @Inject constructor(
         } catch (e: NumberFormatException) {
             if (minVotesInput.isNotEmpty()) {
                 _submitRequestInputErrorMessage.value = VOTE_COUNT_ERROR_MSG
-                    return
+                return
             } else {
                 null
             }

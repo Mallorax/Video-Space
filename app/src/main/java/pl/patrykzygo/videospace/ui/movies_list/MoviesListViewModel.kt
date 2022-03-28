@@ -1,7 +1,10 @@
 package pl.patrykzygo.videospace.ui.movies_list
 
 import androidx.lifecycle.*
-import androidx.paging.*
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
+import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -11,9 +14,10 @@ import pl.patrykzygo.videospace.constants.SortOptions
 import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
 import pl.patrykzygo.videospace.data.mapMoviesResponseToMovie
 import pl.patrykzygo.videospace.repository.discover_paging.DiscoverPagingSource
-import pl.patrykzygo.videospace.ui.SaveableMutableSaveStateFlow
 import javax.inject.Inject
 
+//Not sure if it's good idea to use it in VM,
+// however I couldn't find other way to make it work the way I wanted
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class MoviesListViewModel @Inject constructor(
@@ -24,11 +28,12 @@ class MoviesListViewModel @Inject constructor(
     private var _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> get() = _errorMessage
 
+    // I have no clue how I've managed to make it work, so don't even ask me
     private val _sortOption =
-        SaveableMutableSaveStateFlow(state, "sortOption", SortOptions.POPULARITY_DESC)
-    val sortOption: LiveData<String> get() = _sortOption.asStateFlow().asLiveData()
+        MutableStateFlow(state.get("sortOption") ?: SortOptions.POPULARITY_DESC)
+    val sortOption: LiveData<String> get() = _sortOption.asLiveData()
 
-    var movies = _sortOption.asStateFlow().flatMapLatest {
+    var movies = _sortOption.flatMapLatest {
         createMoviesPagingData()
     }.stateIn(
         scope = viewModelScope + Dispatchers.IO,

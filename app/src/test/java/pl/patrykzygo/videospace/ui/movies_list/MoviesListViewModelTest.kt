@@ -1,6 +1,7 @@
 package pl.patrykzygo.videospace.ui.movies_list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.SavedStateHandle
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
@@ -25,11 +26,11 @@ class MoviesListViewModelTest {
 
     @Before
     fun setup() {
-        viewModel = MoviesListViewModel(repo)
+        viewModel = MoviesListViewModel(repo, SavedStateHandle())
     }
 
     @Test
-    fun `testTriggerSortByVoteCount sets opposite order`(){
+    fun `testTriggerSortByVoteCount sets opposite order`() {
         viewModel.triggerSortByVoteCount()
         val expected = viewModel.sortOption.getOrAwaitValueTest()
         viewModel.triggerSortByVoteCount()
@@ -39,14 +40,14 @@ class MoviesListViewModelTest {
     }
 
     @Test
-    fun `testTriggerSortByVoteCount sets desc when in other order`(){
+    fun `testTriggerSortByVoteCount sets desc when in other order`() {
         viewModel.triggerSortByVoteCount()
         val actual = viewModel.sortOption.getOrAwaitValueTest()
         assertThat(actual).isEqualTo(SortOptions.VOTE_COUNT_DESC)
     }
 
     @Test
-    fun `testTriggerSortByVoteCount sets asc when in desc order`(){
+    fun `testTriggerSortByVoteCount sets asc when in desc order`() {
         viewModel.triggerSortByVoteCount()
         viewModel.triggerSortByVoteCount()
         val actual = viewModel.sortOption.getOrAwaitValueTest()

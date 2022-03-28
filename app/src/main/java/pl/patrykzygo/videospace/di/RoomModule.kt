@@ -7,10 +7,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import pl.patrykzygo.videospace.constants.DbConstants
 import pl.patrykzygo.videospace.data.local.GenreDao
 import pl.patrykzygo.videospace.data.local.MoviesDao
 import pl.patrykzygo.videospace.data.local.VideoSpaceDatabase
-import pl.patrykzygo.videospace.constants.DbConstants
 import javax.inject.Singleton
 
 //Provides all room related dependencies

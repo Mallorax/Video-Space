@@ -11,7 +11,7 @@
 
         <include
             android:id="@+id/app_bar_layout"
-            layout="@layout/app_bar"/>
+            layout="@layout/app_bar" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/movies_list_vertical_recycler"

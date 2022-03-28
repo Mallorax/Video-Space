@@ -15,9 +15,9 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
+import pl.patrykzygo.videospace.constants.MoviesRequestType
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.FragmentMovieDetailsBinding
-import pl.patrykzygo.videospace.constants.MoviesRequestType
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegate
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegateImpl
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment

@@ -9,9 +9,9 @@ import androidx.fragment.app.commit
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
+import pl.patrykzygo.videospace.constants.MoviesRequestType
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.FragmentDefaultListsBinding
-import pl.patrykzygo.videospace.constants.MoviesRequestType
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegate
 import pl.patrykzygo.videospace.ui.delegate.AppBarDelegateImpl
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
@@ -35,7 +35,8 @@ class DefaultListsFragment() : Fragment(),
         ) { _, bundle ->
             val movie = bundle.getParcelable<Movie>("movie")
             movie?.let {
-                val action = DefaultListsFragmentDirections.actionMainFragmentToMovieDetails(movie.id)
+                val action =
+                    DefaultListsFragmentDirections.actionMainFragmentToMovieDetails(movie.id)
                 findNavController().navigate(action)
             }
         }

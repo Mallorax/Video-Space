@@ -24,9 +24,6 @@ fun bindMoviePoster(imageView: ImageView, posterPath: String?) {
 }
 
 
-
-
-
 @BindingAdapter("averageVote")
 fun bindAverageVote(textView: TextView, voteAverage: Double?) {
     textView.text = getAverageVoteString(voteAverage)
