@@ -13,6 +13,11 @@ import javax.inject.Inject
 @HiltAndroidApp
 class VideoSpaceApplication : Application(), Configuration.Provider {
 
+    //Not sure if launching work manager here is good idea
+    //However I don't want to have any android related things in viewmodels
+    //in order to have easier time testing, thus I've decided to put it here
+    //at least for now
+
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
 
@@ -31,7 +36,9 @@ class VideoSpaceApplication : Application(), Configuration.Provider {
 
     private fun scheduleWorker(){
         val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .setRequiredNetworkType(NetworkType.UNMETERED)
+            .setRequiresBatteryNotLow(true)
+            .setRequiresCharging(true)
             .build()
         val workRequest = PeriodicWorkRequestBuilder<MovieGenreWorker>(
             15, TimeUnit.MINUTES,

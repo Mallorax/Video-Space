@@ -15,11 +15,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    //Not sure if launching work manager here is good idea
-    //However I don't want to have any android related things in viewmodels
-    //in order to have easier time testing, thus I've decided to put it here
-    //at least for now
-
     @Inject
     lateinit var fragmentFactory: DefaultFragmentFactory
 
