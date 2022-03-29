@@ -25,13 +25,16 @@ class MovieGenreWorker(
     override suspend fun doWork(): Result {
         val result = withContext(dispatchersProvider.io) {
             makeStatusNotification("Syncing data...", context)
+            setProgress(workDataOf("Progress" to 0))
              try {
                 val networkResponse = entryPoint.getGenresForMovies()
                 if (networkResponse.isSuccessful) {
+                    setProgress(workDataOf("Progress" to 50))
                     val mappedNetworkResponse = networkResponse.body()?.genres
                     val outputGenreEntities = cacheRemoteGenres(mappedNetworkResponse, dao)
                     val outputData =
                         workDataOf(WorkerConstants.KEY_GENRES_LIST_WORKER to outputGenreEntities)
+                    setProgress(workDataOf("Progress" to 100))
                     return@withContext Result.success(outputData)
                 } else {
                     return@withContext Result.failure()
