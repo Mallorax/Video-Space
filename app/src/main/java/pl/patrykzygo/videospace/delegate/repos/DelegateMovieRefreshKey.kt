@@ -1,4 +1,4 @@
-package pl.patrykzygo.videospace.repository.delegate
+package pl.patrykzygo.videospace.delegate.repos
 
 import androidx.paging.PagingState
 import pl.patrykzygo.videospace.data.network.MovieResponse

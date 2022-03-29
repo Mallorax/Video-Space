@@ -2,15 +2,15 @@ package pl.patrykzygo.videospace.repository.local_store
 
 import pl.patrykzygo.videospace.data.app.Genre
 import pl.patrykzygo.videospace.data.local.GenreDao
-import pl.patrykzygo.videospace.data.local.GenreEntity
 import pl.patrykzygo.videospace.data.mapGenreEntityToGenre
 import pl.patrykzygo.videospace.data.mapGenreItemToGenreNullable
-import pl.patrykzygo.videospace.data.network.movie_details.GenreItem
 import pl.patrykzygo.videospace.data.network.movie_details.GenresResponse
+import pl.patrykzygo.videospace.delegate.repos.CacheGenresDelegate
+import pl.patrykzygo.videospace.delegate.repos.CacheGenresDelegateImpl
+import pl.patrykzygo.videospace.delegate.repos.CancellationExceptionCheck
+import pl.patrykzygo.videospace.delegate.repos.CancellationExceptionCheckImpl
 import pl.patrykzygo.videospace.networking.GenresEntryPoint
 import pl.patrykzygo.videospace.repository.RepositoryResponse
-import pl.patrykzygo.videospace.repository.delegate.CancellationExceptionCheck
-import pl.patrykzygo.videospace.repository.delegate.CancellationExceptionCheckImpl
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -18,7 +18,8 @@ class LocalStoreGenresRepositoryImpl @Inject constructor(
     private val genreDao: GenreDao,
     private val genreEntryPoint: GenresEntryPoint
 ) : LocalStoreGenresRepository,
-    CancellationExceptionCheck by CancellationExceptionCheckImpl() {
+    CancellationExceptionCheck by CancellationExceptionCheckImpl(),
+    CacheGenresDelegate by CacheGenresDelegateImpl() {
 
     //returns genres from room db, if there aren't any inside room db
     // fetches genres from API and uses room db as local cache
@@ -51,23 +52,11 @@ class LocalStoreGenresRepositoryImpl @Inject constructor(
         }
     }
 
-    //saves genres from api into room db
-    private suspend fun cacheRemoteGenres(genres: List<GenreItem?>?) {
-        val genreEntities = genres?.mapNotNull {
-            if (it?.id != null && it.name != null) {
-                GenreEntity(it.id, it.name)
-            } else {
-                null
-            }
-        }
-        genreEntities?.let { genreDao.insertGenres(*it.toTypedArray()) }
-    }
-
     private suspend fun handleAllGenresNetworkResponse(
         networkResponse: Response<GenresResponse>
     ): RepositoryResponse<List<Genre>> {
         if (networkResponse.isSuccessful) {
-            cacheRemoteGenres(networkResponse.body()?.genres)
+            cacheRemoteGenres(networkResponse.body()?.genres, genreDao)
             val data = networkResponse.body()?.genres
                 ?: return RepositoryResponse.error("Couldn't retrieve genres")
             return RepositoryResponse.success(data.mapNotNull { mapGenreItemToGenreNullable(it) })
@@ -82,7 +71,7 @@ class LocalStoreGenresRepositoryImpl @Inject constructor(
     ): RepositoryResponse<Int> {
         return if (genresResponse.isSuccessful) {
             val genreResponseBody = genresResponse.body()?.genres
-            cacheRemoteGenres(genreResponseBody)
+            cacheRemoteGenres(genreResponseBody, genreDao)
             val responseGenre = genreResponseBody?.firstOrNull { t -> t?.name == genreName }
             if (responseGenre != null) {
                 RepositoryResponse.success(responseGenre.id!!)

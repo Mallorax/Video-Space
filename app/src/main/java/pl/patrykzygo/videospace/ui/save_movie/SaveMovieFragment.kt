@@ -13,8 +13,8 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.databinding.FragmentSaveMovieBinding
-import pl.patrykzygo.videospace.ui.delegate.AppBarDelegate
-import pl.patrykzygo.videospace.ui.delegate.AppBarDelegateImpl
+import pl.patrykzygo.videospace.delegate.ui.AppBarDelegate
+import pl.patrykzygo.videospace.delegate.ui.AppBarDelegateImpl
 
 @AndroidEntryPoint
 class SaveMovieFragment :

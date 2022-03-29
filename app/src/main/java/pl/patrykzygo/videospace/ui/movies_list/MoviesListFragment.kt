@@ -24,8 +24,8 @@ import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.constants.SortOptions
 import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
 import pl.patrykzygo.videospace.databinding.FragmentMoviesListBinding
-import pl.patrykzygo.videospace.ui.delegate.AppBarDelegate
-import pl.patrykzygo.videospace.ui.delegate.AppBarDelegateImpl
+import pl.patrykzygo.videospace.delegate.ui.AppBarDelegate
+import pl.patrykzygo.videospace.delegate.ui.AppBarDelegateImpl
 
 @AndroidEntryPoint
 class MoviesListFragment() : Fragment(),

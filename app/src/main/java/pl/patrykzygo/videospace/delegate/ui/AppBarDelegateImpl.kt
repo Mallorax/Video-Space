@@ -1,4 +1,4 @@
-package pl.patrykzygo.videospace.ui.delegate
+package pl.patrykzygo.videospace.delegate.ui
 
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController

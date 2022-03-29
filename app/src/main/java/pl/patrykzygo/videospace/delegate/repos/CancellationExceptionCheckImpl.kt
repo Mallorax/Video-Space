@@ -1,4 +1,4 @@
-package pl.patrykzygo.videospace.repository.delegate
+package pl.patrykzygo.videospace.delegate.repos
 
 import kotlin.coroutines.cancellation.CancellationException
 

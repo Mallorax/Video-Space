@@ -8,8 +8,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreMoviesRepository
-import pl.patrykzygo.videospace.ui.delegate.HandleMovieStatusDelegate
-import pl.patrykzygo.videospace.ui.delegate.HandleMovieStatusDelegateImpl
+import pl.patrykzygo.videospace.delegate.ui.HandleMovieStatusDelegate
+import pl.patrykzygo.videospace.delegate.ui.HandleMovieStatusDelegateImpl
 import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
 import javax.inject.Inject
 
