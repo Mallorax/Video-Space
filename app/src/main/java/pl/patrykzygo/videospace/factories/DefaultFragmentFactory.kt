@@ -1,4 +1,4 @@
-package pl.patrykzygo.videospace.ui.factories
+package pl.patrykzygo.videospace.factories
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory

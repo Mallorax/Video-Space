@@ -9,12 +9,16 @@ import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.databinding.ActivityMainBinding
-import pl.patrykzygo.videospace.ui.factories.DefaultFragmentFactory
+import pl.patrykzygo.videospace.factories.DefaultFragmentFactory
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    //Not sure if launching work manager here is good idea
+    //However I don't want to have any android related things in viewmodels
+    //in order to have easier time testing, thus I've decided to put it here
+    //at least for now
 
     @Inject
     lateinit var fragmentFactory: DefaultFragmentFactory
@@ -30,6 +34,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
+
+
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

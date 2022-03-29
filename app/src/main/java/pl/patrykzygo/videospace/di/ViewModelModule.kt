@@ -28,12 +28,6 @@ import pl.patrykzygo.videospace.ui.dispatchers.StandardDispatchers
 object ViewModelModule {
 
     @Provides
-    @ViewModelScoped
-    fun provideDispatchersProvider(): DispatchersProvider {
-        return StandardDispatchers()
-    }
-
-    @Provides
     fun provideLocalStoreMoviesRepository(
         moviesDao: MoviesDao,
         moviesEntryPoint: MoviesEntryPoint
