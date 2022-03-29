@@ -41,8 +41,8 @@ class VideoSpaceApplication : Application(), Configuration.Provider {
             .setRequiresCharging(true)
             .build()
         val workRequest = PeriodicWorkRequestBuilder<MovieGenreWorker>(
-            15, TimeUnit.MINUTES,
-            30, TimeUnit.SECONDS
+            1, TimeUnit.DAYS,
+            5, TimeUnit.HOURS
         )
             .setConstraints(constraints)
             .build()
