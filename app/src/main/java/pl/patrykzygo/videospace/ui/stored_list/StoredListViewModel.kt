@@ -32,7 +32,7 @@ class StoredListViewModel @Inject constructor(
     private val _movies = MutableLiveData<List<Movie>>(listOf())
     val movies: LiveData<List<Movie>> get() = _movies
 
-    private val _errorMessage = MutableLiveData("")
+    private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> get() = _errorMessage
 
     companion object Messages {
@@ -65,7 +65,7 @@ class StoredListViewModel @Inject constructor(
                 }
                 _movies.postValue(movies.awaitAll().filterNotNull())
             } else {
-                _errorMessage.postValue(repoResponse.message)
+                _errorMessage.postValue(repoResponse.message!!)
             }
         }
     }

@@ -42,6 +42,7 @@ class LocalStoreMoviesRepositoryImpl @Inject constructor(
             RepositoryResponse.success(data)
         } catch (e: Exception) {
             checkForCancellationException(e)
+            e.printStackTrace()
             RepositoryResponse.error(e.message.orEmpty())
         }
     }
@@ -54,6 +55,7 @@ class LocalStoreMoviesRepositoryImpl @Inject constructor(
             else RepositoryResponse.error(response.message())
         } catch (e: Exception) {
             checkForCancellationException(e)
+            e.printStackTrace()
             RepositoryResponse.error(e.message.orEmpty())
         }
     }
@@ -65,6 +67,7 @@ class LocalStoreMoviesRepositoryImpl @Inject constructor(
             else RepositoryResponse.success(movie)
         } catch (e: Exception) {
             checkForCancellationException(e)
+            e.printStackTrace()
             RepositoryResponse.error(e.message ?: "")
         }
     }
