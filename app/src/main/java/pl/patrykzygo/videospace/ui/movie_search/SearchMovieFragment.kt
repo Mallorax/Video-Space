@@ -107,13 +107,15 @@ class SearchMovieFragment : Fragment(),
             displayGenres(it)
         })
         viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
-            Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG)
+                .setAnchorView(binding.bottomAppBar)
+                .show()
         })
         viewModel.submitRequestInputErrorMessage.observe(viewLifecycleOwner, Observer {
             val snackbar =
                 Snackbar.make(binding.searchMovieFragmentCoordinator, it, Snackbar.LENGTH_LONG)
-            snackbar.anchorView = binding.bottomNavViewLayout.bottomNavView
-            snackbar.show()
+                    .setAnchorView(binding.bottomAppBar)
+                    .show()
 
         })
         viewModel.requestMoviesLiveEvent.observe(viewLifecycleOwner, Observer {

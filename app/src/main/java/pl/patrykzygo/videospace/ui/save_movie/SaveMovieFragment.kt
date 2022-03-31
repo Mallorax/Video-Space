@@ -49,7 +49,9 @@ class SaveMovieFragment :
 
     private fun subscribeToObservers() {
         viewModel.inputFeedbackMessage.observe(viewLifecycleOwner, Observer {
-            Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG)
+                .setAnchorView(binding.bottomAppBar)
+                .show()
         })
     }
 

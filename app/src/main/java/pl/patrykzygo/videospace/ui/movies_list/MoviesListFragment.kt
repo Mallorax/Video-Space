@@ -108,7 +108,9 @@ class MoviesListFragment() : Fragment(),
             displaySelectedSortOption(it)
         }
         viewModel.errorMessage.observe(viewLifecycleOwner) {
-            Snackbar.make(requireView(), "Error: $it", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(requireView(), "Error: $it", Snackbar.LENGTH_LONG)
+                .setAnchorView(binding.bottomAppBar)
+                .show()
         }
     }
 

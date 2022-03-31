@@ -8,7 +8,6 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.chip.Chip
@@ -107,26 +106,29 @@ class MovieDetailsFragment :
     }
 
     private fun subscribeObservers() {
-        viewModel.genres.observe(viewLifecycleOwner, Observer {
+        viewModel.genres.observe(viewLifecycleOwner) {
             showMovieGenres(it)
-        })
-        viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
-            Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
-        })
-        viewModel.saveMovieEvent.observe(viewLifecycleOwner, Observer {
+        }
+        viewModel.errorMessage.observe(viewLifecycleOwner) {
+            Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG)
+                .setAnchorView(binding.bottomAppBar).show()
+        }
+        viewModel.saveMovieEvent.observe(viewLifecycleOwner) {
             val action = MovieDetailsFragmentDirections.actionMovieDetailsToSaveMovieFragment(
                 it.id,
                 it.title
             )
             findNavController().navigate(action)
-        })
-        viewModel.searchInGenreLiveEvent.observe(viewLifecycleOwner, Observer {
+        }
+        viewModel.searchInGenreLiveEvent.observe(viewLifecycleOwner) {
             val action = MovieDetailsFragmentDirections.actionMovieDetailsToMoviesListFragment(it)
             findNavController().navigate(action)
-        })
-        viewModel.searchInGenreErrorMessage.observe(viewLifecycleOwner, Observer {
-            Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
-        })
+        }
+        viewModel.searchInGenreErrorMessage.observe(viewLifecycleOwner) {
+            Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG)
+                .setAnchorView(binding.bottomAppBar)
+                .show()
+        }
     }
 
     private fun showMovieGenres(genres: List<String>?) {
