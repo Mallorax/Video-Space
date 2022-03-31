@@ -10,8 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:elevation="0dp"
-        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+        app:elevation="0dp"
         app:menu="@menu/bottom_nav_menu"
         tools:menu="@menu/bottom_nav_menu" />
 

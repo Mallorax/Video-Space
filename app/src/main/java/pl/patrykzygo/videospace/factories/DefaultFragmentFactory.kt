@@ -2,6 +2,7 @@ package pl.patrykzygo.videospace.factories
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import pl.patrykzygo.videospace.ui.DefaultListsFragment
 import pl.patrykzygo.videospace.ui.movie_details.MovieDetailsFragment
 import pl.patrykzygo.videospace.ui.movie_dialogs.MovieModalBottomSheet
@@ -12,7 +13,7 @@ import pl.patrykzygo.videospace.ui.save_movie.SaveMovieFragment
 import pl.patrykzygo.videospace.ui.user_lists.UserListsFragment
 import javax.inject.Inject
 
-
+@ExperimentalCoroutinesApi
 class DefaultFragmentFactory
 @Inject constructor(
 ) : FragmentFactory() {

@@ -35,4 +35,11 @@
     <string name="minimum_vote_count_string">Minimum vote count:</string>
     <string name="minimum_score_string">Minimum score:</string>
     <string name="list_of_movies_label">List of movies</string>
+    <string name="add_movie_to_your_list">Add movie to your list</string>
+    <string name="movie_rating_icon">Movie rating icon</string>
+    <string name="poster_of_a_movie">Poster of a movie</string>
+    <string name="genres_to_include_in_your_search">Genres to include in your search</string>
+    <string name="score_picker_content_description">Pick minimum for movies</string>
+    <string name="save_movie">Save movie</string>
+    <string name="set_score_you_give_to_movie">Set score you give to movie</string>
 </resources>

@@ -60,7 +60,7 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:5.0.1'
 
     // Material Design
-    implementation 'com.google.android.material:material:1.6.0-alpha01'
+    implementation 'com.google.android.material:material:1.6.0-beta01'
 
     implementation 'io.github.ShawnLin013:number-picker:2.4.13'
 

@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pl.patrykzygo.videospace.R
@@ -27,6 +28,7 @@ import pl.patrykzygo.videospace.databinding.FragmentMoviesListBinding
 import pl.patrykzygo.videospace.delegate.ui.AppBarDelegate
 import pl.patrykzygo.videospace.delegate.ui.AppBarDelegateImpl
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MoviesListFragment() : Fragment(),
     AppBarDelegate by AppBarDelegateImpl() {
@@ -102,12 +104,12 @@ class MoviesListFragment() : Fragment(),
                 it?.let { it1 -> adapter.submitData(viewLifecycleOwner.lifecycle, it1) }
             }
         }
-        viewModel.sortOption.observe(viewLifecycleOwner, Observer {
+        viewModel.sortOption.observe(viewLifecycleOwner) {
             displaySelectedSortOption(it)
-        })
-        viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
+        }
+        viewModel.errorMessage.observe(viewLifecycleOwner) {
             Snackbar.make(requireView(), "Error: $it", Snackbar.LENGTH_LONG).show()
-        })
+        }
     }
 
 
