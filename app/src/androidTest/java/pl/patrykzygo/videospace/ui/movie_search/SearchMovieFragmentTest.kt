@@ -11,13 +11,11 @@ import org.junit.Rule
 import org.junit.Test
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.TestFragmentFactory
-import pl.patrykzygo.videospace.di.RetrofitModule
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
 import javax.inject.Inject
 
 @MediumTest
 @HiltAndroidTest
-@UninstallModules(RetrofitModule::class)
 class SearchMovieFragmentTest {
 
     @get:Rule

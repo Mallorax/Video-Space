@@ -21,7 +21,6 @@ import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.TestFragmentFactory
 import pl.patrykzygo.videospace.constants.MoviesRequestType
 import pl.patrykzygo.videospace.data.app.Movie
-import pl.patrykzygo.videospace.di.RetrofitModule
 import pl.patrykzygo.videospace.ui.binding_adapters.getAverageVoteString
 import pl.patrykzygo.videospace.ui.binding_adapters.getVoteCountString
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
@@ -30,7 +29,6 @@ import javax.inject.Inject
 
 @MediumTest
 @HiltAndroidTest
-@UninstallModules(RetrofitModule::class)
 class MovieDetailsFragmentTest {
 
     @get:Rule

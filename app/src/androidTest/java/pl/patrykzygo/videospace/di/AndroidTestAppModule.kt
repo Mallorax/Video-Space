@@ -4,14 +4,26 @@ import android.content.Context
 import androidx.navigation.testing.TestNavHostController
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dagger.hilt.testing.TestInstallIn
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import pl.patrykzygo.videospace.AndroidTestDispatcher
 import pl.patrykzygo.videospace.R
+import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
 
+@ExperimentalCoroutinesApi
 @Module
-@InstallIn(SingletonComponent::class)
-object TestModule {
+@TestInstallIn(
+    components = [SingletonComponent::class],
+    replaces = [AppModule::class]
+)
+object AndroidTestAppModule {
+
+    @Provides
+    fun provideDispatchersProvider(): DispatchersProvider {
+        return AndroidTestDispatcher()
+    }
 
     @Provides
     fun provideTestNavController(@ApplicationContext context: Context): TestNavHostController {

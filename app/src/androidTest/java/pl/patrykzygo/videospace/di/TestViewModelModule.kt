@@ -53,19 +53,15 @@ object TestViewModelModule {
         return FakeLocalStoreGenresRepositoryAndroid(genres)
     }
 
-
     @Provides
-    fun provideFakeMoviesSource(): MoviesPagingSource {
+    fun provideFakeMoviesPagingSource(): MoviesPagingSource{
         return FakeMoviesPagingSourceAndroid()
     }
 
     @Provides
-    fun provideFakeGenrePagingSource(): DiscoverPagingSource {
+    fun provideFakeDiscoverEntryPoint(): DiscoverPagingSource{
         return FakeDiscoverPagingSourceAndroid()
     }
 
-    @Provides
-    fun provideDispatchersProvider(): DispatchersProvider {
-        return AndroidTestDispatcher()
-    }
+
 }
