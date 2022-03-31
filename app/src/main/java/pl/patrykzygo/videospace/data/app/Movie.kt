@@ -22,8 +22,8 @@ data class Movie(
     val voteCount: Int,
     var isFavourite: Boolean = false,
     var isOnWatchLater: Boolean = false,
-    val score: Int = 0,
-    val status: String = MovieStatus.UNASSIGNED
+    var score: Int = 0,
+    var status: String = MovieStatus.UNASSIGNED
 ) : Parcelable {
 
 }

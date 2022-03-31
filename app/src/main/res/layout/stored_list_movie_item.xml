@@ -75,7 +75,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintTop_toTopOf="@id/movie_title"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintVertical_chainStyle="packed"
+            app:toggleScoreLabel="@{movie}" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/movie_score"
@@ -84,12 +85,12 @@
             android:fontFamily="@font/averia_serif_libre"
             android:maxLines="5"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            app:averageVote="@{movie.voteAverage}"
             app:layout_constraintBottom_toBottomOf="@id/movie_date"
             app:layout_constraintEnd_toEndOf="@id/movie_score_label"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/movie_score_label"
             app:layout_constraintTop_toBottomOf="@id/movie_score_label"
+            app:userScore="@{movie}"
             tools:text="10/10" />
 
         <androidx.constraintlayout.widget.Guideline

@@ -5,7 +5,6 @@ import dagger.Provides
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.testing.TestInstallIn
 import kotlinx.coroutines.runBlocking
-import pl.patrykzygo.videospace.AndroidTestDispatcher
 import pl.patrykzygo.videospace.data.app.Genre
 import pl.patrykzygo.videospace.data.mapMovieToMovieEntity
 import pl.patrykzygo.videospace.fakes.FakeDiscoverPagingSourceAndroid
@@ -16,7 +15,6 @@ import pl.patrykzygo.videospace.repository.discover_paging.DiscoverPagingSource
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreGenresRepository
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreMoviesRepository
 import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
-import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
 import pl.patrykzygo.videospace.util.provideMovieWithIdUi
 
 @Module
@@ -54,12 +52,12 @@ object TestViewModelModule {
     }
 
     @Provides
-    fun provideFakeMoviesPagingSource(): MoviesPagingSource{
+    fun provideFakeMoviesPagingSource(): MoviesPagingSource {
         return FakeMoviesPagingSourceAndroid()
     }
 
     @Provides
-    fun provideFakeDiscoverEntryPoint(): DiscoverPagingSource{
+    fun provideFakeDiscoverEntryPoint(): DiscoverPagingSource {
         return FakeDiscoverPagingSourceAndroid()
     }
 

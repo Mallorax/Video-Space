@@ -3,10 +3,10 @@ package pl.patrykzygo.videospace.repository.local_store
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.local.MoviesDao
 import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
-import pl.patrykzygo.videospace.networking.MoviesEntryPoint
-import pl.patrykzygo.videospace.repository.RepositoryResponse
 import pl.patrykzygo.videospace.delegate.repos.CancellationExceptionCheck
 import pl.patrykzygo.videospace.delegate.repos.CancellationExceptionCheckImpl
+import pl.patrykzygo.videospace.networking.MoviesEntryPoint
+import pl.patrykzygo.videospace.repository.RepositoryResponse
 import javax.inject.Inject
 
 class LocalStoreMoviesRepositoryImpl @Inject constructor(

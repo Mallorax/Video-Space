@@ -6,13 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import pl.patrykzygo.videospace.data.app.Movie
-import pl.patrykzygo.videospace.databinding.MovieListItemBindingImpl
-import pl.patrykzygo.videospace.ui.view_holders.MovieListItemViewHolder
+import pl.patrykzygo.videospace.databinding.StoredListMovieItemBinding
+import pl.patrykzygo.videospace.ui.view_holders.StoredListItemViewHolder
 
 class StoredListAdapter(private val onMovieClickListener: OnMovieClickListener) :
-    ListAdapter<Movie, MovieListItemViewHolder>(DiffCallback) {
+    ListAdapter<Movie, StoredListItemViewHolder>(DiffCallback) {
 
-    override fun onBindViewHolder(holderListItem: MovieListItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holderListItem: StoredListItemViewHolder, position: Int) {
         val movie = getItem(position)
         val binding = holderListItem.binding
         binding.root.setOnClickListener {
@@ -24,10 +24,10 @@ class StoredListAdapter(private val onMovieClickListener: OnMovieClickListener) 
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoredListItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = MovieListItemBindingImpl.inflate(inflater, parent, false)
-        return MovieListItemViewHolder(binding)
+        val binding = StoredListMovieItemBinding.inflate(inflater, parent, false)
+        return StoredListItemViewHolder(binding)
     }
 
 

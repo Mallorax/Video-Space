@@ -4,7 +4,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
 import pl.patrykzygo.videospace.data.local.GenreDao
 import pl.patrykzygo.videospace.data.local.MoviesDao
 import pl.patrykzygo.videospace.networking.DiscoverEntryPoint
@@ -18,8 +17,6 @@ import pl.patrykzygo.videospace.repository.local_store.LocalStoreMoviesRepositor
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreMoviesRepositoryImpl
 import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
 import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSourceImpl
-import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
-import pl.patrykzygo.videospace.ui.dispatchers.StandardDispatchers
 
 //Provides all dependencies needed for view models
 

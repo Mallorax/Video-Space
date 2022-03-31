@@ -12,10 +12,10 @@ import kotlinx.coroutines.launch
 import pl.patrykzygo.videospace.constants.MovieStatus
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.mapMovieDetailsResponseToMovie
-import pl.patrykzygo.videospace.repository.RepositoryResponse
-import pl.patrykzygo.videospace.repository.local_store.LocalStoreMoviesRepository
 import pl.patrykzygo.videospace.delegate.ui.HandleMovieStatusDelegate
 import pl.patrykzygo.videospace.delegate.ui.HandleMovieStatusDelegateImpl
+import pl.patrykzygo.videospace.repository.RepositoryResponse
+import pl.patrykzygo.videospace.repository.local_store.LocalStoreMoviesRepository
 import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
 import javax.inject.Inject
 
@@ -59,11 +59,15 @@ class StoredListViewModel @Inject constructor(
                 val movies = mutableListOf<Deferred<Movie?>>()
                 dbMovies.forEach { movieEntity ->
                     val movie = async {
-                        getMovie(movieEntity.movieId)
+                        val tmp = getMovie(movieEntity.movieId)
+                        tmp?.score = movieEntity.score
+                        tmp?.status = movieEntity.status
+                        return@async tmp
                     }
                     movies.add(movie)
                 }
-                _movies.postValue(movies.awaitAll().filterNotNull())
+                val collectedMovies = movies.awaitAll().filterNotNull()
+                _movies.postValue(collectedMovies)
             } else {
                 _errorMessage.postValue(repoResponse.message!!)
             }

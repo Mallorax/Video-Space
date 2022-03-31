@@ -5,7 +5,6 @@ import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.*
 import dagger.hilt.android.HiltAndroidApp
 import pl.patrykzygo.videospace.workers.MovieGenreWorker
-import pl.patrykzygo.videospace.workers.createStatusNotification
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -34,7 +33,7 @@ class VideoSpaceApplication : Application(), Configuration.Provider {
         }
     }
 
-    private fun scheduleWorker(){
+    private fun scheduleWorker() {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.UNMETERED)
             .setRequiresBatteryNotLow(true)
