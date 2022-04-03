@@ -46,6 +46,6 @@ class VideoSpaceApplication : Application(), Configuration.Provider {
             .setConstraints(constraints)
             .build()
         WorkManager.getInstance(applicationContext).enqueue(workRequest)
-        Timber.d("Work enqued")
+        Timber.d("Work enqueued")
     }
 }

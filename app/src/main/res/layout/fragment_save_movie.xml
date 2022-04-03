@@ -36,10 +36,11 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/averia_serif_libre"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                app:layout_constraintBottom_toTopOf="@+id/save_movie_status_textview"
                 app:layout_constraintEnd_toStartOf="@id/save_movie_guideline_right"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@id/save_movie_guideline_left"
-                app:layout_constraintTop_toBottomOf="@id/app_bar"
+                app:layout_constraintTop_toBottomOf="@+id/app_bar"
                 tools:text="Movie title" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -50,17 +51,20 @@
                 android:fontFamily="@font/averia_serif_libre"
                 android:text="@string/status"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                app:layout_constraintBottom_toTopOf="@+id/save_movie_chip_group"
                 app:layout_constraintStart_toEndOf="@id/save_movie_guideline_left"
-                app:layout_constraintTop_toBottomOf="@id/save_movie_title_textview" />
+                app:layout_constraintTop_toBottomOf="@+id/save_movie_title_textview" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/save_movie_chip_group"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/save_movie_score_textview"
                 app:layout_constraintEnd_toStartOf="@id/save_movie_guideline_right"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@id/save_movie_guideline_left"
-                app:layout_constraintTop_toBottomOf="@id/save_movie_status_textview"
+                app:layout_constraintTop_toBottomOf="@+id/save_movie_status_textview"
                 app:singleSelection="true">
 
                 <com.google.android.material.chip.Chip
@@ -114,9 +118,12 @@
                 android:fontFamily="@font/averia_serif_libre"
                 android:text="@string/score"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/save_movie_score_picker"
                 app:layout_constraintEnd_toStartOf="@id/save_movie_guideline_right"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@id/save_movie_guideline_left"
-                app:layout_constraintTop_toBottomOf="@id/save_movie_chip_group" />
+                app:layout_constraintTop_toBottomOf="@+id/save_movie_chip_group" />
 
             <com.shawnlin.numberpicker.NumberPicker
                 android:id="@+id/save_movie_score_picker"
@@ -124,10 +131,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:contentDescription="@string/set_score_you_give_to_movie"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/save_movie_notes_text_input_layout"
                 app:layout_constraintEnd_toStartOf="@id/save_movie_guideline_right"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@id/save_movie_guideline_left"
-                app:layout_constraintTop_toBottomOf="@id/save_movie_score_textview"
+                app:layout_constraintTop_toBottomOf="@+id/save_movie_score_textview"
                 app:np_max="10"
                 app:np_orientation="horizontal"
                 app:np_scrollerEnabled="true" />

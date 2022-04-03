@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import pl.patrykzygo.videospace.constants.MovieStatus
 import pl.patrykzygo.videospace.databinding.FragmentSaveMovieBinding
 import pl.patrykzygo.videospace.delegate.ui.AppBarDelegate
 import pl.patrykzygo.videospace.delegate.ui.AppBarDelegateImpl
@@ -53,21 +54,30 @@ class SaveMovieFragment :
                 .setAnchorView(binding.bottomAppBar)
                 .show()
         })
+        viewModel.selectedStatus.observe(viewLifecycleOwner) {
+            if (it == MovieStatus.COMPLETED || it == MovieStatus.DROPPED) {
+                binding.saveMovieScorePicker.visibility = View.VISIBLE
+                binding.saveMovieScoreTextview.visibility = View.VISIBLE
+
+            } else {
+                binding.saveMovieScorePicker.visibility = View.GONE
+                binding.saveMovieScoreTextview.visibility = View.GONE
+            }
+        }
     }
 
     private fun setListeners() {
         binding.saveMovieFab.setOnClickListener {
             val id = arguments?.let { SaveMovieFragmentArgs.fromBundle(it).id }
             val title = arguments?.let { SaveMovieFragmentArgs.fromBundle(it).movieTitle }
-            val status = getCheckedChipText()
             val score = binding.saveMovieScorePicker.value
-            viewModel.saveMovie(id, title, status, score)
+            viewModel.saveMovie(id, title, score)
         }
-    }
-
-    private fun getCheckedChipText(): String? {
-        val checkedChipId = binding.saveMovieChipGroup.checkedChipId
-        val checkedChip = requireView().findViewById<Chip>(checkedChipId)
-        return checkedChip?.text?.toString()
+        binding.saveMovieChipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+            if (checkedIds.isNotEmpty()) {
+                val chip = group.findViewById<Chip>(checkedIds.first())
+                viewModel.selectStatus(chip.text.toString())
+            }
+        }
     }
 }

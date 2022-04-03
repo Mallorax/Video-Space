@@ -32,7 +32,8 @@ class SaveMovieViewModelTest {
     @Test
     fun `saveMovie title is null shows error message`() {
         val expected = SaveMovieViewModel.SAVE_WRONG_UNRECOGNISABLE_MOVIE
-        viewModel.saveMovie(1, null, MovieStatus.PLAN_TO_WATCH, 2)
+        viewModel.selectStatus(MovieStatus.PLAN_TO_WATCH)
+        viewModel.saveMovie(1, null, 2)
         val actual = viewModel.inputFeedbackMessage.getOrAwaitValueTest()
         assertThat(actual).isEqualTo(expected)
     }
@@ -40,7 +41,8 @@ class SaveMovieViewModelTest {
     @Test
     fun `saveMovie id is null shows error message`() {
         val expected = SaveMovieViewModel.SAVE_WRONG_UNRECOGNISABLE_MOVIE
-        viewModel.saveMovie(null, "test", MovieStatus.PLAN_TO_WATCH, 2)
+        viewModel.selectStatus(MovieStatus.PLAN_TO_WATCH)
+        viewModel.saveMovie(null, "test", 2)
         val actual = viewModel.inputFeedbackMessage.getOrAwaitValueTest()
         assertThat(actual).isEqualTo(expected)
     }
@@ -48,7 +50,8 @@ class SaveMovieViewModelTest {
     @Test
     fun `saveMovie status is null shows error message`() {
         val expected = SaveMovieViewModel.SAVE_WRONG_STATUS
-        viewModel.saveMovie(1, "test", null, 2)
+        viewModel.selectStatus(MovieStatus.UNASSIGNED)
+        viewModel.saveMovie(1, "test",  2)
         val actual = viewModel.inputFeedbackMessage.getOrAwaitValueTest()
         assertThat(actual).isEqualTo(expected)
     }
@@ -56,7 +59,8 @@ class SaveMovieViewModelTest {
     @Test
     fun `saveMovie status is incorrect shows error message`() {
         val expected = SaveMovieViewModel.SAVE_WRONG_STATUS
-        viewModel.saveMovie(1, "test", "wrong status", 2)
+        viewModel.selectStatus("wrong status")
+        viewModel.saveMovie(1, "test", 2)
         val actual = viewModel.inputFeedbackMessage.getOrAwaitValueTest()
         assertThat(actual).isEqualTo(expected)
     }
@@ -64,7 +68,8 @@ class SaveMovieViewModelTest {
     @Test
     fun `saveMovie score is incorrect shows error message`() {
         val expected = SaveMovieViewModel.SAVE_WRONG_INCORRECT_SCORE
-        viewModel.saveMovie(1, "test", MovieStatus.PLAN_TO_WATCH, -1)
+        viewModel.selectStatus(MovieStatus.PLAN_TO_WATCH)
+        viewModel.saveMovie(1, "test", -1)
         val actual = viewModel.inputFeedbackMessage.getOrAwaitValueTest()
         assertThat(actual).isEqualTo(expected)
     }
@@ -72,7 +77,8 @@ class SaveMovieViewModelTest {
     @Test
     fun `saveMovie movie is saved correctly`() {
         val expected = SaveMovieViewModel.SAVE_SUCCESSFUL_MSG
-        viewModel.saveMovie(1, "test", MovieStatus.PLAN_TO_WATCH, 2)
+        viewModel.selectStatus(MovieStatus.PLAN_TO_WATCH)
+        viewModel.saveMovie(1, "test", 2)
         val actual = viewModel.inputFeedbackMessage.getOrAwaitValueTest()
         assertThat(actual).isEqualTo(expected)
     }

@@ -6,9 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import pl.patrykzygo.videospace.constants.MovieStatus
 import pl.patrykzygo.videospace.data.local.MovieEntity
-import pl.patrykzygo.videospace.delegate.ui.HandleMovieStatusDelegate
-import pl.patrykzygo.videospace.delegate.ui.HandleMovieStatusDelegateImpl
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreMoviesRepository
 import pl.patrykzygo.videospace.ui.dispatchers.DispatchersProvider
 import javax.inject.Inject
@@ -17,11 +16,13 @@ import javax.inject.Inject
 class SaveMovieViewModel @Inject constructor(
     private val moviesRepo: LocalStoreMoviesRepository,
     private val dispatchersProvider: DispatchersProvider
-) : ViewModel(),
-    HandleMovieStatusDelegate by HandleMovieStatusDelegateImpl() {
+) : ViewModel(){
 
     private val _inputFeedbackMessage = MutableLiveData<String>()
     val inputFeedbackMessage: LiveData<String> get() = _inputFeedbackMessage
+
+    private val _selectedStatus = MutableLiveData<String>()
+    val selectedStatus: LiveData<String> get() = _selectedStatus
 
     companion object FeedbackMessages {
         const val SAVE_SUCCESSFUL_MSG = "Movie saved successfully"
@@ -30,18 +31,23 @@ class SaveMovieViewModel @Inject constructor(
         const val SAVE_WRONG_INCORRECT_SCORE = "Incorrect score"
     }
 
+    fun selectStatus(status: String?) {
+        when (status) {
+            MovieStatus.COMPLETED -> _selectedStatus.value = status!!
+            MovieStatus.PLAN_TO_WATCH -> _selectedStatus.value = status!!
+            MovieStatus.ON_HOLD -> _selectedStatus.value = status!!
+            MovieStatus.WATCHING -> _selectedStatus.value = status!!
+            MovieStatus.DROPPED -> _selectedStatus.value = status!!
+            else -> _selectedStatus.value = MovieStatus.UNASSIGNED
+        }
+    }
 
-    fun saveMovie(id: Int?, title: String?, status: String?, score: Int?) {
-        if (!checkMovieInput(id, title, status, score)) {
+
+    fun saveMovie(id: Int?, title: String?, score: Int?) {
+        if (!checkMovieInput(id, title, _selectedStatus.value, score)) {
             return
         }
-        val movieStatus: String
-        try {
-            movieStatus = handleMovieStatus(status)
-        } catch (e: IllegalArgumentException) {
-            _inputFeedbackMessage.value = SAVE_WRONG_STATUS
-            return
-        }
+        val movieStatus = _selectedStatus.value!!
         viewModelScope.launch(dispatchersProvider.io) {
             moviesRepo.saveMovieToDb(
                 MovieEntity(
@@ -65,7 +71,7 @@ class SaveMovieViewModel @Inject constructor(
             _inputFeedbackMessage.value = SAVE_WRONG_INCORRECT_SCORE
             return false
         }
-        if (status == null || status.isEmpty()) {
+        if (status == null || status.isEmpty() || status == MovieStatus.UNASSIGNED) {
             _inputFeedbackMessage.value = SAVE_WRONG_STATUS
             return false
         }
