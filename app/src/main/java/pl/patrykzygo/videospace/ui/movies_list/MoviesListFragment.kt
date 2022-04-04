@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.paging.LoadState
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -110,6 +111,21 @@ class MoviesListFragment() : Fragment(),
             Snackbar.make(requireView(), "Error: $it", Snackbar.LENGTH_LONG)
                 .setAnchorView(binding.bottomAppBar)
                 .show()
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            adapter.loadStateFlow.collectLatest {
+                when (it.refresh) {
+                    is LoadState.Loading -> {
+                        binding.appBarLayout.appBarProgressBar.visibility = View.VISIBLE
+                    }
+                    is LoadState.Error -> {
+                        binding.appBarLayout.appBarProgressBar.visibility = View.GONE
+                    }
+                    else -> {
+                        binding.appBarLayout.appBarProgressBar.visibility = View.GONE
+                    }
+                }
+            }
         }
     }
 
