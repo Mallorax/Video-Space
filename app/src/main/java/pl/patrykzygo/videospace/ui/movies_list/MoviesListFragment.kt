@@ -117,16 +117,31 @@ class MoviesListFragment() : Fragment(),
                 when (it.refresh) {
                     is LoadState.Loading -> {
                         binding.appBarLayout.appBarProgressBar.visibility = View.VISIBLE
+                        showDefaultState()
                     }
                     is LoadState.Error -> {
                         binding.appBarLayout.appBarProgressBar.visibility = View.GONE
+                        showNoConnectionState()
                     }
                     else -> {
                         binding.appBarLayout.appBarProgressBar.visibility = View.GONE
+                        showDefaultState()
                     }
                 }
             }
         }
+    }
+
+    private fun showDefaultState() {
+        binding.moviesListVerticalRecycler.visibility = View.VISIBLE
+        binding.noConnectionIcon.visibility = View.INVISIBLE
+        binding.noConnectionTextview.visibility = View.INVISIBLE
+    }
+
+    private fun showNoConnectionState() {
+        binding.moviesListVerticalRecycler.visibility = View.INVISIBLE
+        binding.noConnectionIcon.visibility = View.VISIBLE
+        binding.noConnectionTextview.visibility = View.VISIBLE
     }
 
 
