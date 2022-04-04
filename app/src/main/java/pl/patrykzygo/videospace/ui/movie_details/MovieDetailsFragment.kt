@@ -129,6 +129,14 @@ class MovieDetailsFragment :
                 .setAnchorView(binding.bottomAppBar)
                 .show()
         }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.appBar.appBarProgressBar.visibility = View.VISIBLE
+            } else {
+                binding.appBar.appBarProgressBar.visibility = View.GONE
+            }
+        }
     }
 
     private fun showMovieGenres(genres: List<String>?) {

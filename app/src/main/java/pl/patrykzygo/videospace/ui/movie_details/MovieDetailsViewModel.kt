@@ -41,19 +41,25 @@ class MovieDetailsViewModel @Inject constructor(
     private val _searchInGenreErrorMessage = MutableLiveData<String>()
     val searchInGenreErrorMessage get() = _searchInGenreErrorMessage
 
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
-    //Because of they way API movie passed into fragment of this viewmodel doesn't contain genres it belongs to
+
+    //Because of they way API movie was passed into fragment of this viewmodel, it doesn't contain genres it belongs to,
     //thus additional call to api is needed to get missing data
     fun setMovie(movieId: Int?) {
         movieId?.let {
             viewModelScope.launch(dispatchersProvider.io) {
+                _isLoading.postValue(true)
                 val response = moviesRepo.getSpecificMovie(it)
                 if (response.status == RepositoryResponse.Status.SUCCESS) {
                     val mappedMovie = mapMovieDetailsResponseToMovie(response.data!!)
                     _movie.postValue(mappedMovie)
                     _genres.postValue(mappedMovie.genres)
+                    _isLoading.postValue(false)
                 } else if (response.status == RepositoryResponse.Status.ERROR) {
                     _errorMessage.postValue(response.message!!)
+                    _isLoading.postValue(false)
                 }
             }
         }
@@ -61,13 +67,16 @@ class MovieDetailsViewModel @Inject constructor(
 
     fun moveToGenreList(searchedGenre: String) {
         viewModelScope.launch(dispatchersProvider.io) {
+            _isLoading.postValue(true)
             val response = genresRepo.getAllGenres()
             if (response.status == RepositoryResponse.Status.SUCCESS) {
                 val genre = response.data!!.first { t -> t.genreName == searchedGenre }
                 val request = DiscoverMovieRequest(includedGenres = genre.genreId.toString())
                 _searchInGenreLiveEvent.postValue(request)
+                _isLoading.postValue(false)
             } else {
                 _searchInGenreErrorMessage.postValue("Check your internet connection")
+                _isLoading.postValue(false)
             }
         }
     }
