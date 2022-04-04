@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -16,23 +16,60 @@
             android:layout_marginStart="@dimen/small_margin"
             android:layout_marginTop="@dimen/small_margin"
             android:text="@string/default_movies_list_label"
-            android:textSize="@dimen/section_text_size" />
+            android:textSize="@dimen/section_text_size"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/movies_list_recycler"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+
+
+        <ImageView
+            android:id="@+id/no_connection_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:contentDescription="@string/no_connection_icon"
+            android:src="@drawable/ic_baseline_signal_cellular_off"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/no_connection_textview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:visibility="visible" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/no_connection_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_connection"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/no_connection_icon"
+            tools:visibility="visible" />
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/movies_list_recycler"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/small_margin"
             android:layout_marginTop="@dimen/small_margin"
             android:layout_marginEnd="@dimen/small_margin"
             android:orientation="horizontal"
+            android:visibility="invisible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/movie_gallery_item" />
+            app:layout_constraintTop_toBottomOf="@id/list_label"
+            tools:listitem="@layout/movie_gallery_item"
+            tools:visibility="visible" />
 
-    </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

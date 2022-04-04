@@ -16,7 +16,7 @@ import pl.patrykzygo.videospace.data.mapMoviesResponseToMovie
 import pl.patrykzygo.videospace.repository.discover_paging.DiscoverPagingSource
 import javax.inject.Inject
 
-//Not sure if it's good idea to use it in VM,
+//Not sure if it's good idea to use saved state handle in VM,
 // however I couldn't find other way to make it work the way I wanted
 @ExperimentalCoroutinesApi
 @HiltViewModel

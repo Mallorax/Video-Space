@@ -42,4 +42,6 @@
     <string name="score_picker_content_description">Pick minimum for movies</string>
     <string name="save_movie">Save movie</string>
     <string name="set_score_you_give_to_movie">Set score you give to movie</string>
+    <string name="no_connection_icon">No connection icon</string>
+    <string name="no_connection">No connection</string>
 </resources>
