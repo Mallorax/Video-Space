@@ -94,14 +94,14 @@ class MoviesDaoTest {
     @Test
     fun returnsMoviesWithStatus() = runTest {
         val expected = listOf(
-            MovieEntity(1, "1", status = MovieStatus.PLAN_TO_WATCH),
-            MovieEntity(2, "2", status = MovieStatus.PLAN_TO_WATCH),
-            MovieEntity(3, "3", status = MovieStatus.PLAN_TO_WATCH)
+            MovieEntity(1, "1", status = MovieStatus.PLAN_TO_WATCH, releaseDate = ""),
+            MovieEntity(2, "2", status = MovieStatus.PLAN_TO_WATCH, releaseDate = ""),
+            MovieEntity(3, "3", status = MovieStatus.PLAN_TO_WATCH, releaseDate = "")
         )
         val trash = listOf(
-            MovieEntity(4, "1", status = MovieStatus.ON_HOLD),
-            MovieEntity(5, "1", status = MovieStatus.DROPPED),
-            MovieEntity(6, "1", status = MovieStatus.UNASSIGNED)
+            MovieEntity(4, "1", status = MovieStatus.ON_HOLD, releaseDate = ""),
+            MovieEntity(5, "1", status = MovieStatus.DROPPED, releaseDate = ""),
+            MovieEntity(6, "1", status = MovieStatus.UNASSIGNED, releaseDate = "")
         )
         dao.insertMovies(*expected.toTypedArray())
         dao.insertMovies(*trash.toTypedArray())

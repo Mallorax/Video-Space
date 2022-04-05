@@ -69,7 +69,7 @@ fun provideMovieWithIdUi(id: Int): Movie {
 }
 
 fun createMovieEntity(id: Int, status: String = MovieStatus.UNASSIGNED): MovieEntity {
-    return MovieEntity(id, title = "title $id", status = status)
+    return MovieEntity(id, title = "title $id", status = status, releaseDate = "")
 }
 
 

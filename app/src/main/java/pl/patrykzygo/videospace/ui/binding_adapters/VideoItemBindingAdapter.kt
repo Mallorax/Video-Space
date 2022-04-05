@@ -12,6 +12,7 @@ import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.constants.MovieStatus
 import pl.patrykzygo.videospace.constants.Paths
 import pl.patrykzygo.videospace.data.app.Movie
+import pl.patrykzygo.videospace.data.app.SimpleMovie
 
 
 @BindingAdapter("moviePoster")
@@ -54,7 +55,7 @@ fun bindReleaseDate(textView: TextView, releaseDate: String) {
 }
 
 @BindingAdapter("userScore")
-fun bindUserScore(textView: TextView, movie: Movie) {
+fun bindUserScore(textView: TextView, movie: SimpleMovie) {
     if (movie.status != MovieStatus.COMPLETED) {
         textView.visibility = View.INVISIBLE
     } else {
@@ -65,7 +66,7 @@ fun bindUserScore(textView: TextView, movie: Movie) {
 }
 
 @BindingAdapter("toggleScoreLabel")
-fun bindToggleScoreLabel(textView: TextView, movie: Movie) {
+fun bindToggleScoreLabel(textView: TextView, movie: SimpleMovie) {
     if (movie.status != MovieStatus.COMPLETED) {
         textView.visibility = View.INVISIBLE
     } else {

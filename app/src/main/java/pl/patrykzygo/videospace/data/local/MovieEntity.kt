@@ -11,8 +11,11 @@ data class MovieEntity(
     @ColumnInfo(name = "movie_id")
     val movieId: Int,
     val title: String,
+    val releaseDate: String,
     val score: Int = 0,
     val status: String = MovieStatus.UNASSIGNED,
-    val date: Long = System.currentTimeMillis()
+    val dateSaved: Long = System.currentTimeMillis(),
+    val posterPath: String = "",
+    val userNotes: String = ""
 ) {
 }

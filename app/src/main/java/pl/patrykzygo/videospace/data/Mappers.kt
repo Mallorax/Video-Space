@@ -4,6 +4,7 @@ import pl.patrykzygo.videospace.data.app.Genre
 import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.local.GenreEntity
 import pl.patrykzygo.videospace.data.local.MovieEntity
+import pl.patrykzygo.videospace.data.app.SimpleMovie
 import pl.patrykzygo.videospace.data.network.MovieResponse
 import pl.patrykzygo.videospace.data.network.movie_details.GenreItem
 import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
@@ -52,7 +53,9 @@ fun mapMovieToMovieEntity(movie: Movie): MovieEntity {
         movie.id,
         title = movie.title,
         score = movie.score,
-        status = movie.status
+        status = movie.status,
+        releaseDate = movie.releaseDate,
+        posterPath = movie.posterPath
     )
 }
 
@@ -60,6 +63,17 @@ fun mapGenreEntityToGenre(genreEntity: GenreEntity): Genre {
     return Genre(
         genreEntity.id,
         genreEntity.name
+    )
+}
+
+fun mapMovieEntityToSimpleMovie(movieEntity: MovieEntity): SimpleMovie {
+    return SimpleMovie(
+        movieEntity.movieId,
+        movieEntity.title,
+        movieEntity.releaseDate,
+        movieEntity.score,
+        movieEntity.status,
+        movieEntity.posterPath
     )
 }
 

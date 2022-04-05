@@ -11,7 +11,9 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import pl.patrykzygo.videospace.constants.MovieStatus
 import pl.patrykzygo.videospace.data.app.Movie
+import pl.patrykzygo.videospace.data.app.SimpleMovie
 import pl.patrykzygo.videospace.data.mapMovieDetailsResponseToMovie
+import pl.patrykzygo.videospace.data.mapMovieEntityToSimpleMovie
 import pl.patrykzygo.videospace.delegate.ui.HandleMovieStatusDelegate
 import pl.patrykzygo.videospace.delegate.ui.HandleMovieStatusDelegateImpl
 import pl.patrykzygo.videospace.repository.RepositoryResponse
@@ -29,8 +31,8 @@ class StoredListViewModel @Inject constructor(
     private val _moviesStatus = MutableLiveData(MovieStatus.UNASSIGNED)
     val movieStatus: LiveData<String> get() = _moviesStatus
 
-    private val _movies = MutableLiveData<List<Movie>>(listOf())
-    val movies: LiveData<List<Movie>> get() = _movies
+    private val _movies = MutableLiveData<List<SimpleMovie>>(listOf())
+    val movies: LiveData<List<SimpleMovie>> get() = _movies
 
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> get() = _errorMessage
@@ -56,30 +58,11 @@ class StoredListViewModel @Inject constructor(
             val repoResponse = moviesRepo.getAllMoviesWithStatus(status)
             if (repoResponse.status == RepositoryResponse.Status.SUCCESS) {
                 val dbMovies = repoResponse.data!!
-                val movies = mutableListOf<Deferred<Movie?>>()
-                dbMovies.forEach { movieEntity ->
-                    val movie = async {
-                        val tmp = getMovie(movieEntity.movieId)
-                        tmp?.score = movieEntity.score
-                        tmp?.status = movieEntity.status
-                        return@async tmp
-                    }
-                    movies.add(movie)
-                }
-                val collectedMovies = movies.awaitAll().filterNotNull()
-                _movies.postValue(collectedMovies)
+                _movies.postValue(dbMovies.map { mapMovieEntityToSimpleMovie(it) })
             } else {
                 _errorMessage.postValue(repoResponse.message!!)
             }
         }
     }
 
-    private suspend fun getMovie(id: Int): Movie? {
-        val movie = moviesRepo.getSpecificMovie(id)
-        return if (movie.status == RepositoryResponse.Status.SUCCESS) {
-            mapMovieDetailsResponseToMovie(movie.data!!)
-        } else {
-            null
-        }
-    }
 }

@@ -45,9 +45,11 @@ class StoredListFragment(
 
     private fun createRecyclerViewAdapter(): StoredListAdapter {
         return StoredListAdapter(StoredListAdapter.OnMovieClickListener { movie, _ ->
-            val bundle = Bundle()
-            bundle.putParcelable("movie", movie)
-            parentFragmentManager.setFragmentResult("storedListResult", bundle)
+            movie?.let {
+                val bundle = Bundle()
+                bundle.putInt("movieId", movie.movieId)
+                parentFragmentManager.setFragmentResult("storedListResult", bundle)
+            }
         })
     }
 

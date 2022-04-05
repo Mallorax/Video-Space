@@ -64,9 +64,9 @@
         <action
             android:id="@+id/action_movie_details_to_save_movie_fragment"
             app:destination="@id/save_movie_fragment"
-            app:enterAnim="@android:anim/overshoot_interpolator"
+            app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/overshoot_interpolator"
+            app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
 
     </fragment>
@@ -80,9 +80,7 @@
         <argument
             android:name="id"
             app:argType="integer" />
-        <argument
-            android:name="movieTitle"
-            app:argType="string" />
+
     </fragment>
 
 </navigation>

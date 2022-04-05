@@ -75,9 +75,9 @@ class LocalStoreMoviesRepositoryImplTest {
     @Test
     fun `getAllMoviesWithStatus returns only movies with correct status`() = runTest {
         val expected = listOf(
-            MovieEntity(1, "1", status = MovieStatus.PLAN_TO_WATCH),
-            MovieEntity(2, "2", status = MovieStatus.PLAN_TO_WATCH),
-            MovieEntity(3, "3", status = MovieStatus.PLAN_TO_WATCH)
+            MovieEntity(1, "1", status = MovieStatus.PLAN_TO_WATCH, releaseDate = ""),
+            MovieEntity(2, "2", status = MovieStatus.PLAN_TO_WATCH, releaseDate = ""),
+            MovieEntity(3, "3", status = MovieStatus.PLAN_TO_WATCH, releaseDate = "")
         )
         Mockito.`when`(mockMoviesDao.getAllMoviesWithStatus(MovieStatus.PLAN_TO_WATCH)).thenAnswer {
             expected
@@ -136,7 +136,7 @@ class LocalStoreMoviesRepositoryImplTest {
 
     @Test
     fun `getSpecificMovieFromDb returns success`() = runTest {
-        val expected = MovieEntity(1, "1")
+        val expected = MovieEntity(1, "1", releaseDate = "")
         Mockito.`when`(mockMoviesDao.getMovieWithId(1)).thenAnswer {
             expected
         }

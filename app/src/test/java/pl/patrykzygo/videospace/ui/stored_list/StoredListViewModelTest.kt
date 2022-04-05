@@ -10,6 +10,7 @@ import pl.patrykzygo.MainDispatcherRule
 import pl.patrykzygo.videospace.TestDispatcherProvider
 import pl.patrykzygo.videospace.constants.MovieStatus
 import pl.patrykzygo.videospace.data.app.Movie
+import pl.patrykzygo.videospace.data.app.SimpleMovie
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.repository.FakeLocalStoreMoviesRepository
 import pl.patrykzygo.videospace.util.getOrAwaitValueTest
@@ -55,7 +56,7 @@ class StoredListViewModelTest {
     fun `getMoviesWithStatus returns success`() {
         val expected = mutableListOf<MovieEntity>()
         for (i in 10..15) {
-            val movie = MovieEntity(i, i.toString(), status = MovieStatus.PLAN_TO_WATCH)
+            val movie = MovieEntity(i, i.toString(), status = MovieStatus.PLAN_TO_WATCH, releaseDate = "")
             fakeMoviesRepo.movieList.add(movie)
             expected.add(movie)
         }
@@ -66,11 +67,11 @@ class StoredListViewModelTest {
     }
 
     private fun checkListsEqualityWithId(
-        actual: List<Movie>,
+        actual: List<SimpleMovie>,
         expected: List<MovieEntity>
     ): Boolean {
         actual.forEach { actualMovie ->
-            if (!expected.any { expectedMovie -> expectedMovie.movieId == actualMovie.id }) return false
+            if (!expected.any { expectedMovie -> expectedMovie.movieId == actualMovie.movieId }) return false
         }
         return true
     }

@@ -78,13 +78,13 @@ fun fakeGenreEntitiesList(): List<GenreEntity> {
 
 fun fakeMoviesEntitiesList(): List<MovieEntity> {
     return listOf(
-        MovieEntity(1, "1"),
-        MovieEntity(2, "2"),
-        MovieEntity(3, "3"),
-        MovieEntity(4, "4"),
-        MovieEntity(5, "5"),
-        MovieEntity(6, "6"),
-        MovieEntity(7, "7")
+        MovieEntity(1, "1", releaseDate = ""),
+        MovieEntity(2, "2", releaseDate = ""),
+        MovieEntity(3, "3", releaseDate = ""),
+        MovieEntity(4, "4", releaseDate = ""),
+        MovieEntity(5, "5", releaseDate = ""),
+        MovieEntity(6, "6", releaseDate = ""),
+        MovieEntity(7, "7", releaseDate = "")
     )
 }
 

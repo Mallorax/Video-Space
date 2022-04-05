@@ -115,8 +115,7 @@ class MovieDetailsFragment :
         }
         viewModel.saveMovieEvent.observe(viewLifecycleOwner) {
             val action = MovieDetailsFragmentDirections.actionMovieDetailsToSaveMovieFragment(
-                it.id,
-                it.title
+                it.id
             )
             findNavController().navigate(action)
         }

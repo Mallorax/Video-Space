@@ -12,7 +12,6 @@ import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.constants.MovieStatus
-import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.FragmentUserListsBinding
 import pl.patrykzygo.videospace.delegate.ui.AppBarDelegate
 import pl.patrykzygo.videospace.delegate.ui.AppBarDelegateImpl
@@ -74,12 +73,10 @@ class UserListsFragment : Fragment(),
             "storedListResult",
             viewLifecycleOwner
         ) { _, bundle ->
-            val movie = bundle.getParcelable<Movie>("movie")
-            if (movie != null) {
-                val action =
-                    UserListsFragmentDirections.actionUsersListFragmentToMovieDetails(movie.id)
-                findNavController().navigate(action)
-            }
+            val movieId = bundle.getInt("movieId")
+            val action =
+                UserListsFragmentDirections.actionUsersListFragmentToMovieDetails(movieId)
+            findNavController().navigate(action)
         }
 
     }

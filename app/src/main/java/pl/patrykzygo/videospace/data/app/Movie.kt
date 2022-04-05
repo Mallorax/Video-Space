@@ -23,7 +23,8 @@ data class Movie(
     var isFavourite: Boolean = false,
     var isOnWatchLater: Boolean = false,
     var score: Int = 0,
-    var status: String = MovieStatus.UNASSIGNED
+    var status: String = MovieStatus.UNASSIGNED,
+    var userNotes: String = ""
 ) : Parcelable {
 
 }

@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import pl.patrykzygo.videospace.data.app.Movie
+import pl.patrykzygo.videospace.data.app.SimpleMovie
 import pl.patrykzygo.videospace.databinding.StoredListMovieItemBinding
 import pl.patrykzygo.videospace.ui.view_holders.StoredListItemViewHolder
 
 class StoredListAdapter(private val onMovieClickListener: OnMovieClickListener) :
-    ListAdapter<Movie, StoredListItemViewHolder>(DiffCallback) {
+    ListAdapter<SimpleMovie, StoredListItemViewHolder>(DiffCallback) {
 
     override fun onBindViewHolder(holderListItem: StoredListItemViewHolder, position: Int) {
         val movie = getItem(position)
@@ -31,17 +32,17 @@ class StoredListAdapter(private val onMovieClickListener: OnMovieClickListener) 
     }
 
 
-    companion object DiffCallback : DiffUtil.ItemCallback<Movie>() {
-        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem === newItem
+    companion object DiffCallback : DiffUtil.ItemCallback<SimpleMovie>() {
+        override fun areItemsTheSame(oldItem: SimpleMovie, newItem: SimpleMovie): Boolean {
+            return oldItem.movieId == newItem.movieId
         }
 
-        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.originalTitle == newItem.originalTitle
+        override fun areContentsTheSame(oldItem: SimpleMovie, newItem: SimpleMovie): Boolean {
+            return oldItem.title == newItem.title
         }
     }
 
-    class OnMovieClickListener(val clickListener: (movie: Movie?, view: View) -> Unit) {
-        fun onMovieClick(movie: Movie?, view: View) = clickListener(movie, view)
+    class OnMovieClickListener(val clickListener: (movie: SimpleMovie?, view: View) -> Unit) {
+        fun onMovieClick(movie: SimpleMovie?, view: View) = clickListener(movie, view)
     }
 }

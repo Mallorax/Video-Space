@@ -34,6 +34,7 @@ class SaveMovieFragment :
         _binding = FragmentSaveMovieBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        viewModel.getMovieToSave(arguments?.let { SaveMovieFragmentArgs.fromBundle(it).id } ?: -1)
 
         return binding.root
     }
@@ -42,17 +43,16 @@ class SaveMovieFragment :
         super.onViewCreated(view, savedInstanceState)
         setUpAppBar(findNavController(), binding.appBar.toolbar)
         binding.bottomNavViewLayout.bottomNavView.setupWithNavController(findNavController())
-        binding.saveMovieTitleTextview.text =
-            arguments?.let { SaveMovieFragmentArgs.fromBundle(it).movieTitle }
         setListeners()
         subscribeToObservers()
     }
 
     private fun subscribeToObservers() {
         viewModel.inputFeedbackMessage.observe(viewLifecycleOwner, Observer {
-            Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG)
-                .setAnchorView(binding.bottomAppBar)
-                .show()
+            showSnackbarWithText(it)
+        })
+        viewModel.errorFeedbackMessage.observe(viewLifecycleOwner, Observer {
+            showSnackbarWithText(it)
         })
         viewModel.selectedStatus.observe(viewLifecycleOwner) {
             if (it == MovieStatus.COMPLETED || it == MovieStatus.DROPPED) {
@@ -64,14 +64,23 @@ class SaveMovieFragment :
                 binding.saveMovieScoreTextview.visibility = View.GONE
             }
         }
+        viewModel.movie.observe(viewLifecycleOwner){
+            binding.saveMovieTitleTextview.text = it.title
+            binding.releaseDateTextview.text = "Release date: ${it.releaseDate}"
+        }
+    }
+
+    private fun showSnackbarWithText(text: String){
+        Snackbar.make(requireView(), text, Snackbar.LENGTH_LONG)
+            .setAnchorView(binding.bottomAppBar)
+            .show()
     }
 
     private fun setListeners() {
         binding.saveMovieFab.setOnClickListener {
-            val id = arguments?.let { SaveMovieFragmentArgs.fromBundle(it).id }
-            val title = arguments?.let { SaveMovieFragmentArgs.fromBundle(it).movieTitle }
+            val userText = binding.saveMovieNotesTextInput.text.toString()
             val score = binding.saveMovieScorePicker.value
-            viewModel.saveMovie(id, title, score)
+            viewModel.saveMovie(score, userText)
         }
         binding.saveMovieChipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
             if (checkedIds.isNotEmpty()) {
