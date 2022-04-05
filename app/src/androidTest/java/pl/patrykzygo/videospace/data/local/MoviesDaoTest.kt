@@ -6,6 +6,9 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -51,27 +54,28 @@ class MoviesDaoTest {
     @Test
     fun insertAndReadMovieTest() = runTest {
         val movie = createMovieEntity(1)
-        var requestedMovie: List<MovieEntity> = listOf()
+        var requestedMovie: Flow<List<MovieEntity>> = flow { }
         val job = launch(mainDispatcherRule.dispatcher) {
             dao.insertMovie(movie)
             requestedMovie = dao.getAllMovies()
         }
         job.join()
-        assertThat(requestedMovie).contains(movie)
+        assertThat(requestedMovie.first()).contains(movie)
     }
 
     @Test
     fun updateAndReadMoviesWithStatusTest() = runTest {
         val movie = createMovieEntity(1, MovieStatus.PLAN_TO_WATCH)
         val movie2 = createMovieEntity(2, MovieStatus.ON_HOLD)
-        var requestedMovies: List<MovieEntity> = listOf()
+        var requestedMovies: Flow<List<MovieEntity>> = flow { }
         val job = launch(mainDispatcherRule.dispatcher) {
             dao.insertMovie(movie)
             dao.insertMovie(movie2)
             requestedMovies = dao.getAllMoviesWithStatus(MovieStatus.ON_HOLD)
         }
         job.join()
-        assertThat(requestedMovies).doesNotContain(movie)
+        val firstItem = requestedMovies.first()
+        assertThat(firstItem).doesNotContain(movie)
     }
 
     @Test
@@ -81,14 +85,14 @@ class MoviesDaoTest {
         val movie3 = createMovieEntity(3)
         val movie4 = createMovieEntity(4)
         val movies = mutableListOf(movie, movie2, movie3)
-        var requestedMovies: List<MovieEntity> = listOf()
+        var requestedMovies: Flow<List<MovieEntity>> = flow { }
         val job = launch(mainDispatcherRule.dispatcher) {
             dao.insertMovies(*movies.toTypedArray(), movie4)
             requestedMovies = dao.getAllMovies()
         }
         movies.add(movie4)
         job.join()
-        assertThat(requestedMovies).containsExactlyElementsIn(movies)
+        assertThat(requestedMovies.first()).containsExactlyElementsIn(movies)
     }
 
     @Test
@@ -106,16 +110,16 @@ class MoviesDaoTest {
         dao.insertMovies(*expected.toTypedArray())
         dao.insertMovies(*trash.toTypedArray())
         val actual = dao.getAllMoviesWithStatus(MovieStatus.PLAN_TO_WATCH)
-        assertThat(actual).containsExactlyElementsIn(expected)
+        assertThat(actual.first()).containsExactlyElementsIn(expected)
     }
 
     @Test
     fun readMoviesWhenTableIsEmptyTest() = runTest {
-        var requestedMovies: List<MovieEntity> = listOf()
+        var requestedMovies: Flow<List<MovieEntity>> = flow { }
         val job = launch(mainDispatcherRule.dispatcher) {
             requestedMovies = dao.getAllMovies()
         }
         job.join()
-        assertThat(requestedMovies).isEmpty()
+        assertThat(requestedMovies.first()).isEmpty()
     }
 }

@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MoviesDao {
@@ -15,11 +16,11 @@ interface MoviesDao {
     suspend fun insertMovies(vararg moviesDao: MovieEntity)
 
     @Query("SELECT * FROM movies")
-    suspend fun getAllMovies(): List<MovieEntity>
+    fun getAllMovies(): Flow<List<MovieEntity>>
 
     @Query("SELECT * FROM movies WHERE movie_id = :id")
     suspend fun getMovieWithId(id: Int): MovieEntity?
 
     @Query("SELECT * FROM movies WHERE status = :status")
-    suspend fun getAllMoviesWithStatus(status: String): List<MovieEntity>
+    fun getAllMoviesWithStatus(status: String): Flow<List<MovieEntity>>
 }

@@ -19,7 +19,7 @@ import javax.inject.Inject
 class SaveMovieViewModel @Inject constructor(
     private val moviesRepo: LocalStoreMoviesRepository,
     private val dispatchersProvider: DispatchersProvider
-) : ViewModel(){
+) : ViewModel() {
 
     private val _inputFeedbackMessage = MutableLiveData<String>()
     val inputFeedbackMessage: LiveData<String> get() = _inputFeedbackMessage
@@ -52,13 +52,13 @@ class SaveMovieViewModel @Inject constructor(
         }
     }
 
-    fun getMovieToSave(id: Int){
+    fun getMovieToSave(id: Int) {
         viewModelScope.launch(dispatchersProvider.io) {
             val response = moviesRepo.getSpecificMovie(id)
-            if (response.status == RepositoryResponse.Status.SUCCESS){
+            if (response.status == RepositoryResponse.Status.SUCCESS) {
                 val movie = mapMovieDetailsResponseToMovie(response.data!!)
                 _movie.postValue(movie)
-            }else{
+            } else {
                 _errorMessage.postValue(COULDNT_FIND_MOVIE)
             }
         }

@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.app.SimpleMovie
 import pl.patrykzygo.videospace.databinding.StoredListMovieItemBinding
 import pl.patrykzygo.videospace.ui.view_holders.StoredListItemViewHolder

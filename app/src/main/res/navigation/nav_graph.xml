@@ -6,8 +6,8 @@ or if it's handled internally. Couldn't really find much info about it either --
     android:id="@+id/nav_graph"
     app:startDestination="@id/home">
 
-    <include app:graph="@navigation/home"/>
-    <include app:graph="@navigation/user_lists"/>
-    <include app:graph="@navigation/search"/>
+    <include app:graph="@navigation/home" />
+    <include app:graph="@navigation/user_lists" />
+    <include app:graph="@navigation/search" />
 
 </navigation>

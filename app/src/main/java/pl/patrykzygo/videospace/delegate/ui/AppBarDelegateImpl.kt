@@ -9,7 +9,13 @@ import pl.patrykzygo.videospace.R
 class AppBarDelegateImpl() : AppBarDelegate {
 
     override fun setUpAppBar(navController: NavController, toolbar: Toolbar) {
-        val appBarConfig = AppBarConfiguration(setOf(R.id.home_fragment, R.id.user_lists_fragment, R.id.search_fragment))
+        val appBarConfig = AppBarConfiguration(
+            setOf(
+                R.id.home_fragment,
+                R.id.user_lists_fragment,
+                R.id.search_fragment
+            )
+        )
         toolbar.setupWithNavController(navController, appBarConfig)
     }
 }

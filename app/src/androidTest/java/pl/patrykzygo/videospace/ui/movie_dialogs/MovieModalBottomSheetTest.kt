@@ -18,8 +18,6 @@ import org.junit.Rule
 import org.junit.Test
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.TestFragmentFactory
-import pl.patrykzygo.videospace.data.app.Movie
-import pl.patrykzygo.videospace.data.app.SimpleMovie
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
 import pl.patrykzygo.videospace.ui.view_holders.GalleryItemViewHolder
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
@@ -56,7 +54,12 @@ class MovieModalBottomSheetTest {
         val expectedMovieId = provideMovieWithIdUi(1).id
         var resultedMovieId: Int = -1
         launchFragmentInHiltContainer<MoviesGalleryFragment>(fragmentFactory = fragmentFactory) {
-            val movies = PagingData.from(listOf(provideSimpleMovieWithIdUi(1), provideSimpleMovieWithIdUi(2)))
+            val movies = PagingData.from(
+                listOf(
+                    provideSimpleMovieWithIdUi(1),
+                    provideSimpleMovieWithIdUi(2)
+                )
+            )
             adapter.submitData(lifecycle, movies)
             binding.moviesListRecycler.adapter = adapter
             binding.moviesListRecycler.visibility = View.VISIBLE

@@ -74,9 +74,8 @@ class MovieDetailsFragmentTest {
             resultedMovieId = arguments?.let { MovieDetailsFragmentArgs.fromBundle(it).movieId }
         }
         launchFragmentInHiltContainer<MovieDetailsFragment>(fragmentFactory = testFragmentFactory) {
-            movieId = movie.id
             val bundle = Bundle()
-            bundle.putParcelable("movie", movie)
+            bundle.putInt("movie", movie.id)
             parentFragmentManager.setFragmentResult("movieResult", bundle)
         }
         assertThat(resultedMovieId).isEqualTo(movie.id)

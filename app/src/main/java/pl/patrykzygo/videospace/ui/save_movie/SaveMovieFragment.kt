@@ -64,13 +64,13 @@ class SaveMovieFragment :
                 binding.saveMovieScoreTextview.visibility = View.GONE
             }
         }
-        viewModel.movie.observe(viewLifecycleOwner){
+        viewModel.movie.observe(viewLifecycleOwner) {
             binding.saveMovieTitleTextview.text = it.title
             binding.releaseDateTextview.text = "Release date: ${it.releaseDate}"
         }
     }
 
-    private fun showSnackbarWithText(text: String){
+    private fun showSnackbarWithText(text: String) {
         Snackbar.make(requireView(), text, Snackbar.LENGTH_LONG)
             .setAnchorView(binding.bottomAppBar)
             .show()

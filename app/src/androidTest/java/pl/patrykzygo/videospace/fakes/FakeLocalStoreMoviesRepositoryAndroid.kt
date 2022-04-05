@@ -1,5 +1,7 @@
 package pl.patrykzygo.videospace.fakes
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
 import pl.patrykzygo.videospace.repository.RepositoryResponse
@@ -11,9 +13,9 @@ open class FakeLocalStoreMoviesRepositoryAndroid @Inject constructor() :
 
     private val movieList = mutableListOf<MovieEntity>()
 
-    override suspend fun getAllMoviesWithStatus(status: String): RepositoryResponse<List<MovieEntity>> {
+    override suspend fun getAllMoviesWithStatus(status: String): Flow<RepositoryResponse<List<MovieEntity>>> {
         val moviesWithStatus = movieList.filter { t -> t.status == status }
-        return RepositoryResponse.success(moviesWithStatus)
+        return flow { emit(RepositoryResponse.success(moviesWithStatus)) }
     }
 
 
@@ -25,8 +27,8 @@ open class FakeLocalStoreMoviesRepositoryAndroid @Inject constructor() :
         movieList.addAll(movies)
     }
 
-    override suspend fun getAllMoviesFromDb(): RepositoryResponse<List<MovieEntity>> {
-        return RepositoryResponse.success(movieList)
+    override suspend fun getAllMoviesFromDb(): Flow<RepositoryResponse<List<MovieEntity>>> {
+        return flow { emit(RepositoryResponse.success(movieList)) }
     }
 
     override suspend fun getSpecificMovie(id: Int): RepositoryResponse<MovieDetailsResponse> {

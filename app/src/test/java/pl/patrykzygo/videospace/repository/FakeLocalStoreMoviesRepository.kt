@@ -1,5 +1,7 @@
 package pl.patrykzygo.videospace.repository
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import pl.patrykzygo.videospace.constants.MovieStatus
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.network.movie_details.GenreItem
@@ -17,12 +19,12 @@ open class FakeLocalStoreMoviesRepository : LocalStoreMoviesRepository {
         const val SPECIFIC_MOVIE_ERROR = "Specific movie error"
     }
 
-    override suspend fun getAllMoviesWithStatus(status: String): RepositoryResponse<List<MovieEntity>> {
+    override suspend fun getAllMoviesWithStatus(status: String): Flow<RepositoryResponse<List<MovieEntity>>> {
         return if (status != MovieStatus.DROPPED) { //1 variant returns error for testing purposes
             val moviesWithStatus = movieList.filter { t -> t.status == status }
-            RepositoryResponse.success(moviesWithStatus)
+            flow { emit(RepositoryResponse.success(moviesWithStatus)) }
         } else {
-            RepositoryResponse.error(MOVIES_WITH_STATUS_ERROR)
+            flow { emit(RepositoryResponse.error(MOVIES_WITH_STATUS_ERROR)) }
         }
     }
 
@@ -34,8 +36,8 @@ open class FakeLocalStoreMoviesRepository : LocalStoreMoviesRepository {
         movieList.addAll(movies)
     }
 
-    override suspend fun getAllMoviesFromDb(): RepositoryResponse<List<MovieEntity>> {
-        return RepositoryResponse.success(movieList)
+    override suspend fun getAllMoviesFromDb(): Flow<RepositoryResponse<List<MovieEntity>>> {
+        return flow { emit(RepositoryResponse.success(movieList)) }
     }
 
     override suspend fun getSpecificMovie(id: Int): RepositoryResponse<MovieDetailsResponse> {

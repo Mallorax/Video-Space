@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -59,23 +58,23 @@ class MoviesGalleryFragment : Fragment() {
         })
         viewLifecycleOwner.lifecycleScope.launch {
             adapter.loadStateFlow.collectLatest { states ->
-                if (states.refresh is LoadState.Loading){
+                if (states.refresh is LoadState.Loading) {
                     showContent()
-                }else if (states.refresh is LoadState.Error){
+                } else if (states.refresh is LoadState.Error) {
                     showError()
                 }
             }
         }
     }
 
-    private fun showContent(){
+    private fun showContent() {
         binding.listLabel.visibility = View.VISIBLE
         binding.moviesListRecycler.visibility = View.VISIBLE
         binding.noConnectionIcon.visibility = View.INVISIBLE
         binding.noConnectionTextview.visibility = View.INVISIBLE
     }
 
-    private fun showError(){
+    private fun showError() {
         binding.listLabel.visibility = View.INVISIBLE
         binding.moviesListRecycler.visibility = View.INVISIBLE
         binding.noConnectionIcon.visibility = View.VISIBLE

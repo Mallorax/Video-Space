@@ -3,6 +3,8 @@ package pl.patrykzygo.videospace.repository.local_store
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -49,27 +51,29 @@ class LocalStoreMoviesRepositoryImplTest {
     fun `getAllMoviesFromDb returns success with populated db`() = runTest {
         val expected = fakeMoviesEntitiesList()
         Mockito.`when`(mockMoviesDao.getAllMovies()).thenAnswer {
-            expected
+            flow { emit(expected) }
         }
-        val result = repo.getAllMoviesFromDb()
+        val result = repo.getAllMoviesFromDb().first()
         assertThat(result.data).isEqualTo(expected)
     }
 
     @Test
-    fun `getAllMoviesFromDb returns no movies repo response`() = runTest {
+    fun `getAllMoviesFromDb returns empty list`() = runTest {
         Mockito.`when`(mockMoviesDao.getAllMovies()).thenAnswer {
-            listOf<MovieEntity>()
+            flow { emit(listOf<MovieEntity>()) }
         }
-        val expected = RepositoryResponse.error<List<MovieEntity>>("No movies saved to show")
-        val result = repo.getAllMoviesFromDb()
-        assertThat(result.message).isEqualTo(expected.message)
+        val result = repo.getAllMoviesFromDb().first()
+        assertThat(result.data).isEmpty()
     }
 
     @Test
     fun `getAllMoviesFromDb catches exception`() = runTest(UnconfinedTestDispatcher()) {
+        Mockito.`when`(mockMoviesDao.getAllMovies()).thenAnswer {
+            Exception()
+        }
         val expected = RepositoryResponse.Status.ERROR
         val actual = repo.getAllMoviesFromDb()
-        assertThat(actual.status).isEqualTo(expected)
+        assertThat(actual.first().status).isEqualTo(expected)
     }
 
     @Test
@@ -80,19 +84,19 @@ class LocalStoreMoviesRepositoryImplTest {
             MovieEntity(3, "3", status = MovieStatus.PLAN_TO_WATCH, releaseDate = "")
         )
         Mockito.`when`(mockMoviesDao.getAllMoviesWithStatus(MovieStatus.PLAN_TO_WATCH)).thenAnswer {
-            expected
+            flow { emit(expected) }
         }
         val result = repo.getAllMoviesWithStatus(MovieStatus.PLAN_TO_WATCH)
-        assertThat(result.data).containsExactlyElementsIn(expected)
+        assertThat(result.first().data).containsExactlyElementsIn(expected)
     }
 
     @Test
     fun `getAllMoviesWithStatus returns empty list`() = runTest {
         Mockito.`when`(mockMoviesDao.getAllMoviesWithStatus(MovieStatus.PLAN_TO_WATCH)).thenAnswer {
-            listOf<MovieEntity>()
+            flow { emit(listOf<MovieEntity>()) }
         }
-        val result = repo.getAllMoviesWithStatus(MovieStatus.PLAN_TO_WATCH)
-        assertThat(result.data).isEmpty()
+        val result = repo.getAllMoviesWithStatus(MovieStatus.PLAN_TO_WATCH).first().data
+        assertThat(result?.isEmpty()).isTrue()
     }
 
     @Test
@@ -101,7 +105,7 @@ class LocalStoreMoviesRepositoryImplTest {
             throw Exception()
         }
         val result = repo.getAllMoviesWithStatus(MovieStatus.PLAN_TO_WATCH)
-        assertThat(result.status).isEqualTo(RepositoryResponse.Status.ERROR)
+        assertThat(result.first().status).isEqualTo(RepositoryResponse.Status.ERROR)
     }
 
     @Test

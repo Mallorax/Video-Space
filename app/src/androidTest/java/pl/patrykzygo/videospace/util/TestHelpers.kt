@@ -62,7 +62,7 @@ fun provideMovieWithIdUi(id: Int): Movie {
     )
 }
 
-fun provideSimpleMovieWithIdUi(id: Int): SimpleMovie{
+fun provideSimpleMovieWithIdUi(id: Int): SimpleMovie {
     return SimpleMovie(
         id, "Title $id", "Release date: $id", posterPath = "Poster of $id"
     )

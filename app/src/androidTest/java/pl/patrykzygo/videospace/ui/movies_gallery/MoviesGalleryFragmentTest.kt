@@ -22,7 +22,6 @@ import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.TestFragmentFactory
 import pl.patrykzygo.videospace.ui.view_holders.GalleryItemViewHolder
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
-import pl.patrykzygo.videospace.util.provideMovieWithIdUi
 import pl.patrykzygo.videospace.util.provideSimpleMovieWithIdUi
 import javax.inject.Inject
 
@@ -60,7 +59,12 @@ class MoviesGalleryFragmentTest {
     @Test
     fun clickMovieListItem_showBottomSheetDialog() {
         launchFragmentInHiltContainer<MoviesGalleryFragment>(fragmentFactory = testFragmentFactory) {
-            val movies = PagingData.from(listOf(provideSimpleMovieWithIdUi(1), provideSimpleMovieWithIdUi(2)))
+            val movies = PagingData.from(
+                listOf(
+                    provideSimpleMovieWithIdUi(1),
+                    provideSimpleMovieWithIdUi(2)
+                )
+            )
             adapter.submitData(lifecycle, movies)
             binding.moviesListRecycler.adapter = adapter
             binding.moviesListRecycler.visibility = View.VISIBLE

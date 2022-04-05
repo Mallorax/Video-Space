@@ -88,6 +88,6 @@
 
     <fragment
         android:id="@+id/stored_list_fragment"
-        tools:layout="@layout/fragment_stored_list"/>
+        tools:layout="@layout/fragment_stored_list" />
 
 </navigation>

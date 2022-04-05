@@ -15,5 +15,5 @@ data class SimpleMovie(
     var status: String = MovieStatus.UNASSIGNED,
     val posterPath: String,
     var userNotes: String = ""
-): Parcelable {
+) : Parcelable {
 }

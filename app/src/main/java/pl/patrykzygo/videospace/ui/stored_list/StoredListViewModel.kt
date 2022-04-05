@@ -5,14 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pl.patrykzygo.videospace.constants.MovieStatus
-import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.app.SimpleMovie
-import pl.patrykzygo.videospace.data.mapMovieDetailsResponseToMovie
 import pl.patrykzygo.videospace.data.mapMovieEntityToSimpleMovie
 import pl.patrykzygo.videospace.delegate.ui.HandleMovieStatusDelegate
 import pl.patrykzygo.videospace.delegate.ui.HandleMovieStatusDelegateImpl
@@ -56,11 +52,13 @@ class StoredListViewModel @Inject constructor(
         val status = _moviesStatus.value ?: return
         viewModelScope.launch(dispatchersProvider.io) {
             val repoResponse = moviesRepo.getAllMoviesWithStatus(status)
-            if (repoResponse.status == RepositoryResponse.Status.SUCCESS) {
-                val dbMovies = repoResponse.data!!
-                _movies.postValue(dbMovies.map { mapMovieEntityToSimpleMovie(it) })
-            } else {
-                _errorMessage.postValue(repoResponse.message!!)
+            repoResponse.collectLatest {
+                if (it.status == RepositoryResponse.Status.SUCCESS) {
+                    val dbMovies = it.data!!
+                    _movies.postValue(dbMovies.map { mapMovieEntityToSimpleMovie(it) })
+                } else {
+                    _errorMessage.postValue(it.message!!)
+                }
             }
         }
     }
