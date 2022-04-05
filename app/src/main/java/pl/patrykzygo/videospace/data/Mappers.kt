@@ -2,29 +2,21 @@ package pl.patrykzygo.videospace.data
 
 import pl.patrykzygo.videospace.data.app.Genre
 import pl.patrykzygo.videospace.data.app.Movie
+import pl.patrykzygo.videospace.data.app.SimpleMovie
 import pl.patrykzygo.videospace.data.local.GenreEntity
 import pl.patrykzygo.videospace.data.local.MovieEntity
-import pl.patrykzygo.videospace.data.app.SimpleMovie
 import pl.patrykzygo.videospace.data.network.MovieResponse
 import pl.patrykzygo.videospace.data.network.movie_details.GenreItem
 import pl.patrykzygo.videospace.data.network.movie_details.MovieDetailsResponse
 
-fun mapMoviesResponseToMovie(movieResponse: MovieResponse): Movie {
-    return Movie(
-        movieResponse.adult ?: false,
-        movieResponse.backdropPath.orEmpty(),
-        listOf(),
-        movieResponse.id,
-        movieResponse.originalLanguage.orEmpty(),
-        movieResponse.originalTitle.orEmpty(),
-        movieResponse.overview.orEmpty(),
-        movieResponse.popularity ?: 0.0,
-        movieResponse.posterPath.orEmpty(),
-        movieResponse.releaseDate.orEmpty(),
-        movieResponse.title.orEmpty(),
-        movieResponse.video ?: false,
-        movieResponse.voteAverage ?: 0.0,
-        movieResponse.voteCount
+fun mapMoviesResponseToSimpleMovie(movieResponse: MovieResponse): SimpleMovie {
+    return SimpleMovie(
+        movieId = movieResponse.id,
+        title = movieResponse.title.orEmpty(),
+        releaseDate = movieResponse.releaseDate.orEmpty(),
+        voteAverage = movieResponse.voteAverage ?: 0.00,
+        voteCount = movieResponse.voteCount,
+        posterPath = movieResponse.posterPath.orEmpty()
     )
 }
 
@@ -71,9 +63,9 @@ fun mapMovieEntityToSimpleMovie(movieEntity: MovieEntity): SimpleMovie {
         movieEntity.movieId,
         movieEntity.title,
         movieEntity.releaseDate,
-        movieEntity.score,
-        movieEntity.status,
-        movieEntity.posterPath
+        userScore = movieEntity.score,
+        status = movieEntity.status,
+        posterPath = movieEntity.posterPath
     )
 }
 

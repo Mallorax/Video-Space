@@ -15,7 +15,6 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.constants.MoviesRequestType
-import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.FragmentMovieDetailsBinding
 import pl.patrykzygo.videospace.delegate.ui.AppBarDelegate
 import pl.patrykzygo.videospace.delegate.ui.AppBarDelegateImpl
@@ -91,11 +90,10 @@ class MovieDetailsFragment :
 
     private fun setFragmentResultListener() {
         parentFragmentManager.setFragmentResultListener("movieResult", this) { _, bundle ->
-            val movie = bundle.getParcelable<Movie>("movie")
-            movie?.let {
-                val action = MovieDetailsFragmentDirections.actionMovieDetailsSelf(movie.id)
-                findNavController().navigate(action)
-            }
+            val movieId = bundle.getInt("movie")
+            val action = MovieDetailsFragmentDirections.actionMovieDetailsSelf(movieId)
+            findNavController().navigate(action)
+
         }
     }
 

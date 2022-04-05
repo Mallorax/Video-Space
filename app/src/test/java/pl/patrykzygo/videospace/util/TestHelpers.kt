@@ -102,19 +102,12 @@ fun fakeMoviesResponseList(page: Int): List<MovieResponse> {
     for (i in 0..10) {
         moviesList.add(
             MovieResponse(
-                false, "frew",
-                listOf(1, 2, 3, 4),
-                page * 10 + i,
-                "eng",
-                "title",
-                "overview",
-                2.2,
+                false, page + i,
                 "poster",
-                "releaseDate",
+                "release date",
                 "title",
-                false,
-                3.5,
-                5
+                5.23,
+                534,
             )
         )
     }

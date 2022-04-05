@@ -19,10 +19,12 @@ import org.junit.Test
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.TestFragmentFactory
 import pl.patrykzygo.videospace.data.app.Movie
+import pl.patrykzygo.videospace.data.app.SimpleMovie
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
 import pl.patrykzygo.videospace.ui.view_holders.GalleryItemViewHolder
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
 import pl.patrykzygo.videospace.util.provideMovieWithIdUi
+import pl.patrykzygo.videospace.util.provideSimpleMovieWithIdUi
 import javax.inject.Inject
 
 
@@ -51,15 +53,15 @@ class MovieModalBottomSheetTest {
 
     @Test
     fun testIfFragmentResultIsSet() {
-        val expectedMovie = provideMovieWithIdUi(1)
-        var resultedMovie: Movie? = null
+        val expectedMovieId = provideMovieWithIdUi(1).id
+        var resultedMovieId: Int = -1
         launchFragmentInHiltContainer<MoviesGalleryFragment>(fragmentFactory = fragmentFactory) {
-            val movies = PagingData.from(listOf(provideMovieWithIdUi(1), provideMovieWithIdUi(2)))
+            val movies = PagingData.from(listOf(provideSimpleMovieWithIdUi(1), provideSimpleMovieWithIdUi(2)))
             adapter.submitData(lifecycle, movies)
             binding.moviesListRecycler.adapter = adapter
             binding.moviesListRecycler.visibility = View.VISIBLE
             parentFragmentManager.setFragmentResultListener("movieResult", this) { _, bundle ->
-                resultedMovie = bundle.getParcelable("movie")
+                resultedMovieId = bundle.getInt("movie")
             }
 
         }
@@ -71,7 +73,7 @@ class MovieModalBottomSheetTest {
         )
         onView(withId(R.id.more_info_text_view)).inRoot(RootMatchers.isFocusable())
             .perform(click())
-        assertThat(resultedMovie).isEqualTo(expectedMovie)
+        assertThat(resultedMovieId).isEqualTo(expectedMovieId)
     }
 
 

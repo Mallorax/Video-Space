@@ -150,7 +150,7 @@ class MoviesListFragment() : Fragment(),
             MoviesListPagingDataAdapter(MoviesListPagingDataAdapter.OnMovieClickListener { movie, _ ->
                 movie?.let {
                     val action =
-                        MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetails(movie.id)
+                        MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetails(movie.movieId)
                     findNavController().navigate(action)
                 }
 

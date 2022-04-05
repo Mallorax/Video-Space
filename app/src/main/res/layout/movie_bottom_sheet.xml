@@ -7,7 +7,7 @@
 
         <variable
             name="movie"
-            type="pl.patrykzygo.videospace.data.app.Movie" />
+            type="pl.patrykzygo.videospace.data.app.SimpleMovie" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

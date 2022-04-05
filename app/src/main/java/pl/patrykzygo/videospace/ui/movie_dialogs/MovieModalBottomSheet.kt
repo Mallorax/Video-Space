@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
-import pl.patrykzygo.videospace.data.app.Movie
+import pl.patrykzygo.videospace.data.app.SimpleMovie
 import pl.patrykzygo.videospace.databinding.MovieBottomSheetBinding
 
 @AndroidEntryPoint
@@ -28,7 +28,7 @@ open class MovieModalBottomSheet : BottomSheetDialogFragment() {
     ): View? {
         _binding = MovieBottomSheetBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
-        val movie = arguments?.getParcelable<Movie>("movie")
+        val movie = arguments?.getParcelable<SimpleMovie>("movie")
         binding.movie = movie
 
         return binding.root
@@ -36,19 +36,20 @@ open class MovieModalBottomSheet : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val movie = arguments?.getParcelable<Movie>("movie")
+        val movie = arguments?.getParcelable<SimpleMovie>("movie")
         setListeners(movie)
     }
 
 
-    private fun setListeners(movie: Movie?) {
+    private fun setListeners(movie: SimpleMovie?) {
         binding.moreInfoTextView.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putParcelable("movie", movie)
-            parentFragmentManager.setFragmentResult("movieResult", bundle)
-            dismiss()
+            movie?.let {
+                val bundle = Bundle()
+                bundle.putInt("movie", movie.movieId)
+                parentFragmentManager.setFragmentResult("movieResult", bundle)
+                dismiss()
+            }
         }
-
     }
 
 

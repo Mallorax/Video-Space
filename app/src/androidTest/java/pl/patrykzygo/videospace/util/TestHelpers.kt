@@ -9,6 +9,7 @@ import okhttp3.ResponseBody
 import org.hamcrest.Matcher
 import pl.patrykzygo.videospace.constants.MovieStatus
 import pl.patrykzygo.videospace.data.app.Movie
+import pl.patrykzygo.videospace.data.app.SimpleMovie
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.network.EntryPointMoviesResponse
 import pl.patrykzygo.videospace.data.network.MovieResponse
@@ -40,19 +41,12 @@ private fun fakeMoviesResponseListUi(page: Int): List<MovieResponse> {
     for (i in 0..10) {
         moviesList.add(
             MovieResponse(
-                false, "frew",
-                listOf(1, 2, 3, 4),
-                page * 10 + i,
-                "eng",
-                "title",
-                "overview",
-                2.2,
+                false, page + i,
                 "poster",
-                "releaseDate",
+                "release date",
                 "title",
-                false,
-                3.5,
-                5
+                5.23,
+                534,
             )
         )
     }
@@ -65,6 +59,12 @@ fun provideMovieWithIdUi(id: Int): Movie {
         "lang", "title $id", "descritpion $id",
         0.0, "poster $id", "release date",
         "title $id", false, 1.00, 323
+    )
+}
+
+fun provideSimpleMovieWithIdUi(id: Int): SimpleMovie{
+    return SimpleMovie(
+        id, "Title $id", "Release date: $id", posterPath = "Poster of $id"
     )
 }
 

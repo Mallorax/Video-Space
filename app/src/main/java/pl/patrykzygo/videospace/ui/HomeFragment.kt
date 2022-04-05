@@ -11,7 +11,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.constants.MoviesRequestType
-import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.databinding.FragmentHomeBinding
 import pl.patrykzygo.videospace.delegate.ui.AppBarDelegate
 import pl.patrykzygo.videospace.delegate.ui.AppBarDelegateImpl
@@ -34,12 +33,11 @@ class HomeFragment() : Fragment(),
             "movieResult",
             viewLifecycleOwner
         ) { _, bundle ->
-            val movie = bundle.getParcelable<Movie>("movie")
-            movie?.let {
-                val action =
-                    HomeFragmentDirections.actionMainFragmentToMovieDetails(movie.id)
-                findNavController().navigate(action)
-            }
+            val movieId = bundle.getInt("movie")
+            val action =
+                HomeFragmentDirections.actionMainFragmentToMovieDetails(movieId)
+            findNavController().navigate(action)
+
             enterTransition = MaterialFadeThrough()
             exitTransition = MaterialFadeThrough()
         }

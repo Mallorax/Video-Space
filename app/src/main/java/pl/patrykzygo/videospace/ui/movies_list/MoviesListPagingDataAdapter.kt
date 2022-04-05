@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import pl.patrykzygo.videospace.data.app.Movie
+import pl.patrykzygo.videospace.data.app.SimpleMovie
 import pl.patrykzygo.videospace.databinding.MovieListItemBindingImpl
 import pl.patrykzygo.videospace.ui.view_holders.MovieListItemViewHolder
 
 class MoviesListPagingDataAdapter(private val onMovieClickListener: OnMovieClickListener) :
-    PagingDataAdapter<Movie, MovieListItemViewHolder>(DiffCallback) {
+    PagingDataAdapter<SimpleMovie, MovieListItemViewHolder>(DiffCallback) {
 
     override fun onBindViewHolder(holderListItem: MovieListItemViewHolder, position: Int) {
         val movie = getItem(position)
@@ -30,17 +31,17 @@ class MoviesListPagingDataAdapter(private val onMovieClickListener: OnMovieClick
     }
 
 
-    companion object DiffCallback : DiffUtil.ItemCallback<Movie>() {
-        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.id == newItem.id
+    companion object DiffCallback : DiffUtil.ItemCallback<SimpleMovie>() {
+        override fun areItemsTheSame(oldItem: SimpleMovie, newItem: SimpleMovie): Boolean {
+            return oldItem.movieId == newItem.movieId
         }
 
-        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+        override fun areContentsTheSame(oldItem: SimpleMovie, newItem: SimpleMovie): Boolean {
             return oldItem == newItem
         }
     }
 
-    class OnMovieClickListener(val clickListener: (movie: Movie?, view: View) -> Unit) {
-        fun onMovieClick(movie: Movie?, view: View) = clickListener(movie, view)
+    class OnMovieClickListener(val clickListener: (movie: SimpleMovie?, view: View) -> Unit) {
+        fun onMovieClick(movie: SimpleMovie?, view: View) = clickListener(movie, view)
     }
 }

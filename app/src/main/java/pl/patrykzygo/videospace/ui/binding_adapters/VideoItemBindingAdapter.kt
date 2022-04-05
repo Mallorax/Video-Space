@@ -11,7 +11,6 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.constants.MovieStatus
 import pl.patrykzygo.videospace.constants.Paths
-import pl.patrykzygo.videospace.data.app.Movie
 import pl.patrykzygo.videospace.data.app.SimpleMovie
 
 
@@ -60,7 +59,7 @@ fun bindUserScore(textView: TextView, movie: SimpleMovie) {
         textView.visibility = View.INVISIBLE
     } else {
         textView.visibility = View.VISIBLE
-        val text = "${movie.score}/10"
+        val text = "${movie.userScore}/10"
         textView.text = text
     }
 }

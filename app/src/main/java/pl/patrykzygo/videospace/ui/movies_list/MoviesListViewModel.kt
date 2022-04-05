@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.plus
 import pl.patrykzygo.videospace.constants.SortOptions
 import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
-import pl.patrykzygo.videospace.data.mapMoviesResponseToMovie
+import pl.patrykzygo.videospace.data.mapMoviesResponseToSimpleMovie
 import pl.patrykzygo.videospace.repository.discover_paging.DiscoverPagingSource
 import javax.inject.Inject
 
@@ -54,7 +54,7 @@ class MoviesListViewModel @Inject constructor(
         )
             .flow
             .map { pagingData ->
-                pagingData.map { mapMoviesResponseToMovie(it) }
+                pagingData.map { mapMoviesResponseToSimpleMovie(it) }
             }
             .cachedIn(viewModelScope)
 
