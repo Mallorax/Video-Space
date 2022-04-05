@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.constants.MovieStatus
@@ -31,6 +32,8 @@ class UserListsFragment : Fragment(),
     ): View {
         _binding = FragmentUserListsBinding.inflate(inflater, container, false)
         setOnStoredListFragmentResultListener()
+        enterTransition = MaterialFadeThrough()
+        exitTransition = MaterialFadeThrough()
 
         return binding.root
     }

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.data.app.Genre
@@ -34,7 +35,8 @@ class SearchMovieFragment : Fragment(),
     ): View {
         _binding = FragmentMovieSearchBinding.inflate(inflater, container, false)
         viewModel.getAllGenre()
-
+        enterTransition = MaterialFadeThrough()
+        exitTransition = MaterialFadeThrough()
         return binding.root
     }
 

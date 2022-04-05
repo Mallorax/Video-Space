@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.constants.MoviesRequestType
 import pl.patrykzygo.videospace.data.app.Movie
@@ -39,6 +40,8 @@ class HomeFragment() : Fragment(),
                     HomeFragmentDirections.actionMainFragmentToMovieDetails(movie.id)
                 findNavController().navigate(action)
             }
+            enterTransition = MaterialFadeThrough()
+            exitTransition = MaterialFadeThrough()
         }
         return binding.root
     }
