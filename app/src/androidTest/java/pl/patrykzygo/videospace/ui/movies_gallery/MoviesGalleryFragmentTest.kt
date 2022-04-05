@@ -1,5 +1,6 @@
 package pl.patrykzygo.videospace.ui.movies_gallery
 
+import android.view.View
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingData
 import androidx.test.espresso.Espresso.onView
@@ -60,7 +61,8 @@ class MoviesGalleryFragmentTest {
         launchFragmentInHiltContainer<MoviesGalleryFragment>(fragmentFactory = testFragmentFactory) {
             val movies = PagingData.from(listOf(provideMovieWithIdUi(1), provideMovieWithIdUi(2)))
             adapter.submitData(lifecycle, movies)
-            this.binding.moviesListRecycler.adapter = adapter
+            binding.moviesListRecycler.adapter = adapter
+            binding.moviesListRecycler.visibility = View.VISIBLE
         }
         onView(withId(R.id.movies_list_recycler)).perform(
             RecyclerViewActions.actionOnItemAtPosition<GalleryItemViewHolder>(

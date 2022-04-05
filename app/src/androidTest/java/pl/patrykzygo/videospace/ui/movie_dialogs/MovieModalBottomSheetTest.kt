@@ -1,5 +1,6 @@
 package pl.patrykzygo.videospace.ui.movie_dialogs
 
+import android.view.View
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingData
 import androidx.test.espresso.Espresso.onView
@@ -55,10 +56,12 @@ class MovieModalBottomSheetTest {
         launchFragmentInHiltContainer<MoviesGalleryFragment>(fragmentFactory = fragmentFactory) {
             val movies = PagingData.from(listOf(provideMovieWithIdUi(1), provideMovieWithIdUi(2)))
             adapter.submitData(lifecycle, movies)
-            this.binding.moviesListRecycler.adapter = adapter
+            binding.moviesListRecycler.adapter = adapter
+            binding.moviesListRecycler.visibility = View.VISIBLE
             parentFragmentManager.setFragmentResultListener("movieResult", this) { _, bundle ->
                 resultedMovie = bundle.getParcelable("movie")
             }
+
         }
         onView(withId(R.id.movies_list_recycler)).perform(
             RecyclerViewActions.actionOnItemAtPosition<GalleryItemViewHolder>(

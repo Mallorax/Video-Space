@@ -35,7 +35,7 @@ class TestFragmentFactory @Inject constructor(
             MoviesGalleryFragment::class.java.name -> MoviesGalleryFragment()
             SearchMovieFragment::class.java.name -> SearchMovieFragment().also { fragment ->
                 navController.setCurrentDestination(
-                    R.id.search_graph,
+                    R.id.search_fragment,
                     bundleOf("id" to 1, "movieTitle" to "test title")
                 )
                 fragment.viewLifecycleOwnerLiveData.observeForever {
