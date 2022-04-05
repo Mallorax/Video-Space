@@ -2,20 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/main_fragment"
-        android:enabled="true"
+        android:id="@+id/home"
         android:icon="@drawable/ic_baseline_home"
         android:title="@string/home" />
 
     <item
-        android:id="@+id/users_list_fragment"
-        android:enabled="true"
+        android:id="@+id/user_lists"
         android:icon="@drawable/ic_baseline_list"
         android:title="@string/my_lists" />
 
     <item
-        android:id="@+id/search_movie_fragment"
-        android:enabled="true"
+        android:id="@+id/search"
         android:icon="@drawable/ic_baseline_search"
         android:title="@string/search" />
 

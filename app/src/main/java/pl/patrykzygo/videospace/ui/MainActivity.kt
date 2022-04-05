@@ -41,14 +41,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return when (navController.currentDestination?.id) {
-            R.id.search_movie_fragment -> {
-                navController.popBackStack(R.id.main_fragment, true)
-            }
-            R.id.users_list_fragment -> {
-                navController.popBackStack(R.id.main_fragment, true)
-            }
-            else -> navController.navigateUp()
-        }
+        return navController.navigateUp()
     }
 }

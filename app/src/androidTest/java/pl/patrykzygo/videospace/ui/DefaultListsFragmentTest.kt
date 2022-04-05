@@ -42,7 +42,7 @@ class DefaultListsFragmentTest {
     @Test
     fun testNavigationToDetailsView() {
         val movie = provideMovieWithIdUi(1)
-        launchFragmentInHiltContainer<DefaultListsFragment>(fragmentFactory = testFragmentFactory) {
+        launchFragmentInHiltContainer<HomeFragment>(fragmentFactory = testFragmentFactory) {
             val bundle = Bundle()
             bundle.putParcelable("movie", movie)
             parentFragmentManager.setFragmentResult("movieResult", bundle)
@@ -57,7 +57,7 @@ class DefaultListsFragmentTest {
         val expectedRequestType = MoviesRequestType.SIMILAR
         var bundle: Bundle? = null
         val testFragment = Fragment()
-        launchFragmentInHiltContainer<DefaultListsFragment>(fragmentFactory = testFragmentFactory) {
+        launchFragmentInHiltContainer<HomeFragment>(fragmentFactory = testFragmentFactory) {
             addFragmentToContainer(
                 binding.mostPopularMoviesContainer.id,
                 expectedRequestType,

@@ -3,7 +3,7 @@ package pl.patrykzygo.videospace.factories
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import pl.patrykzygo.videospace.ui.DefaultListsFragment
+import pl.patrykzygo.videospace.ui.HomeFragment
 import pl.patrykzygo.videospace.ui.movie_details.MovieDetailsFragment
 import pl.patrykzygo.videospace.ui.movie_dialogs.MovieModalBottomSheet
 import pl.patrykzygo.videospace.ui.movie_search.SearchMovieFragment
@@ -20,7 +20,7 @@ class DefaultFragmentFactory
 
     override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
         return when (className) {
-            DefaultListsFragment::class.java.name -> DefaultListsFragment()
+            HomeFragment::class.java.name -> HomeFragment()
             MoviesListFragment::class.java.name -> MoviesListFragment()
             MoviesGalleryFragment::class.java.name -> MoviesGalleryFragment()
             MovieModalBottomSheet::class.java.name -> MovieModalBottomSheet()

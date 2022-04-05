@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
-import pl.patrykzygo.videospace.ui.DefaultListsFragment
+import pl.patrykzygo.videospace.ui.HomeFragment
 import pl.patrykzygo.videospace.ui.movie_details.MovieDetailsFragment
 import pl.patrykzygo.videospace.ui.movie_search.SearchMovieFragment
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
@@ -17,7 +17,7 @@ class TestFragmentFactory @Inject constructor(
 
     override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
         return when (className) {
-            DefaultListsFragment::class.java.name -> DefaultListsFragment().also { fragment ->
+            HomeFragment::class.java.name -> HomeFragment().also { fragment ->
                 fragment.viewLifecycleOwnerLiveData.observeForever {
                     it?.let {
                         Navigation.setViewNavController(fragment.requireView(), navController)
@@ -35,7 +35,7 @@ class TestFragmentFactory @Inject constructor(
             MoviesGalleryFragment::class.java.name -> MoviesGalleryFragment()
             SearchMovieFragment::class.java.name -> SearchMovieFragment().also { fragment ->
                 navController.setCurrentDestination(
-                    R.id.search_movie_fragment,
+                    R.id.search_graph,
                     bundleOf("id" to 1, "movieTitle" to "test title")
                 )
                 fragment.viewLifecycleOwnerLiveData.observeForever {

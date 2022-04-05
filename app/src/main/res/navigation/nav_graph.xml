@@ -3,111 +3,11 @@ If it's possible for user to navigate so much to overflow navigation stack,
 or if it's handled internally. Couldn't really find much info about it either -->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/main_fragment">
+    app:startDestination="@id/home">
 
-    <fragment
-        android:id="@+id/main_fragment"
-        android:name="pl.patrykzygo.videospace.ui.DefaultListsFragment"
-        android:label="@string/main_app_label"
-        tools:layout="@layout/fragment_default_lists">
-        <action
-            android:id="@+id/action_main_fragment_to_movie_details"
-            app:destination="@id/movie_details" />
-        <action
-            android:id="@+id/action_main_fragment_to_save_movie_fragment"
-            app:destination="@id/save_movie_fragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/search_movie_fragment"
-        android:name="pl.patrykzygo.videospace.ui.movie_search.SearchMovieFragment"
-        android:label="@string/search"
-        tools:layout="@layout/fragment_movie_search">
-
-        <action
-            android:id="@+id/action_search_movie_fragment_to_movies_list_fragment"
-            app:destination="@id/movies_list_fragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/users_list_fragment"
-        android:name="pl.patrykzygo.videospace.ui.user_lists.UserListsFragment"
-        android:label="@string/my_lists"
-        tools:layout="@layout/fragment_user_lists">
-
-        <action
-            android:id="@+id/action_users_list_fragment_to_movie_details"
-            app:destination="@id/movie_details" />
-    </fragment>
-
-
-    <fragment
-        android:id="@+id/movies_gallery_fragment"
-        android:name="pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment"
-        android:label="@string/main_app_label"
-        tools:layout="@layout/fragment_movies_gallery" />
-
-    <fragment
-        android:id="@+id/movies_modal_bottom_sheet"
-        android:name="pl.patrykzygo.videospace.ui.movie_dialogs.MovieModalBottomSheet"
-        android:label="@string/main_app_label"
-        tools:layout="@layout/movie_bottom_sheet" />
-
-    <fragment
-        android:id="@+id/save_movie_fragment"
-        android:name="pl.patrykzygo.videospace.ui.save_movie.SaveMovieFragment"
-        android:label="Save Movie"
-        tools:layout="@layout/fragment_save_movie">
-
-        <argument
-            android:name="id"
-            app:argType="integer" />
-        <argument
-            android:name="movieTitle"
-            app:argType="string" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/movies_list_fragment"
-        android:name="pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment"
-        android:label="@string/list_of_movies_label"
-        tools:layout="@layout/fragment_movies_list">
-
-        <action
-            android:id="@+id/action_movies_list_fragment_to_movie_details"
-            app:destination="@id/movie_details" />
-        <action
-            android:id="@+id/action_movies_list_fragment_to_save_movie_fragment"
-            app:destination="@id/save_movie_fragment" />
-        <argument
-            android:name="request"
-            app:argType="pl.patrykzygo.videospace.data.app.DiscoverMovieRequest" />
-
-    </fragment>
-
-
-    <fragment
-        android:id="@+id/movie_details"
-        android:name="pl.patrykzygo.videospace.ui.movie_details.MovieDetailsFragment"
-        android:label="Movie details"
-        tools:layout="@layout/fragment_movie_details">
-
-        <argument
-            android:name="movieId"
-            app:argType="integer" />
-
-        <action
-            android:id="@+id/action_movie_details_self"
-            app:destination="@id/movie_details" />
-        <action
-            android:id="@+id/action_movie_details_to_movies_list_fragment"
-            app:destination="@id/movies_list_fragment" />
-        <action
-            android:id="@+id/action_movie_details_to_save_movie_fragment"
-            app:destination="@id/save_movie_fragment" />
-
-    </fragment>
+    <include app:graph="@navigation/home"/>
+    <include app:graph="@navigation/user_lists"/>
+    <include app:graph="@navigation/search"/>
 
 </navigation>

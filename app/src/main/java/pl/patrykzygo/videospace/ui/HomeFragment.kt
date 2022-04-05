@@ -11,16 +11,16 @@ import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.constants.MoviesRequestType
 import pl.patrykzygo.videospace.data.app.Movie
-import pl.patrykzygo.videospace.databinding.FragmentDefaultListsBinding
+import pl.patrykzygo.videospace.databinding.FragmentHomeBinding
 import pl.patrykzygo.videospace.delegate.ui.AppBarDelegate
 import pl.patrykzygo.videospace.delegate.ui.AppBarDelegateImpl
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
 
 @AndroidEntryPoint
-class DefaultListsFragment() : Fragment(),
+class HomeFragment() : Fragment(),
     AppBarDelegate by AppBarDelegateImpl() {
 
-    private var _binding: FragmentDefaultListsBinding? = null
+    private var _binding: FragmentHomeBinding? = null
     val binding get() = _binding!!
 
     override fun onCreateView(
@@ -28,7 +28,7 @@ class DefaultListsFragment() : Fragment(),
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDefaultListsBinding.inflate(inflater)
+        _binding = FragmentHomeBinding.inflate(inflater)
         parentFragmentManager.setFragmentResultListener(
             "movieResult",
             viewLifecycleOwner
@@ -36,7 +36,7 @@ class DefaultListsFragment() : Fragment(),
             val movie = bundle.getParcelable<Movie>("movie")
             movie?.let {
                 val action =
-                    DefaultListsFragmentDirections.actionMainFragmentToMovieDetails(movie.id)
+                    HomeFragmentDirections.actionMainFragmentToMovieDetails(movie.id)
                 findNavController().navigate(action)
             }
         }

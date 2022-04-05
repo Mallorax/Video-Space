@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home"
+    app:startDestination="@id/home_fragment">
+
+    <fragment
+        android:id="@+id/home_fragment"
+        android:name="pl.patrykzygo.videospace.ui.HomeFragment"
+        android:label="@string/main_app_label"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_main_fragment_to_movie_details"
+            app:destination="@id/movie_details"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/save_movie_fragment"
+        android:name="pl.patrykzygo.videospace.ui.save_movie.SaveMovieFragment"
+        android:label="Save Movie"
+        tools:layout="@layout/fragment_save_movie">
+
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="movieTitle"
+            app:argType="string" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/movies_list_fragment"
+        android:name="pl.patrykzygo.videospace.ui.movies_list.MoviesListFragment"
+        android:label="@string/list_of_movies_label"
+        tools:layout="@layout/fragment_movies_list">
+
+        <action
+            android:id="@+id/action_movies_list_fragment_to_movie_details"
+            app:destination="@id/movie_details"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+        <argument
+            android:name="request"
+            app:argType="pl.patrykzygo.videospace.data.app.DiscoverMovieRequest" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/movie_details"
+        android:name="pl.patrykzygo.videospace.ui.movie_details.MovieDetailsFragment"
+        android:label="Movie details"
+        tools:layout="@layout/fragment_movie_details">
+
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
+
+        <action
+            android:id="@+id/action_movie_details_self"
+            app:destination="@id/movie_details"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_movie_details_to_movies_list_fragment"
+            app:destination="@id/movies_list_fragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+
+        <action
+            android:id="@+id/action_movie_details_to_save_movie_fragment"
+            app:destination="@id/save_movie_fragment"
+            app:enterAnim="@android:anim/overshoot_interpolator"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/overshoot_interpolator"
+            app:popExitAnim="@android:anim/fade_out" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/movies_gallery_fragment"
+        android:name="pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment"
+        android:label="@string/main_app_label"
+        tools:layout="@layout/fragment_movies_gallery" />
+
+
+    <fragment
+        android:id="@+id/movies_modal_bottom_sheet"
+        android:name="pl.patrykzygo.videospace.ui.movie_dialogs.MovieModalBottomSheet"
+        android:label="@string/main_app_label"
+        tools:layout="@layout/movie_bottom_sheet" />
+</navigation>
