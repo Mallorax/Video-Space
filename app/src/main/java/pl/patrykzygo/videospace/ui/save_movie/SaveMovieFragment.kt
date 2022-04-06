@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.chip.Chip
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.constants.MovieStatus
 import pl.patrykzygo.videospace.databinding.FragmentSaveMovieBinding
@@ -49,10 +48,10 @@ class SaveMovieFragment :
 
     private fun subscribeToObservers() {
         viewModel.inputFeedbackMessage.observe(viewLifecycleOwner, Observer {
-            showSnackbarWithText(it)
+            showSnackbarWithTextAndBottomAppBar(it, binding.bottomAppBar)
         })
         viewModel.errorFeedbackMessage.observe(viewLifecycleOwner, Observer {
-            showSnackbarWithText(it)
+            showSnackbarWithTextAndBottomAppBar(it, binding.bottomAppBar)
         })
         viewModel.selectedStatus.observe(viewLifecycleOwner) {
             if (it == MovieStatus.COMPLETED || it == MovieStatus.DROPPED) {
@@ -70,11 +69,6 @@ class SaveMovieFragment :
         }
     }
 
-    private fun showSnackbarWithText(text: String) {
-        Snackbar.make(requireView(), text, Snackbar.LENGTH_LONG)
-            .setAnchorView(binding.bottomAppBar)
-            .show()
-    }
 
     private fun setListeners() {
         binding.saveMovieFab.setOnClickListener {

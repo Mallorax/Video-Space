@@ -108,8 +108,7 @@ class MovieDetailsFragment :
             showMovieGenres(it)
         }
         viewModel.errorMessage.observe(viewLifecycleOwner) {
-            Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG)
-                .setAnchorView(binding.bottomAppBar).show()
+            showSnackbarWithTextAndBottomAppBar(it, binding.bottomAppBar)
         }
         viewModel.saveMovieEvent.observe(viewLifecycleOwner) {
             val action = MovieDetailsFragmentDirections.actionMovieDetailsToSaveMovieFragment(
@@ -122,9 +121,7 @@ class MovieDetailsFragment :
             findNavController().navigate(action)
         }
         viewModel.searchInGenreErrorMessage.observe(viewLifecycleOwner) {
-            Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG)
-                .setAnchorView(binding.bottomAppBar)
-                .show()
+            showSnackbarWithTextAndBottomAppBar(it, binding.bottomAppBar)
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {

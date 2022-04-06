@@ -4,6 +4,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.snackbar.Snackbar
 import pl.patrykzygo.videospace.R
 
 class AppBarDelegateImpl() : AppBarDelegate {
@@ -17,5 +19,11 @@ class AppBarDelegateImpl() : AppBarDelegate {
             )
         )
         toolbar.setupWithNavController(navController, appBarConfig)
+    }
+
+    override fun showSnackbarWithTextAndBottomAppBar(text: String, bottomAppBar: BottomAppBar) {
+        Snackbar.make(bottomAppBar.rootView, text, Snackbar.LENGTH_LONG)
+            .setAnchorView(bottomAppBar)
+            .show()
     }
 }

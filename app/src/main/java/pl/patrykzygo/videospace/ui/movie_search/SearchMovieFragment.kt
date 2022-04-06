@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.chip.Chip
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
@@ -109,16 +108,10 @@ class SearchMovieFragment : Fragment(),
             displayGenres(it)
         })
         viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
-            Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG)
-                .setAnchorView(binding.bottomAppBar)
-                .show()
+            showSnackbarWithTextAndBottomAppBar(it, binding.bottomAppBar)
         })
         viewModel.submitRequestInputErrorMessage.observe(viewLifecycleOwner, Observer {
-            val snackbar =
-                Snackbar.make(binding.searchMovieFragmentCoordinator, it, Snackbar.LENGTH_LONG)
-                    .setAnchorView(binding.bottomAppBar)
-                    .show()
-
+            showSnackbarWithTextAndBottomAppBar(it, binding.bottomAppBar)
         })
         viewModel.requestMoviesLiveEvent.observe(viewLifecycleOwner, Observer {
             val action =
@@ -126,4 +119,5 @@ class SearchMovieFragment : Fragment(),
             findNavController().navigate(action)
         })
     }
+
 }
