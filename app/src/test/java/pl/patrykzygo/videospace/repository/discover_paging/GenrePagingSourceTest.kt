@@ -11,9 +11,9 @@ import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
 import pl.patrykzygo.videospace.data.network.MovieResponse
+import pl.patrykzygo.videospace.fakeCorrectMoviesResponse
+import pl.patrykzygo.videospace.fakeHttpErrorResponse
 import pl.patrykzygo.videospace.networking.DiscoverEntryPoint
-import pl.patrykzygo.videospace.util.fakeCorrectMoviesResponse
-import pl.patrykzygo.videospace.util.fakeHttpErrorResponse
 import retrofit2.HttpException
 
 @ExperimentalCoroutinesApi

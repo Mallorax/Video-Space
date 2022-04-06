@@ -9,10 +9,10 @@ import org.junit.Test
 import pl.patrykzygo.MainDispatcherRule
 import pl.patrykzygo.videospace.TestDispatcherProvider
 import pl.patrykzygo.videospace.data.app.DiscoverMovieRequest
+import pl.patrykzygo.videospace.fakeGenreList
+import pl.patrykzygo.videospace.getMovieWithId
 import pl.patrykzygo.videospace.repository.FakeLocalStoreGenresRepository
 import pl.patrykzygo.videospace.repository.FakeLocalStoreMoviesRepository
-import pl.patrykzygo.videospace.util.fakeGenreList
-import pl.patrykzygo.videospace.util.getMovieWithId
 import pl.patrykzygo.videospace.util.getOrAwaitValueTest
 
 @ExperimentalCoroutinesApi

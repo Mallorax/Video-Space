@@ -17,11 +17,11 @@ import pl.patrykzygo.videospace.data.local.GenreDao
 import pl.patrykzygo.videospace.data.local.GenreEntity
 import pl.patrykzygo.videospace.data.mapGenreEntityToGenre
 import pl.patrykzygo.videospace.data.mapGenreItemToGenreNullable
+import pl.patrykzygo.videospace.fakeCorrectGenresResponse
+import pl.patrykzygo.videospace.fakeGenreEntitiesList
+import pl.patrykzygo.videospace.fakeHttpErrorResponse
 import pl.patrykzygo.videospace.networking.GenresEntryPoint
 import pl.patrykzygo.videospace.repository.RepositoryResponse
-import pl.patrykzygo.videospace.util.fakeCorrectGenresResponse
-import pl.patrykzygo.videospace.util.fakeGenreEntitiesList
-import pl.patrykzygo.videospace.util.fakeHttpErrorResponse
 
 @ExperimentalCoroutinesApi
 class LocalStoreGenresRepositoryImplTest {

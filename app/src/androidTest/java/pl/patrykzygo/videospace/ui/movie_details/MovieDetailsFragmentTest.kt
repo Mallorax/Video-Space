@@ -20,10 +20,10 @@ import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.TestFragmentFactory
 import pl.patrykzygo.videospace.constants.MoviesRequestType
 import pl.patrykzygo.videospace.data.app.Movie
+import pl.patrykzygo.videospace.provideMovieWithId
 import pl.patrykzygo.videospace.ui.binding_adapters.getAverageVoteString
 import pl.patrykzygo.videospace.ui.binding_adapters.getVoteCountString
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
-import pl.patrykzygo.videospace.util.provideMovieWithIdUi
 import javax.inject.Inject
 
 @MediumTest
@@ -44,7 +44,7 @@ class MovieDetailsFragmentTest {
     @Before
     fun setup() {
         hiltRule.inject()
-        expectedMovie = provideMovieWithIdUi(1)
+        expectedMovie = provideMovieWithId(1)
     }
 
     @Test
@@ -68,7 +68,7 @@ class MovieDetailsFragmentTest {
 
     @Test
     fun testNavigationToSelf() {
-        val movie = provideMovieWithIdUi(1)
+        val movie = provideMovieWithId(1)
         var resultedMovieId: Int? = null
         testFragmentFactory.navController.addOnDestinationChangedListener { _, _, arguments ->
             resultedMovieId = arguments?.let { MovieDetailsFragmentArgs.fromBundle(it).movieId }
@@ -120,7 +120,7 @@ class MovieDetailsFragmentTest {
 
     @Test
     fun testIsMovieRatingSet() {
-        val movie = provideMovieWithIdUi(1)
+        val movie = provideMovieWithId(1)
         launchFragmentInHiltContainer<MovieDetailsFragment>(fragmentFactory = testFragmentFactory) {
             movieId = movie.id
             viewModel.setMovie(movie.id)
@@ -131,7 +131,7 @@ class MovieDetailsFragmentTest {
 
     @Test
     fun testIsVoteCountSet() {
-        val movie = provideMovieWithIdUi(1)
+        val movie = provideMovieWithId(1)
         launchFragmentInHiltContainer<MovieDetailsFragment>(fragmentFactory = testFragmentFactory) {
             movieId = movie.id
             viewModel.setMovie(movie.id)

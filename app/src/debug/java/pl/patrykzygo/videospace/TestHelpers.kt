@@ -1,9 +1,11 @@
-package pl.patrykzygo.videospace.util
+package pl.patrykzygo.videospace
 
 import okhttp3.MediaType
 import okhttp3.ResponseBody
+import pl.patrykzygo.videospace.constants.MovieStatus
 import pl.patrykzygo.videospace.data.app.Genre
 import pl.patrykzygo.videospace.data.app.Movie
+import pl.patrykzygo.videospace.data.app.SimpleMovie
 import pl.patrykzygo.videospace.data.local.GenreEntity
 import pl.patrykzygo.videospace.data.local.MovieEntity
 import pl.patrykzygo.videospace.data.network.EntryPointMoviesResponse
@@ -35,6 +37,26 @@ fun fakeHttpErrorResponse(): Response<Any> {
         )
     )
 }
+
+fun provideMovieWithId(id: Int): Movie {
+    return Movie(
+        false, "", listOf(), id,
+        "lang", "title $id", "descritpion $id",
+        0.0, "poster $id", "release date",
+        "title $id", false, 1.00, 323
+    )
+}
+
+fun provideSimpleMovieWithId(id: Int): SimpleMovie {
+    return SimpleMovie(
+        id, "Title $id", "Release date: $id", posterPath = "Poster of $id"
+    )
+}
+
+fun createMovieEntity(id: Int, status: String = MovieStatus.UNASSIGNED): MovieEntity {
+    return MovieEntity(id, title = "title $id", status = status, releaseDate = "")
+}
+
 
 fun fakeCorrectGenresResponse(): Response<GenresResponse> {
     val genresResponse = GenresResponse(

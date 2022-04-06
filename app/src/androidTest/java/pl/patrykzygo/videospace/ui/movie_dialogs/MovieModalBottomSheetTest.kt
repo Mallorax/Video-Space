@@ -18,11 +18,11 @@ import org.junit.Rule
 import org.junit.Test
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.TestFragmentFactory
+import pl.patrykzygo.videospace.provideMovieWithId
+import pl.patrykzygo.videospace.provideSimpleMovieWithId
 import pl.patrykzygo.videospace.ui.movies_gallery.MoviesGalleryFragment
 import pl.patrykzygo.videospace.ui.view_holders.GalleryItemViewHolder
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
-import pl.patrykzygo.videospace.util.provideMovieWithIdUi
-import pl.patrykzygo.videospace.util.provideSimpleMovieWithIdUi
 import javax.inject.Inject
 
 
@@ -51,13 +51,13 @@ class MovieModalBottomSheetTest {
 
     @Test
     fun testIfFragmentResultIsSet() {
-        val expectedMovieId = provideMovieWithIdUi(1).id
+        val expectedMovieId = provideMovieWithId(1).id
         var resultedMovieId: Int = -1
         launchFragmentInHiltContainer<MoviesGalleryFragment>(fragmentFactory = fragmentFactory) {
             val movies = PagingData.from(
                 listOf(
-                    provideSimpleMovieWithIdUi(1),
-                    provideSimpleMovieWithIdUi(2)
+                    provideSimpleMovieWithId(1),
+                    provideSimpleMovieWithId(2)
                 )
             )
             adapter.submitData(lifecycle, movies)

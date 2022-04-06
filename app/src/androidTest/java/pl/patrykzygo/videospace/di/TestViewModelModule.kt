@@ -11,11 +11,11 @@ import pl.patrykzygo.videospace.fakes.FakeDiscoverPagingSourceAndroid
 import pl.patrykzygo.videospace.fakes.FakeLocalStoreGenresRepositoryAndroid
 import pl.patrykzygo.videospace.fakes.FakeLocalStoreMoviesRepositoryAndroid
 import pl.patrykzygo.videospace.fakes.FakeMoviesPagingSourceAndroid
+import pl.patrykzygo.videospace.provideMovieWithId
 import pl.patrykzygo.videospace.repository.discover_paging.DiscoverPagingSource
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreGenresRepository
 import pl.patrykzygo.videospace.repository.local_store.LocalStoreMoviesRepository
 import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
-import pl.patrykzygo.videospace.util.provideMovieWithIdUi
 
 @Module
 @TestInstallIn(
@@ -29,9 +29,9 @@ object TestViewModelModule {
         val repo = FakeLocalStoreMoviesRepositoryAndroid()
         runBlocking {
             repo.saveMoviesToDb(
-                mapMovieToMovieEntity(provideMovieWithIdUi(1)),
-                mapMovieToMovieEntity(provideMovieWithIdUi(2)),
-                mapMovieToMovieEntity(provideMovieWithIdUi(3))
+                mapMovieToMovieEntity(provideMovieWithId(1)),
+                mapMovieToMovieEntity(provideMovieWithId(2)),
+                mapMovieToMovieEntity(provideMovieWithId(3))
             )
         }
         return repo

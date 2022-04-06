@@ -20,7 +20,7 @@ import org.junit.Rule
 import org.junit.Test
 import pl.patrykzygo.videospace.AndroidMainDispatcherRule
 import pl.patrykzygo.videospace.constants.MovieStatus
-import pl.patrykzygo.videospace.util.createMovieEntity
+import pl.patrykzygo.videospace.createMovieEntity
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi

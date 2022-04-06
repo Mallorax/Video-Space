@@ -8,8 +8,8 @@ import pl.patrykzygo.videospace.delegate.repos.DelegateMovieRefreshKey
 import pl.patrykzygo.videospace.delegate.repos.DelegateMovieRefreshKeyImpl
 import pl.patrykzygo.videospace.delegate.repos.MovieCalcKeyPositionDelegate
 import pl.patrykzygo.videospace.delegate.repos.MovieCalcNextKeyDelegateImpl
+import pl.patrykzygo.videospace.fakeCorrectMoviesResponse
 import pl.patrykzygo.videospace.repository.discover_paging.DiscoverPagingSource
-import pl.patrykzygo.videospace.util.fakeCorrectMoviesResponse
 
 class FakeDiscoverPagingSource : DiscoverPagingSource(),
     MovieCalcKeyPositionDelegate by MovieCalcNextKeyDelegateImpl(),

@@ -2,8 +2,8 @@ package pl.patrykzygo.videospace.fakes
 
 import androidx.paging.PagingState
 import pl.patrykzygo.videospace.data.network.MovieResponse
+import pl.patrykzygo.videospace.fakeCorrectMoviesResponse
 import pl.patrykzygo.videospace.repository.movies_paging.MoviesPagingSource
-import pl.patrykzygo.videospace.util.fakeCorrectMoviesResponseUi
 import javax.inject.Inject
 
 open class FakeMoviesPagingSourceAndroid @Inject constructor() : MoviesPagingSource() {
@@ -15,7 +15,7 @@ open class FakeMoviesPagingSourceAndroid @Inject constructor() : MoviesPagingSou
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieResponse> {
-        val fakeResponse = fakeCorrectMoviesResponseUi(params.key ?: 1, 2)
+        val fakeResponse = fakeCorrectMoviesResponse(params.key ?: 1, 2)
         return LoadResult.Page(
             data = listOf(fakeResponse).flatMap { it.body()!!.movieList },
             prevKey = params.key?.minus(1),

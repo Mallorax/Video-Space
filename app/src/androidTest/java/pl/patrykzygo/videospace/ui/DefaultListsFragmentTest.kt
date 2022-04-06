@@ -14,8 +14,8 @@ import org.junit.Test
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.TestFragmentFactory
 import pl.patrykzygo.videospace.constants.MoviesRequestType
+import pl.patrykzygo.videospace.provideMovieWithId
 import pl.patrykzygo.videospace.util.launchFragmentInHiltContainer
-import pl.patrykzygo.videospace.util.provideMovieWithIdUi
 import javax.inject.Inject
 
 @MediumTest
@@ -41,7 +41,7 @@ class DefaultListsFragmentTest {
 
     @Test
     fun testNavigationToDetailsView() {
-        val movie = provideMovieWithIdUi(1)
+        val movie = provideMovieWithId(1)
         launchFragmentInHiltContainer<HomeFragment>(fragmentFactory = testFragmentFactory) {
             val bundle = Bundle()
             bundle.putParcelable("movie", movie)
