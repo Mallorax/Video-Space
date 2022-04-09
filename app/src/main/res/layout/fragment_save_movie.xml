@@ -20,7 +20,6 @@
             android:layout_height="match_parent">
 
 
-
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/save_movie_title_textview"
                 android:layout_width="0dp"

@@ -29,7 +29,6 @@ class DefaultListsFragmentTest {
     @get:Rule
     var taskExecutorRule = InstantTaskExecutorRule()
 
-
     @Inject
     lateinit var testFragmentFactory: TestFragmentFactory
 
@@ -37,7 +36,6 @@ class DefaultListsFragmentTest {
     fun setup() {
         hiltRule.inject()
     }
-
 
     @Test
     fun testNavigationToDetailsView() {
@@ -47,9 +45,7 @@ class DefaultListsFragmentTest {
             bundle.putParcelable("movie", movie)
             parentFragmentManager.setFragmentResult("movieResult", bundle)
         }
-
         assertThat(testFragmentFactory.navController.currentDestination?.id).isEqualTo(R.id.movie_details)
-
     }
 
     @Test
@@ -67,6 +63,5 @@ class DefaultListsFragmentTest {
         }
         val resultingRequestType = bundle?.getString("request_type")
         assertThat(resultingRequestType).isEqualTo(expectedRequestType)
-
     }
 }

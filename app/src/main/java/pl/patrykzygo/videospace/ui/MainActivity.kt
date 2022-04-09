@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    private fun setupNavigation(){
+    private fun setupNavigation() {
         val appBarConfig = AppBarConfiguration(
             setOf(
                 R.id.home_fragment,

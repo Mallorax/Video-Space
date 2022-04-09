@@ -4,8 +4,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomappbar.BottomAppBar
-import com.google.android.material.snackbar.Snackbar
 import pl.patrykzygo.videospace.R
 
 class AppBarDelegateImpl() : AppBarDelegate {

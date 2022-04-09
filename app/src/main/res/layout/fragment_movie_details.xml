@@ -227,12 +227,12 @@
             android:id="@+id/details_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
             android:layout_gravity="end|bottom"
             android:layout_marginEnd="@dimen/small_margin"
             android:layout_marginBottom="?attr/actionBarSize"
             android:backgroundTint="@color/purple_200"
             android:contentDescription="@string/add_movie_to_your_list"
+            android:paddingBottom="8dp"
             android:src="@drawable/ic_baseline_playlist_add"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:tint="@color/white" />
