@@ -47,7 +47,6 @@ class HomeFragment() : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpAppBar(findNavController(), binding.appBar.toolbar)
-        binding.bottomNavViewLayout.bottomNavView.setupWithNavController(findNavController())
         addFragmentToContainer(
             binding.mostPopularMoviesContainer.id,
             MoviesRequestType.POPULAR,

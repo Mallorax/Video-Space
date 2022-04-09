@@ -154,26 +154,6 @@
         </androidx.core.widget.NestedScrollView>
 
 
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bottom_app_bar"
-            style="@style/Widget.MaterialComponents.BottomAppBar.PrimarySurface"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            app:contentInsetEnd="0dp"
-            app:contentInsetStart="0dp"
-            app:elevation="0dp"
-            app:fabAlignmentMode="end"
-            app:hideOnScroll="true">
-
-
-            <include
-                android:id="@+id/bottom_nav_view_layout"
-                layout="@layout/bottom_nav_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="120dp" />
-        </com.google.android.material.bottomappbar.BottomAppBar>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/search_fragment_fab"
@@ -183,7 +163,7 @@
             android:backgroundTint="@color/purple_200"
             android:contentDescription="@string/search"
             android:src="@drawable/ic_baseline_search"
-            app:layout_anchor="@id/bottom_app_bar"
+            android:layout_gravity="bottom|end"
             app:tint="@color/white" />
 
 

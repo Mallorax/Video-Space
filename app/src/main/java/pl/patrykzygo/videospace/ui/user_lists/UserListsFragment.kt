@@ -40,7 +40,6 @@ class UserListsFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpAppBar(findNavController(), binding.appBarLayout.toolbar)
-        binding.bottomNavViewLayout.bottomNavView.setupWithNavController(findNavController())
         showStoredLists()
     }
 

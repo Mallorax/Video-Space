@@ -21,9 +21,4 @@ class AppBarDelegateImpl() : AppBarDelegate {
         toolbar.setupWithNavController(navController, appBarConfig)
     }
 
-    override fun showSnackbarWithTextAndBottomAppBar(text: String, bottomAppBar: BottomAppBar) {
-        Snackbar.make(bottomAppBar.rootView, text, Snackbar.LENGTH_LONG)
-            .setAnchorView(bottomAppBar)
-            .show()
-    }
 }

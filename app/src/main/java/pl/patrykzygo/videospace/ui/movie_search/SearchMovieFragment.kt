@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.chip.Chip
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
@@ -42,7 +42,6 @@ class SearchMovieFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpAppBar(findNavController(), binding.appBar.toolbar)
-        binding.bottomNavViewLayout.bottomNavView.setupWithNavController(findNavController())
         subscribeObservers()
         binding.searchFragmentFab.setOnClickListener {
             viewModel.submitRequest(
@@ -108,10 +107,10 @@ class SearchMovieFragment : Fragment(),
             displayGenres(it)
         })
         viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
-            showSnackbarWithTextAndBottomAppBar(it, binding.bottomAppBar)
+            Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
         })
         viewModel.submitRequestInputErrorMessage.observe(viewLifecycleOwner, Observer {
-            showSnackbarWithTextAndBottomAppBar(it, binding.bottomAppBar)
+            Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
         })
         viewModel.requestMoviesLiveEvent.observe(viewLifecycleOwner, Observer {
             val action =

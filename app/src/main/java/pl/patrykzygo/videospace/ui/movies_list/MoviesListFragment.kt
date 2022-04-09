@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
 import androidx.paging.LoadState
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,7 +55,6 @@ class MoviesListFragment() : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpAppBar(findNavController(), binding.appBarLayout.toolbar)
-        binding.bottomNavViewLayout.bottomNavView.setupWithNavController(findNavController())
         binding.lifecycleOwner = viewLifecycleOwner
         val recyclerView = binding.moviesListVerticalRecycler
         recyclerView.adapter = adapter
@@ -108,7 +106,7 @@ class MoviesListFragment() : Fragment(),
             displaySelectedSortOption(it)
         }
         viewModel.errorMessage.observe(viewLifecycleOwner) {
-            showSnackbarWithTextAndBottomAppBar("Error: $it", binding.bottomAppBar)
+            Snackbar.make(requireView(), "Error: $it", Snackbar.LENGTH_LONG).show()
         }
         viewLifecycleOwner.lifecycleScope.launch {
             adapter.loadStateFlow.collectLatest {

@@ -7,5 +7,4 @@ import com.google.android.material.bottomappbar.BottomAppBar
 interface AppBarDelegate {
 
     fun setUpAppBar(navController: NavController, toolbar: Toolbar)
-    fun showSnackbarWithTextAndBottomAppBar(text: String, bottomAppBar: BottomAppBar)
 }

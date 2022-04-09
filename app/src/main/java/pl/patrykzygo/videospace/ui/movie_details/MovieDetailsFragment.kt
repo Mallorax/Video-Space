@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,7 +48,6 @@ class MovieDetailsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpAppBar(findNavController(), binding.appBar.toolbar)
-        binding.bottomNavViewLayout.bottomNavView.setupWithNavController(findNavController())
         setUpFragmentContainers()
         setOnClickListeners()
         subscribeObservers()
@@ -108,7 +106,7 @@ class MovieDetailsFragment :
             showMovieGenres(it)
         }
         viewModel.errorMessage.observe(viewLifecycleOwner) {
-            showSnackbarWithTextAndBottomAppBar(it, binding.bottomAppBar)
+            Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
         }
         viewModel.saveMovieEvent.observe(viewLifecycleOwner) {
             val action = MovieDetailsFragmentDirections.actionMovieDetailsToSaveMovieFragment(
@@ -121,7 +119,7 @@ class MovieDetailsFragment :
             findNavController().navigate(action)
         }
         viewModel.searchInGenreErrorMessage.observe(viewLifecycleOwner) {
-            showSnackbarWithTextAndBottomAppBar(it, binding.bottomAppBar)
+            Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
