@@ -19,14 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <include
-                android:id="@+id/app_bar"
-                layout="@layout/app_bar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
 
             <com.google.android.material.textview.MaterialTextView
@@ -40,7 +32,7 @@
                 app:layout_constraintEnd_toStartOf="@id/save_movie_guideline_right"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@id/save_movie_guideline_left"
-                app:layout_constraintTop_toBottomOf="@+id/app_bar"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="Movie title" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -197,7 +189,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/small_margin"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:layout_marginBottom="?attr/actionBarSize"
             android:backgroundTint="@color/purple_200"
             android:contentDescription="@string/save_movie"
             android:src="@drawable/ic_baseline_playlist_add"
