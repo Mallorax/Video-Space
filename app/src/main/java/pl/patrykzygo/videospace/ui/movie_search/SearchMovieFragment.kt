@@ -34,6 +34,7 @@ class SearchMovieFragment : Fragment(),
     ): View {
         _binding = FragmentMovieSearchBinding.inflate(inflater, container, false)
         viewModel.getAllGenre()
+        setHasOptionsMenu(true)
         enterTransition = MaterialFadeThrough()
         exitTransition = MaterialFadeThrough()
         return binding.root
@@ -41,7 +42,6 @@ class SearchMovieFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpAppBar(findNavController(), binding.appBar.toolbar)
         subscribeObservers()
         binding.searchFragmentFab.setOnClickListener {
             viewModel.submitRequest(

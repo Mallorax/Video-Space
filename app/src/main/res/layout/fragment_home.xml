@@ -7,13 +7,8 @@
         android:id="@+id/default_fragment_coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
-        <include
-            android:id="@+id/app_bar"
-            layout="@layout/app_bar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+        android:fitsSystemWindows="true"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
 
         <androidx.core.widget.NestedScrollView

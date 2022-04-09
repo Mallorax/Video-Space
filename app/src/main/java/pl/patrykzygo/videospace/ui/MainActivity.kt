@@ -6,6 +6,8 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.databinding.ActivityMainBinding
@@ -27,7 +29,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportFragmentManager.fragmentFactory = fragmentFactory
         binding = ActivityMainBinding.inflate(layoutInflater)
+        setupNavigation()
         setContentView(binding.root)
+    }
+
+    private fun setupNavigation(){
+        val appBarConfig = AppBarConfiguration(
+            setOf(
+                R.id.home_fragment,
+                R.id.user_lists_fragment,
+                R.id.search_fragment
+            ),
+            binding.mainActivityRoot
+        )
+        binding.drawerNavView.setupWithNavController(navController)
+        binding.appBarLayout.toolbar.setupWithNavController(navController, appBarConfig)
     }
 
 

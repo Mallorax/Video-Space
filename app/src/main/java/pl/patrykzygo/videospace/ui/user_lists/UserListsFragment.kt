@@ -30,6 +30,7 @@ class UserListsFragment : Fragment(),
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentUserListsBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
         setOnStoredListFragmentResultListener()
         enterTransition = MaterialFadeThrough()
         exitTransition = MaterialFadeThrough()
@@ -39,7 +40,6 @@ class UserListsFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpAppBar(findNavController(), binding.appBarLayout.toolbar)
         showStoredLists()
     }
 

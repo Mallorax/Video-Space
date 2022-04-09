@@ -32,6 +32,7 @@ class SaveMovieFragment :
     ): View {
         _binding = FragmentSaveMovieBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
+        setHasOptionsMenu(true)
         binding.viewModel = viewModel
         viewModel.getMovieToSave(arguments?.let { SaveMovieFragmentArgs.fromBundle(it).id } ?: -1)
 
@@ -40,7 +41,6 @@ class SaveMovieFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpAppBar(findNavController(), binding.appBar.toolbar)
         setListeners()
         subscribeToObservers()
     }

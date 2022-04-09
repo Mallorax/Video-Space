@@ -37,6 +37,7 @@ class HomeFragment() : Fragment(),
             val action =
                 HomeFragmentDirections.actionMainFragmentToMovieDetails(movieId)
             findNavController().navigate(action)
+            setHasOptionsMenu(true)
 
             enterTransition = MaterialFadeThrough()
             exitTransition = MaterialFadeThrough()
@@ -46,7 +47,6 @@ class HomeFragment() : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpAppBar(findNavController(), binding.appBar.toolbar)
         addFragmentToContainer(
             binding.mostPopularMoviesContainer.id,
             MoviesRequestType.POPULAR,

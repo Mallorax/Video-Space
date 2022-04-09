@@ -14,18 +14,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/app_bar"
-            layout="@layout/app_bar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
-
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/details_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -232,13 +225,16 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/details_fab"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:layout_marginBottom="?attr/actionBarSize"
             android:backgroundTint="@color/purple_200"
             android:contentDescription="@string/add_movie_to_your_list"
             android:src="@drawable/ic_baseline_playlist_add"
-            android:layout_gravity="bottom|end"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:tint="@color/white" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

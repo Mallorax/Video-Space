@@ -38,6 +38,7 @@ class MovieDetailsFragment :
         _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
         movieId = arguments?.let { MovieDetailsFragmentArgs.fromBundle(it).movieId }
         setFragmentResultListener()
+        setHasOptionsMenu(true)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
@@ -47,7 +48,6 @@ class MovieDetailsFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpAppBar(findNavController(), binding.appBar.toolbar)
         setUpFragmentContainers()
         setOnClickListeners()
         subscribeObservers()
@@ -124,9 +124,9 @@ class MovieDetailsFragment :
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
             if (it) {
-                binding.appBar.appBarProgressBar.visibility = View.VISIBLE
+//                binding.appBar.appBarProgressBar.visibility = View.VISIBLE
             } else {
-                binding.appBar.appBarProgressBar.visibility = View.GONE
+//                binding.appBar.appBarProgressBar.visibility = View.GONE
             }
         }
     }
