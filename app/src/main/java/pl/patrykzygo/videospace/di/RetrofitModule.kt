@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import pl.patrykzygo.videospace.constants.Paths
+import pl.patrykzygo.videospace.networking.AuthenticationEntryPoint
 import pl.patrykzygo.videospace.networking.DiscoverEntryPoint
 import pl.patrykzygo.videospace.networking.GenresEntryPoint
 import pl.patrykzygo.videospace.networking.MoviesEntryPoint
@@ -46,6 +47,16 @@ object RetrofitModule {
             .baseUrl(Paths.DISCOVER_BASE_URL)
             .build()
             .create(DiscoverEntryPoint::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAuthEntryPoint(): AuthenticationEntryPoint {
+        return Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(Paths.AUTH_BASE_URL)
+            .build()
+            .create(AuthenticationEntryPoint::class.java)
     }
 
 }
