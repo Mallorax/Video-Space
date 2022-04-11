@@ -36,7 +36,7 @@ class MovieDetailsViewModel @Inject constructor(
     val saveMovieEvent: LiveData<Movie> get() = _saveMovieEvent
 
     private val _searchInGenreLiveEvent = LiveEvent<DiscoverMovieRequest>()
-    val searchInGenreLiveEvent get() = _searchInGenreLiveEvent
+    val searchInGenreLiveEvent: LiveData<DiscoverMovieRequest> get() = _searchInGenreLiveEvent
 
     private val _searchInGenreErrorMessage = MutableLiveData<String>()
     val searchInGenreErrorMessage get() = _searchInGenreErrorMessage
