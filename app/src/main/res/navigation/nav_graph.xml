@@ -3,11 +3,18 @@ If it's possible for user to navigate so much to overflow navigation stack,
 or if it's handled internally. Couldn't really find much info about it either -->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/home">
 
     <include app:graph="@navigation/home" />
     <include app:graph="@navigation/user_lists" />
     <include app:graph="@navigation/search" />
+
+    <fragment
+        android:id="@+id/login"
+        android:name="pl.patrykzygo.videospace.ui.login.LoginFragment"
+        android:label="@string/login"
+        tools:layout="@layout/fragment_login" />
 
 </navigation>
