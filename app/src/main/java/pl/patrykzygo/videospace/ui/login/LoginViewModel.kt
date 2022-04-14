@@ -26,7 +26,8 @@ class LoginViewModel @Inject constructor(private val auth: AuthenticationEntryPo
             val authTokenResponse = auth.requestAuthToken()
             if (authTokenResponse.isSuccessful) {
                 val requestToken = authTokenResponse.body()?.requestToken ?: return@launch
-                _authEvent.postValue(Paths.AUTH_USER + requestToken)
+                val redirectString = "?redirect_to=https://videospace.com/loggedIn/$requestToken"
+                _authEvent.postValue(Paths.AUTH_USER + requestToken + redirectString)
             } else {
                 _errorMessage.postValue(authTokenResponse.message())
             }

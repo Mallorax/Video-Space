@@ -17,4 +17,17 @@ or if it's handled internally. Couldn't really find much info about it either --
         android:label="@string/login"
         tools:layout="@layout/fragment_login" />
 
+    <fragment
+        android:id="@+id/logged_in"
+        android:name="pl.patrykzygo.videospace.ui.login.LoggedInFragment"
+        android:label="Logged in"
+        tools:layout="@layout/fragment_login">
+
+        <deepLink app:uri="https://videospace.com/loggedIn/{requestToken}" />
+        <argument
+            android:name="requestToken"
+            app:argType="string" />
+
+    </fragment>
+
 </navigation>
