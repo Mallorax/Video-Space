@@ -1,13 +1,16 @@
-package pl.patrykzygo.videospace.ui
+package pl.patrykzygo.videospace.ui.main_activity
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +29,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var fragmentFactory: DefaultFragmentFactory
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var appBarConfig: AppBarConfiguration
+    private val viewModel: MainActivityViewModel by viewModels()
     private val navController: NavController by lazy {
         (supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment).navController
     }
@@ -34,9 +39,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportFragmentManager.fragmentFactory = fragmentFactory
         binding = ActivityMainBinding.inflate(layoutInflater)
+        binding.drawerNavView.menu.findItem(R.id.login).setOnMenuItemClickListener {
+            viewModel.launchAuthEvent()
+            true
+        }
         setupNavigation()
-        setLoginListener()
+        subscribeObservers()
         setContentView(binding.root)
+    }
+
+    private fun handleIntent() {
+        val uri = intent.data
+        uri?.let {
+            val path = uri.toString()
+            Toast.makeText(this, "Path: $path", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onStart() {
@@ -44,8 +61,9 @@ class MainActivity : AppCompatActivity() {
         performLoginCheck()
     }
 
+
     private fun setupNavigation() {
-        val appBarConfig = AppBarConfiguration(
+        appBarConfig = AppBarConfiguration(
             setOf(
                 R.id.home_fragment,
                 R.id.user_lists_fragment,
@@ -57,35 +75,30 @@ class MainActivity : AppCompatActivity() {
         binding.appBarLayout.toolbar.setupWithNavController(navController, appBarConfig)
     }
 
-    private fun setLoginListener() {
-        supportFragmentManager.setFragmentResultListener("sessionId", this) { _, bundle ->
-            val result = bundle.getString("sessionId")
-            result?.let { saveSessionId(it) }
-        }
-    }
 
-    private fun performLoginCheck(){
+    private fun performLoginCheck() {
         val sessionId = readSessionId()
-        if (sessionId != null){
-            Snackbar.make(binding.root, "User logged in with session: $sessionId", Snackbar.LENGTH_LONG).show()
-        }else{
+        if (sessionId != null) {
+            Snackbar.make(
+                binding.root,
+                "User logged in with session: $sessionId",
+                Snackbar.LENGTH_LONG
+            ).show()
+        } else {
             Snackbar.make(binding.root, "User logged out", Snackbar.LENGTH_LONG).show()
         }
     }
 
-//    private fun testPreferences(){
-//        val sharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return
-//        val result = sharedPref.getString("test", null)
-//        if (result != null){
-//            Snackbar.make(binding.root, "Test has been read: $result", Snackbar.LENGTH_LONG).show()
-//        }else{
-//            with(sharedPref.edit()){
-//                putString("test", "test")
-//                apply()
-//                Snackbar.make(binding.root, "Test has been saved", Snackbar.LENGTH_LONG).show()
-//            }
-//        }
-//    }
+    private fun subscribeObservers() {
+        viewModel.authEvent.observe(this) {
+            val uri = Uri.parse(it)
+            val intent = Intent(
+                "android.intent.action.VIEW",
+                uri
+            )
+            startActivity(intent)
+        }
+    }
 
     private fun readSessionId(): String? {
         val sharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return null
@@ -102,17 +115,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        super.onOptionsItemSelected(item)
-        return false
-    }
-
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp()
+        return navController.navigateUp(appBarConfig) || super.onSupportNavigateUp()
     }
 }

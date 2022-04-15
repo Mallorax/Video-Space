@@ -18,6 +18,7 @@
             app:launchSingleTop="true"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
+
     </fragment>
 
     <fragment
