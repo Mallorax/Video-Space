@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -91,12 +92,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun subscribeObservers() {
         viewModel.authEvent.observe(this) {
-            val uri = Uri.parse(it)
-            val intent = Intent(
-                "android.intent.action.VIEW",
-                uri
-            )
-            startActivity(intent)
+            val tabsBuilder = CustomTabsIntent.Builder()
+            val tabsIntent = tabsBuilder.build()
+            tabsIntent.launchUrl(this, Uri.parse(it))
         }
     }
 

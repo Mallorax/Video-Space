@@ -35,8 +35,7 @@ class MainActivityViewModel
             val authTokenResponse = userAuthEndpoint.requestAuthToken()
             if (authTokenResponse.isSuccessful) {
                 val requestToken = authTokenResponse.body()?.requestToken ?: return@launch
-                val redirectString = "?redirect_to=https://www.patrykzygo.pl/token=$requestToken"
-                _authEvent.postValue(Paths.AUTH_USER + requestToken + redirectString)
+                _authEvent.postValue(Paths.AUTH_USER + requestToken)
             } else {
                 _errorMessage.postValue(authTokenResponse.message())
             }
