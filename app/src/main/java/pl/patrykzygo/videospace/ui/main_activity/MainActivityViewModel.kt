@@ -24,17 +24,30 @@ class MainActivityViewModel
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> get() = _errorMessage
 
-    private val _sessionEvent = LiveEvent<String>()
-    val sessionEvent: LiveData<String> get() = _sessionEvent
+    private val _sessionId = MutableLiveData<String>()
+    val sessionId: LiveData<String> get() = _sessionId
 
     private val _message = MutableLiveData<String>()
     val message: LiveData<String> get() = _message
+
+    private val _wasTabShown = MutableLiveData<Boolean>()
+    val wasTabShown: LiveData<Boolean> get() = _wasTabShown
+
+    private var requestToken: String? = null
+
+    fun setWasTabShown(wasTabShown: Boolean) {
+        _wasTabShown.value = wasTabShown
+    }
+
+    fun restoreSession(sessionId: String) {
+        _sessionId.value = sessionId
+    }
 
     fun launchAuthEvent() {
         viewModelScope.launch(Dispatchers.IO) {
             val authTokenResponse = userAuthEndpoint.requestAuthToken()
             if (authTokenResponse.isSuccessful) {
-                val requestToken = authTokenResponse.body()?.requestToken ?: return@launch
+                requestToken = authTokenResponse.body()?.requestToken ?: return@launch
                 _authEvent.postValue(Paths.AUTH_USER + requestToken)
             } else {
                 _errorMessage.postValue(authTokenResponse.message())
@@ -43,15 +56,17 @@ class MainActivityViewModel
     }
 
 
-    fun createSession(requestToken: String) {
-        val sessionBody = CreateSessionBody(requestToken)
-        viewModelScope.launch(Dispatchers.IO) {
-            val response = userAuthEndpoint.createSessionId(body = sessionBody)
-            if (response.isSuccessful && response.body() != null) {
-                _sessionEvent.postValue(response.body()!!.sessionId)
-                _message.postValue(response.body()!!.success.toString())
-            } else {
-                _message.postValue(response.message())
+    fun createSession() {
+        requestToken?.let {
+            val sessionBody = CreateSessionBody(requestToken!!)
+            viewModelScope.launch(Dispatchers.IO) {
+                val response = userAuthEndpoint.createSessionId(body = sessionBody)
+                if (response.isSuccessful && response.body() != null) {
+                    _sessionId.postValue(response.body()!!.sessionId)
+                    _message.postValue(response.body()!!.success.toString())
+                } else {
+                    _message.postValue(response.message())
+                }
             }
         }
     }

@@ -1,13 +1,10 @@
 package pl.patrykzygo.videospace.ui.main_activity
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.browser.customtabs.CustomTabsIntent
+import androidx.browser.customtabs.CustomTabsCallback
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -18,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import pl.patrykzygo.videospace.R
 import pl.patrykzygo.videospace.databinding.ActivityMainBinding
 import pl.patrykzygo.videospace.factories.DefaultFragmentFactory
+import pl.patrykzygo.videospace.ui.ChromeCustomTab
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -31,6 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfig: AppBarConfiguration
+    private lateinit var chromeCustomTab: ChromeCustomTab
     private val viewModel: MainActivityViewModel by viewModels()
     private val navController: NavController by lazy {
         (supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment).navController
@@ -46,16 +45,22 @@ class MainActivity : AppCompatActivity() {
         }
         setupNavigation()
         subscribeObservers()
+        chromeCustomTab = ChromeCustomTab(this, object : CustomTabsCallback() {
+            override fun onNavigationEvent(navigationEvent: Int, extras: Bundle?) {
+                when (navigationEvent) {
+                    TAB_HIDDEN -> viewModel.setWasTabShown(true)
+                }
+            }
+        })
+        chromeCustomTab.warmup()
         setContentView(binding.root)
     }
 
-    private fun handleIntent() {
-        val uri = intent.data
-        uri?.let {
-            val path = uri.toString()
-            Toast.makeText(this, "Path: $path", Toast.LENGTH_LONG).show()
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        chromeCustomTab.unbindCustomTabsService()
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -85,6 +90,8 @@ class MainActivity : AppCompatActivity() {
                 "User logged in with session: $sessionId",
                 Snackbar.LENGTH_LONG
             ).show()
+            viewModel.setWasTabShown(false)
+            viewModel.restoreSession(sessionId)
         } else {
             Snackbar.make(binding.root, "User logged out", Snackbar.LENGTH_LONG).show()
         }
@@ -92,9 +99,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun subscribeObservers() {
         viewModel.authEvent.observe(this) {
-            val tabsBuilder = CustomTabsIntent.Builder()
-            val tabsIntent = tabsBuilder.build()
-            tabsIntent.launchUrl(this, Uri.parse(it))
+            chromeCustomTab.show(it)
+        }
+        viewModel.wasTabShown.observe(this) {
+            if (it) {
+                viewModel.createSession()
+            }
+        }
+        viewModel.sessionId.observe(this){
+            saveSessionId(it)
         }
     }
 
@@ -116,4 +129,6 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfig) || super.onSupportNavigateUp()
     }
+
+
 }
